@@ -16,7 +16,8 @@ export class AuthenticationService {
                 return response;
               }
               if (response) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                localStorage.setItem('username', JSON.stringify(username));
                   localStorage.setItem('token', JSON.stringify(response.token));
                   localStorage.setItem('tokenexpirytime', JSON.stringify(response.expirytime));
                   localStorage.setItem('roles', JSON.stringify(response.roles));
@@ -24,12 +25,21 @@ export class AuthenticationService {
 
                 return response;
             });
+  }
+
+  checkLogin() {
+    var username = localStorage.getItem('username');
+    if (username != null) {
+      return username;
     }
+  }
+
 
     logout() {
         // remove user from local storage to log user out
       localStorage.removeItem('token');
       localStorage.removeItem('tokenexpirytime');
       localStorage.removeItem('roles');
+      localStorage.removeItem('username');
     }
 }

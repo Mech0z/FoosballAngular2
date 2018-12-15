@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService, AuthenticationService } from '../services/index';
 
 @Component({
+  selector: 'app-login',
   moduleId: module.id,
   templateUrl: 'login.component.html'
 })
@@ -23,10 +24,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     // reset login status
-    this.authenticationService.logout();
+    //this.authenticationService.logout();
 
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account';
   }
 
   login() {

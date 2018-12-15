@@ -13,13 +13,13 @@
         <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
           <ul class='nav navbar-nav'>
             <li [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
-                <span class='glyphicon glyphicon-th-list'></span> Fetch data
+              <a [routerLink]='["/account"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-user'></span> Account
               </a>
             </li>
             <li [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/login"]' (click)='collapse()'>
-                <span class='glyphicon glyphicon-lock'></span> Login
+              <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-th-list'></span> Leaderboard
               </a>
             </li>
           </ul>

@@ -1,0 +1,11 @@
+<div *ngIf="!username && checked">
+  <app-login> </app-login>
+</div>
+
+<div *ngIf="username">
+  <p>Hello {{username}}</p>
+
+  <a [routerLink]='["/login"]' (click)='collapse()'>
+    <span class='glyphicon glyphicon-lock'></span> Logout
+  </a>
+</div>
