@@ -12,7 +12,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 
-import { AlertService, AuthenticationService, UserService } from './services/index';
+import { AlertService, AuthenticationService, UserService, PlayerService } from './services/index';
+import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AlertService, AuthenticationService, UserService } from './services/ind
     CounterComponent,
     FetchDataComponent,
     LoginComponent,
-    AccountComponent
+    AccountComponent,
+    RequestPasswordComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,13 +34,15 @@ import { AlertService, AuthenticationService, UserService } from './services/ind
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'account', component: AccountComponent }
+      { path: 'account', component: AccountComponent },
+      { path: 'requestpassword', component: RequestPasswordComponent }
     ])
   ],
   providers: [
     AlertService,
     AuthenticationService,
-    UserService],
+    UserService,
+  PlayerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
