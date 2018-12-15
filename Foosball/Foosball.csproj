@@ -35,7 +35,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\services\alert.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\models\authentication.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\user.service.ts" />
   </ItemGroup>
 

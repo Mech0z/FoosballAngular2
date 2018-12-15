@@ -11,6 +11,8 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
 
+import { AlertService, AuthenticationService, UserService } from './services/index';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +33,10 @@ import { LoginComponent } from './login/login.component';
       { path: 'login', component: LoginComponent }
     ])
   ],
-  providers: [],
+  providers: [
+    AlertService,
+    AuthenticationService,
+    UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
