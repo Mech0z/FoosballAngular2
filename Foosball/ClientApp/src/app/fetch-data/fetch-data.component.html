@@ -1,24 +1,32 @@
-<h1>Weather forecast</h1>
+<p *ngIf="!leaderboards"><em>Loading...</em></p>
 
-<p>This component demonstrates fetching data from the server.</p>
+<br/>
 
-<p *ngIf="!forecasts"><em>Loading...</em></p>
+<select [(ngModel)]="selectedLeaderboard">
+  <option *ngFor="let leaderboard of leaderboards" [ngValue]="leaderboard">
+    {{ leaderboard.seasonName }}
+  </option>
+</select>
 
-<table class='table' *ngIf="forecasts">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.dateFormatted }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
-    </tr>
-  </tbody>
-</table>
+
+<div *ngIf="selectedLeaderboard">
+  <h2>{{selectedLeaderboard.name | uppercase}} Details</h2>
+  <div>
+    <table class="table" >
+      <thead>
+        <tr>
+          <th>NAME</th>
+          <th>STATS</th>
+          <th>ELO RATING</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let leaderboardEntry of selectedLeaderboard.entries">
+          <td>{{ leaderboardEntry.displayName }}</td>
+          <td>{{ leaderboardEntry.wins }} / {{leaderboardEntry.numberOfGames}} ({{(leaderboardEntry.wins/leaderboardEntry.numberOfGames*100)| number : '1.2-2'}}%)</td>
+          <td>{{ leaderboardEntry.eloRating }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
