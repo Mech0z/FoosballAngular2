@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   model: any = {};
   loading = false;
   returnUrl: string;
+  public errorMessage: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,10 +33,18 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.authenticationService.login(this.model.username, this.model.password)
       .subscribe(
-        data => {
+      data => {
+        if (data.loginFailed) {
+          this.loading = false;
+          this.errorMessage = "Login failed!";
+        }
+        else {
           this.router.navigate([this.returnUrl]);
+          this.errorMessage = null;
+        }
         },
-        error => {
+      error => {
+          this.errorMessage = "Request failed!";
           this.alertService.error(error);
           this.loading = false;
         });

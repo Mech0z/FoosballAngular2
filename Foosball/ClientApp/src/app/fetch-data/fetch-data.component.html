@@ -2,7 +2,7 @@
 
 <br/>
 
-<select [(ngModel)]="selectedLeaderboard">
+<select *ngIf="selectedLeaderboard" [(ngModel)]="selectedLeaderboard">
   <option *ngFor="let leaderboard of leaderboards" [ngValue]="leaderboard">
     {{ leaderboard.seasonName }}
   </option>

@@ -12,7 +12,10 @@ export class AuthenticationService {
     return this.http.post<any>('https://foosballapi.azurewebsites.net' + '/api/Account/Login', new LoginRequest(username, password, "somewebsitename"))
             .map(response => {
                 // login successful if there's a jwt token in the response
-                if (response && response.token) {
+              if (response.loginfailed) {
+                return response;
+              }
+              if (response) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                   localStorage.setItem('token', JSON.stringify(response.token));
                   localStorage.setItem('tokenexpirytime', JSON.stringify(response.expirytime));
