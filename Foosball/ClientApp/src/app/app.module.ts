@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -15,6 +16,7 @@ import { ChangePasswordComponent } from './changepassword/changepassword.compone
 
 import { AlertService, AuthenticationService, UserService, PlayerService, HeadersService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
+import { ApiInterceptor } from './services/ApiInterceptor';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { RequestPasswordComponent } from './requestpassword/requestpassword.comp
     AuthenticationService,
     UserService,
     PlayerService,
-    HeadersService],
+    HeadersService,
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true } ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

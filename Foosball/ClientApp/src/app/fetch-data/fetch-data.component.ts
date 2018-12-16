@@ -11,16 +11,16 @@ export class FetchDataComponent {
   public selectedLeaderboard: Leaderboard;
   public players: User[];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(http: HttpClient) {
 
-    http.get<User[]>('https://foosballapi.azurewebsites.net/' + 'api/Player/GetUsers').subscribe(result => {
+    http.get<User[]>('/api/Player/GetUsers').subscribe(result => {
       this.players = result;
       if (this.leaderboards != null) {
         this.setNames(this.players);
       }
     }, error => console.error(error));
 
-    http.get<Leaderboard[]>('https://foosballapi.azurewebsites.net/' + 'api/leaderboard/index').subscribe(result => {
+    http.get<Leaderboard[]>('/api/leaderboard/index').subscribe(result => {
       this.leaderboards = result;
       this.leaderboards.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
       this.selectedLeaderboard = this.leaderboards[this.leaderboards.length - 1];
