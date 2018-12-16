@@ -5,6 +5,10 @@
 <div *ngIf="username">
   <p>Hello {{username}}</p>
 
+  <a [routerLink]='["/changepassword"]' (click)='collapse()'>
+    <span class='glyphicon glyphicon-lock'></span> Change password
+  </a>
+  <br />
   <a [routerLink]='["/login"]' (click)='collapse()'>
     <span class='glyphicon glyphicon-lock'></span> Logout
   </a>

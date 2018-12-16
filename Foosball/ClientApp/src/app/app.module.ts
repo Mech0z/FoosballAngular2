@@ -11,6 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
+import { ChangePasswordComponent } from './changepassword/changepassword.component';
 
 import { AlertService, AuthenticationService, UserService, PlayerService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
@@ -24,7 +25,8 @@ import { RequestPasswordComponent } from './requestpassword/requestpassword.comp
     FetchDataComponent,
     LoginComponent,
     AccountComponent,
-    RequestPasswordComponent
+    RequestPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,7 +37,8 @@ import { RequestPasswordComponent } from './requestpassword/requestpassword.comp
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'login', component: LoginComponent },
       { path: 'account', component: AccountComponent },
-      { path: 'requestpassword', component: RequestPasswordComponent }
+      { path: 'requestpassword', component: RequestPasswordComponent },
+      { path: 'changepassword', component: ChangePasswordComponent }
     ])
   ],
   providers: [

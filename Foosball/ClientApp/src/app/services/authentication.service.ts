@@ -17,10 +17,10 @@ export class AuthenticationService {
               }
               if (response) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('username', JSON.stringify(username));
-                  localStorage.setItem('token', JSON.stringify(response.token));
-                  localStorage.setItem('tokenexpirytime', JSON.stringify(response.expirytime));
-                  localStorage.setItem('roles', JSON.stringify(response.roles));
+                  localStorage.setItem('username', username);
+                  localStorage.setItem('token', response.token);
+                  localStorage.setItem('tokenexpirytime', response.expirytime);
+                  localStorage.setItem('roles', response.roles);
                 }
 
                 return response;
@@ -33,13 +33,11 @@ export class AuthenticationService {
       return username;
     }
   }
-
-
-    logout() {
-        // remove user from local storage to log user out
-      localStorage.removeItem('token');
-      localStorage.removeItem('tokenexpirytime');
-      localStorage.removeItem('roles');
-      localStorage.removeItem('username');
-    }
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('token');
+    localStorage.removeItem('tokenexpirytime');
+    localStorage.removeItem('roles');
+    localStorage.removeItem('username');
+  }
 }
