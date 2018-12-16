@@ -13,7 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { ChangePasswordComponent } from './changepassword/changepassword.component';
 
-import { AlertService, AuthenticationService, UserService, PlayerService } from './services/index';
+import { AlertService, AuthenticationService, UserService, PlayerService, HeadersService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
 
 @NgModule({
@@ -45,7 +45,8 @@ import { RequestPasswordComponent } from './requestpassword/requestpassword.comp
     AlertService,
     AuthenticationService,
     UserService,
-  PlayerService],
+    PlayerService,
+    HeadersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
