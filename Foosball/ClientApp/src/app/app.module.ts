@@ -13,6 +13,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { ChangePasswordComponent } from './changepassword/changepassword.component';
+import { AddMatchComponent } from './add-match/add-match.component';
 
 import { AlertService, AuthenticationService, PlayerService, HeadersService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
@@ -28,7 +29,8 @@ import { ApiInterceptor } from './services/ApiInterceptor';
     LoginComponent,
     AccountComponent,
     RequestPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AddMatchComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,7 +42,8 @@ import { ApiInterceptor } from './services/ApiInterceptor';
       { path: 'login', component: LoginComponent },
       { path: 'account', component: AccountComponent },
       { path: 'requestpassword', component: RequestPasswordComponent },
-      { path: 'changepassword', component: ChangePasswordComponent }
+      { path: 'changepassword', component: ChangePasswordComponent },
+      { path: 'add-match', component: AddMatchComponent }
     ])
   ],
   providers: [

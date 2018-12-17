@@ -22,6 +22,11 @@
                 <span class='glyphicon glyphicon-th-list'></span> Leaderboard
               </a>
             </li>
+            <li [routerLinkActive]='["link-active"]'>
+              <a [routerLink]='["/add-match"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-th-list'></span> Add Match
+              </a>
+            </li>
           </ul>
         </div>
     </div>
