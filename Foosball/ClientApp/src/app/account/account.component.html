@@ -1,9 +1,9 @@
-<div *ngIf="!username && checked">
+<div *ngIf="!user && checked">
   <app-login> </app-login>
 </div>
 
-<div *ngIf="username">
-  <p>Hello {{username}}</p>
+<div *ngIf="user">
+  <p>Hello {{user.username}}</p>
 
   <a [routerLink]='["/changepassword"]' (click)='collapse()'>
     <span class='glyphicon glyphicon-lock'></span> Change password

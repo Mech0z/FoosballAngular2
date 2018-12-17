@@ -1,7 +1,6 @@
-export class User {
-  id: number;
+class User {
+  id: string;
+  email: string;
   username: string;
-  password: string;
-  firstName: string;
-  lastName: string;
+  gravatarEmail: string;
 }

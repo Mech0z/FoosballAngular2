@@ -32,7 +32,7 @@ export class FetchDataComponent {
       }
     }, error => console.error(error));
   }
-  
+
   public setNames(players: User[]) {
     this.leaderboards.forEach(function (leaderboard) {
       leaderboard.entries.forEach(function (entry) {
@@ -44,13 +44,6 @@ export class FetchDataComponent {
       });
     });
   }
-}
-
-interface User {
-    id: string;
-    email: string;
-    username: string;
-    gravatarEmail: string;
 }
 
 interface LeaderboardEntries {

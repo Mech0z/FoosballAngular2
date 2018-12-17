@@ -14,7 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { ChangePasswordComponent } from './changepassword/changepassword.component';
 
-import { AlertService, AuthenticationService, UserService, PlayerService, HeadersService } from './services/index';
+import { AlertService, AuthenticationService, PlayerService, HeadersService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
 import { ApiInterceptor } from './services/ApiInterceptor';
 
@@ -46,7 +46,6 @@ import { ApiInterceptor } from './services/ApiInterceptor';
   providers: [
     AlertService,
     AuthenticationService,
-    UserService,
     PlayerService,
     HeadersService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true } ],

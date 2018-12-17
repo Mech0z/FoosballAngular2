@@ -9,7 +9,7 @@ export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
   login(username: string, password: string) {
-    return this.http.post<any>('https://foosballapi.azurewebsites.net' + '/api/Account/Login', new LoginRequest(username, password, "somewebsitename"))
+    return this.http.post<any>('/api/Account/Login', new LoginRequest(username, password, "somewebsitename"))
             .map(response => {
                 // login successful if there's a jwt token in the response
               if (response.loginfailed) {
