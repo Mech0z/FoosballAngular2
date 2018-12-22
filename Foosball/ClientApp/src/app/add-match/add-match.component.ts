@@ -69,7 +69,14 @@ export class AddMatchComponent {
     //match1.timeStampUtc = Date.now();
     request.matches = new Array(match1);
 
-    this.matchService.submitMatch(request);
+    this.matchService.submitMatch(request)
+      .subscribe(
+        () => {
+          console.debug("success");
+        },
+        () => {
+          console.debug("fail");
+        });;
   }
 }
 
