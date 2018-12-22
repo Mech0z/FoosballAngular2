@@ -1,22 +1,14 @@
-  Help me Obi Wan Martin/Peter your Add matchs only hope
-  <img src="https://media.giphy.com/media/3o8doPOY0S97MPsK76/giphy.gif" width="520" height="265" alt="">
-
-  <div class="grid grid-pad">
-    <a *ngFor="let player of players" class="col-1-4"
-       (click)="addPlayer(player)">
-      <div class="module">
-        <h4>{{player.name}}</h4>
-      </div>
-    </a>
-  </div>
-
-  <div class="bottembar">
-    <div class="grid grid-pad">
-      <div *ngFor="let player of addedPlayers" class="col-1-4"
-         (click)="addPlayer(player)">
-        <div class="module">
-          <h4>{{player.name}}</h4>
-        </div>
-      </div>
+<div class="layout" *ngIf="!isloading">
+  <div class="players">
+    <div class="player selected" *ngFor="let p of selectedPlayers"  (click)="togglePlayer(p)">
+      {{p.name}}
+      <br>
+      {{ p.elo }}
     </div>
   </div>
+  <div class="players">
+    <div class="player" *ngFor="let p of players" (click)="togglePlayer(p)">
+      {{p.name}}
+    </div>
+  </div>
+</div>

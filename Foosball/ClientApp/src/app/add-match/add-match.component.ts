@@ -7,65 +7,35 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./add-match.component.css']
 })
 export class AddMatchComponent {
-  public players: Player[];
-  public addedPlayers: Player[];
+  players: Player[];
+  loading = true;
+  constructor(http: HttpClient) {
 
-  public team1Player1: Player;
-  public team1Player2: Player;
-  public team2Player1: Player;
-  public team2Player2: Player;
-
-  constructor() {
-    this.players = new Array(
-      new Player(1, "Martin", 10),
-      new Player(2, "Peter", 9),
-      new Player(3, "No Name 1", 8),
-      new Player(4, "No Name 2", 6),
-      new Player(5, "No Name 3", 7),
-      new Player(6, "No Name 4", 6),
-      new Player(7, "No Name 5", 5),
-      new Player(8, "No Name 6", 4),
-      new Player(9, "No Name 7", 3),
-      new Player(10, "No Name 8", 2));
-    this.addedPlayers = new Array();
+    http.get<User[]>('/api/Player/GetUsers').subscribe(result => {
+     this.players = result.map(r => this.toPlayer(r));
+     this.players.sort((p1, p2) => p1.name.localeCompare(p2.name));
+     this.loading = false;
+    }
+    , error => console.error(error));
   }
 
-  addPlayer(player: Player) {
-    var foundIndex = -1;
+  toPlayer(r: User) : Player {
+    return { id: 0, name: r.username, elo: 0 } as Player;
+  }
 
-    this.addedPlayers.forEach((value, index) => {
-      if (value.id == player.id) {
-        foundIndex = index;
-      }
-    });
+  togglePlayer(player: Player) {
+    player.isSelected = !player.isSelected;
+  }
 
-    
 
-    if (foundIndex != -1) {
-      this.addedPlayers.splice(foundIndex, 1);
-    } else {
-      if (this.addedPlayers.length == 4) {
-        return;
-      }
-      this.addedPlayers.push(player);
-    }
-
-    var sortedArray: Player[] = this.addedPlayers.sort((n1, n2) => n1.elo - n2.elo);
-    this.team1Player1 = sortedArray[0];
-    this.team1Player2 = sortedArray[3];
-    this.team2Player1 = sortedArray[1];
-    this.team2Player2 = sortedArray[2];
+  get selectedPlayers(): Player[] {
+    return !this.players ? [] : this.players.filter(p => p.isSelected);
   }
 }
 
-class Player {
-  constructor(id: number, name: string, elo: number) {
-    this.id = id;
-    this.name = name;
-    this.elo = elo;
-  }
-
+interface Player {
   id: number;
   name: string;
   elo: number;
+  isSelected: boolean;
 }

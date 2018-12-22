@@ -1,36 +1,21 @@
-.bottembar {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0;
-  height: 200px;
-  background-color: grey;
-  font-size: larger
+.players {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
-.grid {
-  margin: 0;
-}
-
-.grid-pad {
-  padding: 10px 0;
-}
-
-.module {
-  padding: 20px;
-  text-align: center;
-  color: #eee;
-  max-height: 120px;
+.player {
+  padding: 12px;
+  background: lightblue;
+  border: 1px solid darkgray;
+  margin: 2px;
   min-width: 120px;
-  background-color: #607D8B;
-  border-radius: 2px;
 }
 
-.module:hover {
-  background-color: #EEE;
+.player:hover {
   cursor: pointer;
-  color: #607d8b;
 }
 
-.col-1-4 {
-  width: 25%;
+.selected {
+  background-color: orange;
 }
