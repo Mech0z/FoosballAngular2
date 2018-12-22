@@ -15,7 +15,7 @@ import { AccountComponent } from './account/account.component';
 import { ChangePasswordComponent } from './changepassword/changepassword.component';
 import { AddMatchComponent } from './add-match/add-match.component';
 
-import { AlertService, AuthenticationService, PlayerService, HeadersService } from './services/index';
+import { AlertService, AuthenticationService, PlayerService, HeadersService, MatchService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
 import { ApiInterceptor } from './services/ApiInterceptor';
 
@@ -51,6 +51,7 @@ import { ApiInterceptor } from './services/ApiInterceptor';
     AuthenticationService,
     PlayerService,
     HeadersService,
+    MatchService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true } ],
   bootstrap: [AppComponent]
 })

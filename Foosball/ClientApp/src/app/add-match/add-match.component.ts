@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { SaveMatchesRequest, Match, MatchResult } from '../models/SaveMatchesRequest';
+import { MatchService } from '../services/index';
 
 @Component({
   selector: 'app-add-match',
@@ -15,7 +17,8 @@ export class AddMatchComponent {
   public team2Player1: Player;
   public team2Player2: Player;
 
-  constructor() {
+  constructor(
+    private matchService: MatchService) {
     this.players = new Array(
       new Player(1, "Martin", 10),
       new Player(2, "Peter", 9),
@@ -38,9 +41,7 @@ export class AddMatchComponent {
         foundIndex = index;
       }
     });
-
     
-
     if (foundIndex != -1) {
       this.addedPlayers.splice(foundIndex, 1);
     } else {
@@ -55,6 +56,20 @@ export class AddMatchComponent {
     this.team1Player2 = sortedArray[3];
     this.team2Player1 = sortedArray[1];
     this.team2Player2 = sortedArray[2];
+  }
+
+  submitMatch() {
+    var request = new SaveMatchesRequest();
+    request.email = "madsskipper@gmail.com";
+
+    var match1 = new Match();
+    match1.playerList = new Array("madsskipper@gmail.com", "pfr@seges.dk", "mahj@seges.dk", "vik@seges.dk");
+    match1.submittedBy = "madsskipper@gmail.com";
+    match1.matchResult = new MatchResult(8, 2);
+    //match1.timeStampUtc = Date.now();
+    request.matches = new Array(match1);
+
+    this.matchService.submitMatch(request);
   }
 }
 

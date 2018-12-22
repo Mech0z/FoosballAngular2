@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
+import { HttpClient } from '@angular/common/http';
 import { HeadersService } from './headers.service';
+import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 
 @Injectable()
 export class PlayerService {
@@ -11,7 +11,7 @@ export class PlayerService {
     return this.http.get('/api/Player/RequestPassword?email=' + email)
   }
 
-  changePassword(request: ChangePasswordRequest, ) {
+  changePassword(request: ChangePasswordRequest) {
     var headers = this.headersService.createHttpHeaders();
     return this.http.post('/api/Player/ChangePassword', request, { headers: headers });
   }
