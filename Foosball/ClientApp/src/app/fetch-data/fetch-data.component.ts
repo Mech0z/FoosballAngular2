@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Leaderboard } from '../models/Leaderboard';
 
 @Component({
   selector: 'app-fetch-data',
@@ -44,22 +45,4 @@ export class FetchDataComponent {
       });
     });
   }
-}
-
-interface LeaderboardEntries {
-  numberOfGames: number,
-  userName:	string,
-  wins: number,
-  losses: number,
-  eloRating: number,
-  form: string;
-  displayName: string;
-}
-
-interface Leaderboard {
-  id: string;
-  entries: LeaderboardEntries[];
-  seasonName: string;
-  timestamp: Date;
-  startDate: string;
 }

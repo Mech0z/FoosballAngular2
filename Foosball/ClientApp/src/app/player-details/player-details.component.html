@@ -1,0 +1,18 @@
+<p *ngIf="!playerSeasonHistory"><em>Loading...</em></p>
+
+<div *ngIf="playerSeasonHistory">
+  <table class="table" >
+    <thead>
+      <tr>
+        <th>Season</th>
+        <th>Rank</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of playerSeasonHistory.PlayerLeaderBoardEntries" >
+        <td>{{ entry.seasonName }}</td>
+        <td>{{ entry.rank }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

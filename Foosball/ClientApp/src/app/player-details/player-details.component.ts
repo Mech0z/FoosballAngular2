@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { PlayerService } from '../services/index';
+import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistoryResponse';
 
 @Component({
   selector: 'player-details',
@@ -10,6 +10,7 @@ import { PlayerService } from '../services/index';
 
 export class PlayerDetailsComponent implements OnInit {
   loading = false;
+  public playerSeasonHistory: GetPlayerSeasonHistoryResponse;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,10 +20,11 @@ export class PlayerDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.playerService.getPlayerHistory("madsskipper@gmail.com")
+    var email = this.route.snapshot.paramMap.get('email');
+    this.playerService.getPlayerHistory(email)
       .subscribe(
         data => {
-          var result = data;
+          this.playerSeasonHistory = data;
         },
         error => {
           this.loading = false;

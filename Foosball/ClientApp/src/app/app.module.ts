@@ -46,7 +46,7 @@ import { ApiInterceptor } from './services/ApiInterceptor';
       { path: 'requestpassword', component: RequestPasswordComponent },
       { path: 'changepassword', component: ChangePasswordComponent },
       { path: 'add-match', component: AddMatchComponent },
-      { path: 'player-details', component: PlayerDetailsComponent}
+      { path: 'player-details/:email', component: PlayerDetailsComponent}
     ])
   ],
   providers: [
