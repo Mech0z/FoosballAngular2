@@ -9,7 +9,6 @@ export class MatchService {
 
   submitMatch(request: SaveMatchesRequest) {
     var headers = this.headersService.createHttpHeaders();
-    //WHY DONT THIS **** POST??#*@*#*(&@$##)
     return this.http.post('/api/Match/SaveMatch', request, { headers: headers });
   }
 }

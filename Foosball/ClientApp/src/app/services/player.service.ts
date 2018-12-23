@@ -15,4 +15,11 @@ export class PlayerService {
     var headers = this.headersService.createHttpHeaders();
     return this.http.post('/api/Player/ChangePassword', request, { headers: headers });
   }
+
+  getPlayerHistory(email: string) {
+    return this.http.get<any>('/api/Player/GetPlayerHistory?email=' + email)
+      .map(response => {
+        return response;
+      });
+  }
 }
