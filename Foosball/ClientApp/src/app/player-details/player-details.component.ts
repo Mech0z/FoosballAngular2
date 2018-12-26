@@ -9,7 +9,6 @@ import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistory
 })
 
 export class PlayerDetailsComponent implements OnInit {
-  loading = false;
   public playerSeasonHistory: GetPlayerSeasonHistoryResponse;
 
   constructor(
@@ -19,7 +18,9 @@ export class PlayerDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loading = true;
+    this.getPlayerHistory();
+  }
+  getPlayerHistory() {
     var email = this.route.snapshot.paramMap.get('email');
     this.playerService.getPlayerHistory(email)
       .subscribe(
@@ -27,7 +28,7 @@ export class PlayerDetailsComponent implements OnInit {
           this.playerSeasonHistory = data;
         },
         error => {
-          this.loading = false;
+          console.error(error);
         });
   }
 }

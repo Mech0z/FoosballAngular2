@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HeadersService } from './headers.service';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
+import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistoryResponse';
 
 @Injectable()
 export class PlayerService {
@@ -17,9 +18,6 @@ export class PlayerService {
   }
 
   getPlayerHistory(email: string) {
-    return this.http.get<any>('/api/Player/GetPlayerHistory?email=' + email)
-      .map(response => {
-        return response;
-      });
+    return this.http.get<GetPlayerSeasonHistoryResponse>('/api/Player/GetPlayerHistory?email=' + email);
   }
 }

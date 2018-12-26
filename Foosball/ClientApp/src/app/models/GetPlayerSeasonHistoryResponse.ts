@@ -1,7 +1,7 @@
 import { Match } from "./SaveMatchesRequest";
 import { PlayerLeaderboardEntry } from "./PlayerLeaderboardEntry";
 
-export class GetPlayerSeasonHistoryResponse {
+export interface GetPlayerSeasonHistoryResponse {
   PlayerLeaderBoardEntries: PlayerLeaderboardEntry[];
   EggStats: EggStats;
 }
