@@ -10,6 +10,7 @@ import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistory
 
 export class PlayerDetailsComponent implements OnInit {
   public playerSeasonHistory: GetPlayerSeasonHistoryResponse;
+  public email: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,8 +22,8 @@ export class PlayerDetailsComponent implements OnInit {
     this.getPlayerHistory();
   }
   getPlayerHistory() {
-    var email = this.route.snapshot.paramMap.get('email');
-    this.playerService.getPlayerHistory(email)
+    this.email = this.route.snapshot.paramMap.get('email');
+    this.playerService.getPlayerHistory(this.email)
       .subscribe(
         data => {
           this.playerSeasonHistory = data;
