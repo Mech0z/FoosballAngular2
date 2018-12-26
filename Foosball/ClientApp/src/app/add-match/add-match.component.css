@@ -1,21 +1,46 @@
+.layout {
+
+}
+
 .players {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
 
+.addedplayers {
+  min-height: 80px;
+  border: 1px dotted #555555;
+  margin-left: -1px;
+}
+
 .player {
-  padding: 12px;
-  background: lightblue;
-  border: 1px solid darkgray;
+  padding: 8px;
+
+  border: 1px solid #555555;
   margin: 2px;
-  min-width: 120px;
+  width: 24%;
+  min-width: 140px;
+  max-height: 80px;
+  text-overflow: ellipsis;
 }
 
 .player:hover {
   cursor: pointer;
+  background-color: #b4cad2;
 }
 
 .selected {
-  background-color: orange;
+  border: 2px solid #555555;
+  background: #b4cad2;
+}
+
+.startMatch {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+    position: sticky;
+    position: -webkit-sticky; /* safari */
+    bottom: 0px;
+    background: whitesmoke;
 }

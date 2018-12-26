@@ -1,14 +1,18 @@
 <div class="layout" *ngIf="!isloading">
-  <div class="players">
-    <div class="player selected" *ngFor="let p of selectedPlayers"  (click)="togglePlayer(p)">
-      {{p.name}}
-      <br>
-      {{ p.elo }}
+  <div class="players addedplayers">
+    <div class="player selected" *ngFor="let p of selectedPlayers" (click)="togglePlayer(p)">
+      <p>{{p.username}}
+        <br>
+        {{ p.currentElo }}</p>
     </div>
   </div>
+  <mat-checkbox (click)="showAllToggle()">Show all players</mat-checkbox>
   <div class="players">
-    <div class="player" *ngFor="let p of players" (click)="togglePlayer(p)">
-      {{p.name}}
+    <div class="player" [ngClass]="{selected: p.isSelected}" *ngFor="let p of filteredPlayers" (click)="togglePlayer(p)">
+      <p>{{p.username}}</p>
     </div>
   </div>
+</div>
+<div class="startMatch">
+    <button  mat-raised-button color="primary" [disabled]="selectedPlayers.length !== 4">Start</button>
 </div>

@@ -1,5 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Leaderboard } from '../models/leaderboard.interface';
+import { forEach } from '@angular/router/src/utils/collection';
+import { User } from '../models/user.interface';
 
 @Component({
   selector: 'app-add-match',
@@ -7,35 +10,64 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./add-match.component.css']
 })
 export class AddMatchComponent {
-  players: Player[];
+  players: User[] = [];
   loading = true;
-  constructor(http: HttpClient) {
-
-    http.get<User[]>('/api/Player/GetUsers').subscribe(result => {
-     this.players = result.map(r => this.toPlayer(r));
-     this.players.sort((p1, p2) => p1.name.localeCompare(p2.name));
-     this.loading = false;
-    }
-    , error => console.error(error));
+  showAll = false;
+  constructor(private http: HttpClient) {
+    this.doMagic();
   }
 
-  toPlayer(r: User) : Player {
-    return { id: 0, name: r.username, elo: 0 } as Player;
-  }
+  showAllToggle() {
+    this.showAll = !this.showAll;
 
-  togglePlayer(player: Player) {
+  }
+  togglePlayer(player: User) {
     player.isSelected = !player.isSelected;
   }
 
+  get filteredPlayers(): User[] {
 
-  get selectedPlayers(): Player[] {
-    return !this.players ? [] : this.players.filter(p => p.isSelected);
+    const fPlayers = this.players.filter(p => this.showAll || !p.noElo);
+    if (!this.showAll) {
+      fPlayers.sort((a, b) => b.currentElo - a.currentElo);
+    }
+    return fPlayers;
   }
-}
 
-interface Player {
-  id: number;
-  name: string;
-  elo: number;
-  isSelected: boolean;
+  get selectedPlayers(): User[] {
+    const sPlayers = !this.players ? [] : this.players.filter(p => p.isSelected);
+    sPlayers.sort((a, b) => b.currentElo - a.currentElo);
+    return sPlayers;
+  }
+
+  private doMagic() {
+
+    this.http.get<User[]>('/api/Player/GetUsers').subscribe(users => {
+      this.players = users;
+      this.players.sort((p1, p2) => p1.username.localeCompare(p2.username));
+
+
+      this.http.get<Leaderboard[]>('/api/leaderboard/index').subscribe(leaderboards => {
+        leaderboards.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+        const l = leaderboards[0];
+
+        this.players.forEach(p => {
+          p.currentElo = l.entries.filter(e => e.userName === p.email).map(e => e.eloRating)[0];
+          if (!p.currentElo) {
+            p.currentElo = 1500;
+            p.noElo = true;
+          }
+        });
+
+        this.loading = false;
+
+      });
+
+
+
+    }
+      , error => console.error(error));
+
+
+  }
 }

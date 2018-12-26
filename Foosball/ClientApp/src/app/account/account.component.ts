@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../services/index';
 import { HttpClient } from '@angular/common/http';
-import { forEach } from '@angular/router/src/utils/collection';
+import { User } from '../models/user.interface';
 
 @Component({
   selector: 'app-account',
@@ -41,7 +41,7 @@ export class AccountComponent {
           this.user = user;
         }
       }.bind(this));
-      
+
     }, error => console.error(error));
   }
 }
