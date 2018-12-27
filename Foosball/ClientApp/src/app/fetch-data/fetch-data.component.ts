@@ -35,13 +35,13 @@ export class FetchDataComponent {
   }
 
   public setNames(players: User[]) {
-    this.leaderboards.forEach(function (leaderboard) {
-      leaderboard.entries.forEach(function (entry) {
-        players.forEach(function(player) {
+    this.leaderboards.forEach(leaderboard => {
+      leaderboard.entries.forEach(entry => {
+        players.forEach(player => {
           if (player.email === entry.userName) {
             entry.displayName = player.username;
           }
-        })
+        });
       });
     });
   }
