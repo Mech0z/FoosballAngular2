@@ -58,7 +58,6 @@ export class AccountComponent {
     this.loading = true;
 
     this.playerService.changeEmail(this.newEmail1).subscribe(result => {
-      localStorage.setItem('username', "madsskipper@gmail.com");
       console.debug("Email changed");
       this.loading = false;
     }, error => {
