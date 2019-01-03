@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Leaderboard } from '../models/leaderboard.interface';
 import { forEach } from '@angular/router/src/utils/collection';
 import { User } from '../models/user.interface';
+import { SaveMatchesRequest, Match, MatchResult } from '../models/SaveMatchesRequest';
+import { MatchService } from '../services/index';
 
 @Component({
   selector: 'app-add-match',
@@ -68,6 +70,28 @@ export class AddMatchComponent {
       });
 
 
+
+  submitMatch() {
+    var request = new SaveMatchesRequest();
+    request.email = "madsskipper@gmail.com";
+
+    var match1 = new Match();
+    match1.playerList = new Array("madsskipper@gmail.com", "pfr@seges.dk", "mahj@seges.dk", "vik@seges.dk");
+    match1.submittedBy = "madsskipper@gmail.com";
+    match1.matchResult = new MatchResult(8, 2);
+    //match1.timeStampUtc = Date.now();
+    request.matches = new Array(match1);
+
+    this.matchService.submitMatch(request)
+      .subscribe(
+        () => {
+          console.debug("success");
+        },
+        () => {
+          console.debug("fail");
+        });;
+  }
+}
 
     }
       , error => console.error(error));

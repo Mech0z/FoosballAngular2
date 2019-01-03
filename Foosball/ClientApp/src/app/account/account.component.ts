@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../services/index';
+import { AuthenticationService, PlayerService } from '../services/index';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.interface';
 
@@ -14,11 +14,16 @@ export class AccountComponent {
   public checked: boolean;
   returnUrl: string;
   loginUrl: string;
+  newEmail1: string;
+  newEmail2: string;
+  errorMessage: string;
+  loading: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
+    private playerService: PlayerService,
     private http: HttpClient
   ) { }
 
@@ -43,5 +48,22 @@ export class AccountComponent {
       }.bind(this));
 
     }, error => console.error(error));
+  }
+
+  changeEmail() {
+    if (this.newEmail1 !== this.newEmail2) {
+      this.errorMessage = "Emails are not equal";
+      return;
+    }
+
+    this.loading = true;
+
+    this.playerService.changeEmail(this.newEmail1).subscribe(result => {
+      console.debug("Email changed");
+      this.loading = false;
+    }, error => {
+      this.errorMessage = "Error in request: " + error.errorMessage;
+      this.loading = false;
+    });
   }
 }

@@ -21,8 +21,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let leaderboardEntry of selectedLeaderboard.entries">
-          <td>{{ leaderboardEntry.displayName }}</td>
+        <tr *ngFor="let leaderboardEntry of selectedLeaderboard.entries" >
+          <td><a routerLink="/player-details/{{leaderboardEntry.userName}}">{{ leaderboardEntry.displayName }}</a></td>
           <td>{{ leaderboardEntry.wins }} / {{leaderboardEntry.numberOfGames}} ({{(leaderboardEntry.wins/leaderboardEntry.numberOfGames*100)| number : '1.2-2'}}%)</td>
           <td>{{ leaderboardEntry.eloRating }}</td>
         </tr>

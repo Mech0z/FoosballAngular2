@@ -17,8 +17,9 @@ import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
 import { ChangePasswordComponent } from './changepassword/changepassword.component';
 import { AddMatchComponent } from './add-match/add-match.component';
+import { PlayerDetailsComponent } from './player-details/player-details.component';
 
-import { AlertService, AuthenticationService, PlayerService, HeadersService } from './services/index';
+import { AlertService, AuthenticationService, PlayerService, HeadersService, MatchService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
 import { ApiInterceptor } from './services/ApiInterceptor';
 
@@ -33,7 +34,8 @@ import { ApiInterceptor } from './services/ApiInterceptor';
     AccountComponent,
     RequestPasswordComponent,
     ChangePasswordComponent,
-    AddMatchComponent
+    AddMatchComponent,
+    PlayerDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -49,7 +51,8 @@ import { ApiInterceptor } from './services/ApiInterceptor';
       { path: 'account', component: AccountComponent },
       { path: 'requestpassword', component: RequestPasswordComponent },
       { path: 'changepassword', component: ChangePasswordComponent },
-      { path: 'add-match', component: AddMatchComponent }
+      { path: 'add-match', component: AddMatchComponent },
+      { path: 'player-details/:email', component: PlayerDetailsComponent}
     ])
   ],
   providers: [
@@ -57,7 +60,8 @@ import { ApiInterceptor } from './services/ApiInterceptor';
     AuthenticationService,
     PlayerService,
     HeadersService,
-    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }],
+    MatchService,
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true } ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

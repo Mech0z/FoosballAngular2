@@ -29,9 +29,11 @@
     <None Remove="ClientApp\src\app\alert.service.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
     <None Remove="ClientApp\src\app\models\authentication.service.ts" />
+    <None Remove="ClientApp\src\app\player-details\player-details.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\player-details\player-details.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\alert.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
   </ItemGroup>
