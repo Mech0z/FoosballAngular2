@@ -22,6 +22,10 @@ export class AddMatchComponent {
 
   }
   togglePlayer(player: User) {
+    if (!player.isSelected && this.selectedPlayers.length >= 4) {
+      return;
+    }
+
     player.isSelected = !player.isSelected;
   }
 
