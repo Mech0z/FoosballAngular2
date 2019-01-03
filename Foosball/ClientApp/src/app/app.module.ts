@@ -7,6 +7,8 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/c
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -19,9 +21,10 @@ import { ChangePasswordComponent } from './changepassword/changepassword.compone
 import { AddMatchComponent } from './add-match/add-match.component';
 import { PlayerDetailsComponent } from './player-details/player-details.component';
 
-import { AlertService, AuthenticationService, PlayerService, HeadersService, MatchService } from './services/index';
+import { AlertService, AuthenticationService, PlayerService, HeadersService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
 import { ApiInterceptor } from './services/ApiInterceptor';
+import { MatchService } from './services/match.service';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,8 @@ import { ApiInterceptor } from './services/ApiInterceptor';
     FormsModule,
     MatCheckboxModule,
     MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },

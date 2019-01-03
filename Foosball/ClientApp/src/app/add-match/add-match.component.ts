@@ -1,10 +1,9 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Leaderboard } from '../models/leaderboard.interface';
-import { forEach } from '@angular/router/src/utils/collection';
 import { User } from '../models/user.interface';
-import { SaveMatchesRequest, Match, MatchResult } from '../models/SaveMatchesRequest';
-import { MatchService } from '../services/index';
+import { SaveMatchesRequest, MatchResult, Match } from '../models/SaveMatchesRequest';
+import { MatchService } from '../services/match.service';
 
 @Component({
   selector: 'app-add-match',
@@ -15,7 +14,16 @@ export class AddMatchComponent {
   players: User[] = [];
   loading = true;
   showAll = false;
-  constructor(private http: HttpClient) {
+  matchStarted = false;
+
+  match1team1score: number;
+  match1team2score: number;
+
+  match2team1score: number;
+  match2team2score: number;
+
+
+  constructor(private http: HttpClient, private matchService: MatchService) {
     this.doMagic();
   }
 
@@ -68,34 +76,39 @@ export class AddMatchComponent {
         this.loading = false;
 
       });
+    });
+  }
 
-
+  get isMatchesValid(): boolean {
+    return this.match1team1score >= 0 && this.match1team2score  >= 0;
+  }
 
   submitMatch() {
-    var request = new SaveMatchesRequest();
-    request.email = "madsskipper@gmail.com";
+    const request = {
+      email: 'madsskipper@gmail.com',
+      matches: [{
+        playerList: this.selectedPlayers.map(p => p.email),
+        submittedBy: 'madsskipper@gmail.com',
+        matchResult: new MatchResult(this.match1team1score, this.match1team2score)
+      }]
+    } as SaveMatchesRequest;
 
-    var match1 = new Match();
-    match1.playerList = new Array("madsskipper@gmail.com", "pfr@seges.dk", "mahj@seges.dk", "vik@seges.dk");
-    match1.submittedBy = "madsskipper@gmail.com";
-    match1.matchResult = new MatchResult(8, 2);
-    //match1.timeStampUtc = Date.now();
-    request.matches = new Array(match1);
-
+    if (this.match2team1score >= 0 && this.match2team2score  >= 0) {
+      request.matches.push({
+        playerList: this.selectedPlayers.map(p => p.email),
+        submittedBy: 'madsskipper@gmail.com',
+        matchResult: new MatchResult(this.match2team1score, this.match2team2score)
+      } as Match);
+    }
     this.matchService.submitMatch(request)
       .subscribe(
         () => {
-          console.debug("success");
+          console.log('success');
         },
         () => {
-          console.debug("fail");
-        });;
+          console.log('fail');
+        });
   }
+
 }
 
-    }
-      , error => console.error(error));
-
-
-  }
-}

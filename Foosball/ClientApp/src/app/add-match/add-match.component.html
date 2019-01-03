@@ -1,4 +1,33 @@
-<div class="layout" *ngIf="!isloading">
+<div *ngIf="matchStarted">
+
+  <form #matchForm="ngForm" class="submit-form">
+    <p>Match 1</p>
+    <div class="matchinput">
+      <mat-form-field>
+        <input name="match1team1score" [(ngModel)]="match1team1score" name="match1team1score" matInput type="number"
+          maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input name="match1team1score" [(ngModel)]="match1team2score" name="match1team1score" matInput type="number"
+          maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
+      </mat-form-field>
+    </div>
+    <p>Match 2</p>
+    <div class="matchinput">
+      <mat-form-field>
+        <input name="match2team1score" [(ngModel)]="match2team1score" name="match2team1score" matInput type="number"
+          maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input name="match2team1score" [(ngModel)]="match2team1score" name="match2team1score" matInput type="number"
+          maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div class="layout" *ngIf="!isloading && !matchStarted">
 
   <mat-checkbox (click)="showAllToggle()">Show all players</mat-checkbox>
   <div class="players">
@@ -7,6 +36,7 @@
     </div>
   </div>
 </div>
+
 <div class="startMatch">
   <div>
     <p *ngIf="selectedPlayers[0]">
@@ -25,5 +55,12 @@
       {{ selectedPlayers[3].username }}
     </p>
   </div>
-  <button mat-raised-button color="primary" [disabled]="selectedPlayers.length !== 4">Start</button>
+  <button type="submit" *ngIf="!matchStarted" mat-raised-button color="primary" [disabled]="selectedPlayers.length !== 4"
+    (click)="matchStarted = true">
+    Score
+  </button>
+
+  <button type="submit" *ngIf="matchStarted" mat-raised-button color="primary" [disabled]="!isMatchesValid" (click)="submitMatch()">
+    Tilføj
+  </button>
 </div>

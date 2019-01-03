@@ -2,6 +2,11 @@
 
 }
 
+.matchinput {
+  display: flex;
+  justify-content: space-between;
+}
+
 .players {
   display: flex;
   justify-content: flex-start;
