@@ -104,6 +104,8 @@ export class AddMatchComponent {
       .subscribe(
         () => {
           console.log('success');
+          this.selectedPlayers.forEach(p => p.isSelected = false);
+          this.matchStarted = false;
         },
         () => {
           console.log('fail');
