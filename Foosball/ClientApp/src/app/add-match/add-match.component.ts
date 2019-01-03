@@ -80,7 +80,7 @@ export class AddMatchComponent {
   }
 
   get isMatchesValid(): boolean {
-    return this.match1team1score >= 0 && this.match1team2score  >= 0;
+    return this.match1team1score >= 0 && this.match1team2score >= 0 && (this.match1team1score === 8 || this.match1team2score === 8);
   }
 
   submitMatch() {
@@ -93,7 +93,7 @@ export class AddMatchComponent {
       }]
     } as SaveMatchesRequest;
 
-    if (this.match2team1score >= 0 && this.match2team2score  >= 0) {
+    if (this.match2team1score >= 0 && this.match2team2score >= 0 && (this.match2team1score === 8 || this.match2team2score === 8)) {
       request.matches.push({
         playerList: this.selectedPlayers.map(p => p.email),
         submittedBy: 'madsskipper@gmail.com',
