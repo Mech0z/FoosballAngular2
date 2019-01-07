@@ -1,0 +1,27 @@
+<p *ngIf="loading"><em>Loading...</em></p>
+
+<div *ngIf="matches">
+    <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>DATE</th>
+
+          <th>Team 1</th>
+          <th></th>
+          <th>Team 2</th>
+          <th>ELO Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let match of matches">
+          <td>{{ match.timeStampUtc }}</td>
+          <td>{{ match.playerList[0] }} & {{ match.playerList[1]}} <br />{{match.matchResult.team1Score}}</td>
+          <td> VS </td>
+          <td>{{ match.playerList[2]}} & {{ match.playerList[3]}} <br /> {{match.matchResult.team2Score}}</td>
+          <td>{{ match.points}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

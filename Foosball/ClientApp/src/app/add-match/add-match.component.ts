@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Leaderboard } from '../models/leaderboard.interface';
 import { User } from '../models/user.interface';
-import { SaveMatchesRequest, MatchResult, Match } from '../models/SaveMatchesRequest';
+import { SaveMatchesRequest, MatchResult } from '../models/SaveMatchesRequest';
 import { MatchService } from '../services/match.service';
+import { Match } from '../models/Match';
 
 @Component({
   selector: 'app-add-match',

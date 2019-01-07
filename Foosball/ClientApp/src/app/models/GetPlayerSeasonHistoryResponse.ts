@@ -1,4 +1,4 @@
-import { Match } from "./SaveMatchesRequest";
+import { Match } from "./Match";
 import { PlayerLeaderboardEntry } from "./PlayerLeaderboardEntry";
 
 export interface GetPlayerSeasonHistoryResponse {
