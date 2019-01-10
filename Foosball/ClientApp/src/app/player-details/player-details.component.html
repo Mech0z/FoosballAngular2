@@ -7,6 +7,7 @@
         <th>Season</th>
         <th>Rank</th>
         <th>Games</th>
+        <th>ELO</th>
       </tr>
     </thead>
     <tbody>
@@ -14,6 +15,7 @@
         <td>{{ entry.seasonName }}</td>
         <td>{{ entry.rank }}</td>
         <td>{{ entry.wins }} / {{ entry.numberOfGames }} ({{ (entry.wins/ entry.numberOfGames * 100)| number : '1.2-2'}})</td>
+        <td>{{ entry.eloRating }}</td>
       </tr>
     </tbody>
   </table>

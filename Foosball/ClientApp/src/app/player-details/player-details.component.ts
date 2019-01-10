@@ -27,6 +27,7 @@ export class PlayerDetailsComponent implements OnInit {
       .subscribe(
         data => {
           this.playerSeasonHistory = data;
+          this.playerSeasonHistory.playerLeaderBoardEntries.reverse();
         },
         error => {
           console.error(error);
