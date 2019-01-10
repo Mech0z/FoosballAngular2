@@ -1,5 +1,9 @@
 <p *ngIf="!playerSeasonHistory"><em>Loading...</em></p>
-<h3>{{ email }}</h3>
+<select *ngIf="email" (change)="onChange()" [(ngModel)]="selectedUser">
+  <option *ngFor="let user of users" [ngValue]="user">
+    {{ user.username }}
+  </option>
+</select>
 <div *ngIf="playerSeasonHistory">
   <table class="table">
     <thead>

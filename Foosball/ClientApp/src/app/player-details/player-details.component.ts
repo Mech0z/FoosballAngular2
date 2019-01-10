@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PlayerService } from '../services/index';
 import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistoryResponse';
+import { User } from '../models/user.interface';
 
 @Component({
   selector: 'player-details',
@@ -11,6 +12,9 @@ import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistory
 export class PlayerDetailsComponent implements OnInit {
   public playerSeasonHistory: GetPlayerSeasonHistoryResponse;
   public email: string;
+  public username: string;
+  public users: User[];
+  public selectedUser: User;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,19 +23,51 @@ export class PlayerDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getUsers();
     this.getPlayerHistory();
   }
   getPlayerHistory() {
-    this.email = this.route.snapshot.paramMap.get('email');
+    if (!this.email) {
+      this.email = this.route.snapshot.paramMap.get('email');
+    }
+
     this.playerService.getPlayerHistory(this.email)
       .subscribe(
         data => {
           this.playerSeasonHistory = data;
           this.playerSeasonHistory.playerLeaderBoardEntries.reverse();
+
+          this.users.forEach(user => {
+            if (user.email === this.email) {
+              this.selectedUser = user;
+            }
+          });
         },
         error => {
           console.error(error);
         });
   }
-}
 
+  onChange() {
+    this.playerSeasonHistory = null;
+    this.email = this.selectedUser.email;
+    this.selectedUser = this.selectedUser;
+    this.setName();
+    this.getPlayerHistory();
+  }
+
+  getUsers() {
+    this.playerService.getUsers().subscribe(result => {
+      this.users = result;
+      this.setName();
+    }, error => console.error(error));
+  }
+
+  setName() {
+    this.users.forEach(user => {
+      if (user.email === this.email) {
+        this.username = user.username;
+      }
+    });
+  }
+}
