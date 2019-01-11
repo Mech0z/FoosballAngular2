@@ -59,6 +59,11 @@ export class PlayerDetailsComponent implements OnInit {
   getUsers() {
     this.playerService.getUsers().subscribe(result => {
       this.users = result;
+      this.users.sort((a, b) => {
+        if (a.username < b.username) { return -1; }
+        if (a.username > b.username) { return 1; }
+        return 0;
+      });
       this.setName();
     }, error => console.error(error));
   }
