@@ -36,7 +36,7 @@ export class PlayerDetailsComponent implements OnInit {
         data => {
           this.playerSeasonHistory = data;
           this.playerSeasonHistory.playerLeaderBoardEntries.reverse();
-
+          
           this.users.forEach(user => {
             if (user.email === this.email) {
               this.selectedUser = user;
@@ -67,6 +67,17 @@ export class PlayerDetailsComponent implements OnInit {
       this.setName();
     }, error => console.error(error));
   }
+
+  public getName(email: string) {
+    var result = "";
+    this.users.forEach(player => {
+      if (player.email === email) {
+        result = player.username;
+      };
+    });
+
+    return result;
+  };
 
   setName() {
     this.users.forEach(user => {

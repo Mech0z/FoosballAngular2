@@ -5,6 +5,7 @@
   </option>
 </select>
 <div *ngIf="playerSeasonHistory">
+  <h3>Season History</h3>
   <table class="table">
     <thead>
       <tr>
@@ -20,6 +21,36 @@
         <td>{{ entry.rank }}</td>
         <td>{{ entry.wins }} / {{ entry.numberOfGames }} ({{ (entry.wins/ entry.numberOfGames * 100)| number : '1.2-2'}})</td>
         <td>{{ entry.eloRating }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Eggs Given</h3>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Time</th>
+      <th>Players</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let match of playerSeasonHistory.eggStats.matchesGivenEgg">
+      <td>{{ match.timeStampUtc | date : "H:mm dd MMM yyyy" }}</td>
+      <td>{{ getName(match.playerList[0]) }} & {{ getName(match.playerList[1])}} vs {{ getName(match.playerList[2])}} & {{getName(match.playerList[3]) }}</td>
+    </tr>
+    </tbody>
+  </table>
+  <h3>Eggs Received</h3>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Time</th>
+      <th>Players</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let match of playerSeasonHistory.eggStats.matchesReceivedEgg">
+        <td>{{ match.timeStampUtc | date : "H:mm dd MMM" }}</td>
+        <td>{{ getName(match.playerList[0]) }} & {{ getName(match.playerList[1])}} vs {{ getName(match.playerList[2])}} & {{getName(match.playerList[3]) }}</td>
       </tr>
     </tbody>
   </table>
