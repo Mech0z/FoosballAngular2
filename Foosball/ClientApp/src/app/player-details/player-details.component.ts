@@ -36,7 +36,10 @@ export class PlayerDetailsComponent implements OnInit {
         data => {
           this.playerSeasonHistory = data;
           this.playerSeasonHistory.playerLeaderBoardEntries.reverse();
-          
+          this.playerSeasonHistory.eggStats.matchesGivenEgg.sort((b, c) => new Date(b.timeStampUtc).getTime() - new Date(c.timeStampUtc).getTime());
+          this.playerSeasonHistory.eggStats.matchesReceivedEgg.sort((b, c) => new Date(b.timeStampUtc).getTime() - new Date(c.timeStampUtc).getTime());
+          this.playerSeasonHistory.eggStats.matchesGivenEgg.reverse();
+          this.playerSeasonHistory.eggStats.matchesReceivedEgg.reverse();
           this.users.forEach(user => {
             if (user.email === this.email) {
               this.selectedUser = user;
