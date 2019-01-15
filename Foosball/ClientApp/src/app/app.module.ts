@@ -26,6 +26,8 @@ import { AlertService, AuthenticationService, PlayerService, HeadersService } fr
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
 import { ApiInterceptor } from './services/ApiInterceptor';
 import { MatchService } from './services/match.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @
 NgModule({
@@ -52,6 +54,7 @@ NgModule({
     MatFormFieldModule,
     MatInputModule,
     BrowserAnimationsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'fetch-data', component: FetchDataComponent },
