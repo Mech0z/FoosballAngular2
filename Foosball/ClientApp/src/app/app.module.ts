@@ -21,6 +21,7 @@ import { ChangePasswordComponent } from './changepassword/changepassword.compone
 import { AddMatchComponent } from './add-match/add-match.component';
 import { PlayerDetailsComponent } from './player-details/player-details.component';
 import { LastGamesComponent } from './last-games/last-games.component';
+import { OnlineComponent } from './online/online.component';
 
 import { AlertService, AuthenticationService, PlayerService, HeadersService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
@@ -43,7 +44,8 @@ NgModule({
     ChangePasswordComponent,
     AddMatchComponent,
     PlayerDetailsComponent,
-    LastGamesComponent
+    LastGamesComponent,
+    OnlineComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

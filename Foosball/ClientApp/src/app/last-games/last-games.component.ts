@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { PlayerService, MatchService } from '../services/index';
-import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.interface';
 import { Match } from '../models/match';
 
 @Component({
   selector: 'app-last-games',
-  templateUrl: './last-games.component.html',
+  templateUrl: './last-games.component.html'
 })
 export class LastGamesComponent {
   errorMessage: string;
@@ -18,9 +16,9 @@ export class LastGamesComponent {
 
   constructor(
     private playerService: PlayerService,
-    private matchService: MatchService,
-    private http: HttpClient
-  ) { }
+    private matchService: MatchService
+  ) {
+  }
 
   ngOnInit() {
     this.loadingMatches = true;

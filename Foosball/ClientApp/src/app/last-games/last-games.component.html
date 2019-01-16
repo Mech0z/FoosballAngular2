@@ -1,5 +1,4 @@
 <p *ngIf="!matches || !players"><em>Loading...</em></p>
-
 <div *ngIf="matches && players">
   <div>
     <table class="table">
@@ -15,8 +14,8 @@
       <tbody>
       <tr *ngFor="let match of matches">
         <td>
-          {{ match.timeStampUtc | date :  "H:mm dd MMM" }}<br />
-          {{match.submittedBy}}
+          {{ match.timeStampUtc | date :  "H:mm dd MMM" }}
+          <!--<br />{{match.submittedBy}}-->
         </td>
         <td>{{ getName(match.playerList[0]) }} & {{ getName(match.playerList[1])}} <br />{{match.matchResult.team1Score}}</td>
         <td> VS </td>
