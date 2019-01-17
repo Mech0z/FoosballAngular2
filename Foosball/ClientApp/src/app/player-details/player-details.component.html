@@ -26,6 +26,28 @@
       </tr>
     </tbody>
   </table>
+  <h3>Latest matches</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Team 1</th>
+        <th></th>
+        <th>Team 2</th>
+        <th>ELO Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let match of matches"><td>
+        {{ match.timeStampUtc | date :  "H:mm dd MMM" }}
+      </td>
+      <td>{{ getName(match.playerList[0]) }} & {{ getName(match.playerList[1])}} <br />{{match.matchResult.team1Score}}</td>
+      <td> VS </td>
+      <td>{{ getName(match.playerList[2])}} & {{ getName(match.playerList[3])}} <br /> {{match.matchResult.team2Score}}</td>
+      <td>{{ match.points}}</td>
+      </tr>
+    </tbody>
+  </table>
   <h3>Eggs Given: {{playerSeasonHistory.eggStats.matchesGivenEgg.length}}</h3>
   <table class="table">
     <thead>

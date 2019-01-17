@@ -1,25 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { PlayerService } from '../services/index';
+import { ActivatedRoute } from '@angular/router';
+import { PlayerService, MatchService } from '../services/index';
 import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistoryResponse';
 import { User } from '../models/user.interface';
+import { Match } from '../models/Match';
 
 @Component({
-  selector: 'player-details',
+  selector: 'app-player-details',
   templateUrl: 'player-details.component.html'
 })
 
 export class PlayerDetailsComponent implements OnInit {
-  public playerSeasonHistory: GetPlayerSeasonHistoryResponse;
-  public email: string;
-  public username: string;
-  public users: User[];
-  public selectedUser: User;
+  playerSeasonHistory: GetPlayerSeasonHistoryResponse;
+  email: string;
+  username: string;
+  users: User[];
+  selectedUser: User;
+  matches: Match[];
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private matchService: MatchService
   ) { }
 
   ngOnInit() {
@@ -31,13 +33,20 @@ export class PlayerDetailsComponent implements OnInit {
       this.email = this.route.snapshot.paramMap.get('email');
     }
 
+    this.matchService.getPlayerLatestMatches(this.email)
+      .subscribe(data => {
+        this.matches = data.slice(0, 10);
+      });
+
     this.playerService.getPlayerHistory(this.email)
       .subscribe(
         data => {
           this.playerSeasonHistory = data;
           this.playerSeasonHistory.playerLeaderBoardEntries.reverse();
-          this.playerSeasonHistory.eggStats.matchesGivenEgg.sort((b, c) => new Date(b.timeStampUtc).getTime() - new Date(c.timeStampUtc).getTime());
-          this.playerSeasonHistory.eggStats.matchesReceivedEgg.sort((b, c) => new Date(b.timeStampUtc).getTime() - new Date(c.timeStampUtc).getTime());
+          this.playerSeasonHistory.eggStats.matchesGivenEgg.sort((b, c) =>
+            new Date(b.timeStampUtc).getTime() - new Date(c.timeStampUtc).getTime());
+          this.playerSeasonHistory.eggStats.matchesReceivedEgg.sort((b, c) =>
+            new Date(b.timeStampUtc).getTime() - new Date(c.timeStampUtc).getTime());
           this.playerSeasonHistory.eggStats.matchesGivenEgg.reverse();
           this.playerSeasonHistory.eggStats.matchesReceivedEgg.reverse();
           this.users.forEach(user => {
@@ -72,11 +81,11 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   public getName(email: string) {
-    var result = "";
+    let result = '';
     this.users.forEach(player => {
       if (player.email === email) {
         result = player.username;
-      };
+      }
     });
 
     return result;

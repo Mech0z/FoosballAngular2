@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HeadersService } from './headers.service';
 import { SaveMatchesRequest } from '../models/SaveMatchesRequest';
 import { Match } from '../models/Match';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class MatchService {
@@ -13,7 +14,11 @@ export class MatchService {
     return this.http.post('/api/Match/SaveMatch', request, { headers: headers });
   }
 
-  getLatestMatches(count: number) {
+  getLatestMatches(count: number): Observable<Match[]> {
     return this.http.get<Match[]>('/api/Match/LastGames?numberOfMatches=' + count);
+  }
+
+  getPlayerLatestMatches(email: string): Observable<Match[]> {
+    return this.http.get<Match[]>('/api/Player/GetPlayerMatches?email=' + email);
   }
 }
