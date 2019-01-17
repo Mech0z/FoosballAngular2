@@ -10,7 +10,8 @@ import { AlertService, AuthenticationService } from '../services/index';
 })
 
 export class LoginComponent implements OnInit {
-  model: any = {};
+  username: string;
+  password: string;
   loading = false;
   returnUrl: string;
   public errorMessage: string;
@@ -32,20 +33,21 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.loading = true;
-    this.authenticationService.login(this.model.username, this.model.password)
+    this.username = this.username.trim();
+    this.username = this.username.toLowerCase();
+    this.authenticationService.login(this.username, this.password)
       .subscribe(
       data => {
         if (data.loginFailed) {
           this.loading = false;
-          this.errorMessage = "Login failed!";
-        }
-        else {
+          this.errorMessage = 'Login failed!';
+        } else {
           this.router.navigate([this.returnUrl]);
           this.errorMessage = null;
         }
         },
       error => {
-          this.errorMessage = "Request failed!";
+          this.errorMessage = 'Request failed!';
           this.alertService.error(error);
           this.loading = false;
         });
