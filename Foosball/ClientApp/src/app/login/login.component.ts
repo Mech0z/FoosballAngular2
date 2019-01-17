@@ -31,8 +31,25 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/account';
   }
 
+  userIsValid() {
+    if (this.username == null) {
+      return false;
+    }
+    return true;
+  }
+
+  passwordIsValid() {
+    if (this.password == null) {
+      return false;
+    }
+    return true;
+  }
+
   login() {
     this.loading = true;
+    if (this.username == null) {
+      return;
+    }
     this.username = this.username.trim();
     this.username = this.username.toLowerCase();
     this.authenticationService.login(this.username, this.password)
