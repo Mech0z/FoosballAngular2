@@ -5,9 +5,9 @@ import { HttpHeaders } from '@angular/common/http';
 export class HeadersService {
   constructor() { }
   createHttpHeaders() {
-    var username = localStorage.getItem('username');
-    var token = localStorage.getItem('token');
-    var devicename = 'somewebsitename';
+    const username = localStorage.getItem('username');
+    const token = localStorage.getItem('token');
+    const devicename = 'somewebsitename';
 
     return new HttpHeaders({
       'Content-Type': 'application/json',
@@ -15,5 +15,22 @@ export class HeadersService {
       'DeviceName': devicename,
       'Email': username
     });
+  }
+  getUsername() {
+    const username = localStorage.getItem('username');
+    if (username != null) {
+      return username;
+    } else {
+      return '';
+    }
+  }
+
+  getRoles() {
+    const roles = localStorage.getItem('roles');
+    if (roles != null) {
+      return roles;
+    } else {
+      return '';
+    }
   }
 }

@@ -1,35 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { from } from 'rxjs';
-import { map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import { LoginRequest } from '../models/LoginRequest';
 
 @Injectable()
 export class AuthenticationService {
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   login(username: string, password: string) {
     return this.http.post<any>('/api/Account/Login', new LoginRequest(username, password, "somewebsitename"))
-            .map(response => {
-                // login successful if there's a jwt token in the response
-              if (response.loginfailed) {
-                return response;
-              }
-              if (response) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                  localStorage.setItem('username', username);
-                  localStorage.setItem('token', response.token);
-                  localStorage.setItem('tokenexpirytime', response.expirytime);
-                  localStorage.setItem('roles', response.roles);
-                }
+      .map(response => {
+        // login successful if there's a jwt token in the response
+        if (response.loginfailed) {
+          return response;
+        }
+        if (response) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('username', username);
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('tokenexpirytime', response.expirytime);
+          localStorage.setItem('roles', response.roles);
+        }
 
-                return response;
-            });
+        return response;
+      });
   }
 
   checkLogin() {
-    var username = localStorage.getItem('username');
+    const username = localStorage.getItem('username');
     if (username != null) {
       return username;
     }

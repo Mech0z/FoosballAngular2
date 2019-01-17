@@ -1,66 +1,71 @@
-<div *ngIf="matchStarted">
+<div *ngIf="!isLoggedIn">Login first</div>
+<div *ngIf="isLoggedIn && !haveRole">You need 'Player' role to submit matches, talk to an admin</div>
+<div *ngIf="isLoggedIn && haveRole">
+  <div *ngIf="matchStarted">
 
-  <form #matchForm="ngForm" class="submit-form">
-    <p>Match 1</p>
-    <div class="matchinput">
-      <mat-form-field>
-        <input name="match1team1score" [(ngModel)]="match1team1score" name="match1team1score" matInput type="number"
-          maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
-      </mat-form-field>
+    <form #matchForm="ngForm" class="submit-form">
+      <p>Match 1</p>
+      <div class="matchinput">
+        <mat-form-field>
+          <input name="match1team1score" [(ngModel)]="match1team1score" name="match1team1score" matInput type="number"
+            maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
+        </mat-form-field>
 
-      <mat-form-field>
-        <input name="match1team1score" [(ngModel)]="match1team2score" name="match1team1score" matInput type="number"
-          maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
-      </mat-form-field>
-    </div>
-    <p>Match 2</p>
-    <div class="matchinput">
-      <mat-form-field>
-        <input name="match2team1score" [(ngModel)]="match2team1score" name="match2team1score" matInput type="number"
-          maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
-      </mat-form-field>
+        <mat-form-field>
+          <input name="match1team1score" [(ngModel)]="match1team2score" name="match1team1score" matInput type="number"
+            maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
+        </mat-form-field>
+      </div>
+      <p>Match 2</p>
+      <div class="matchinput">
+        <mat-form-field>
+          <input name="match2team1score" [(ngModel)]="match2team1score" name="match2team1score" matInput type="number"
+            maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
+        </mat-form-field>
 
-      <mat-form-field>
-        <input name="match2team2score" [(ngModel)]="match2team2score" name="match2team2score" matInput type="number"
-          maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
-      </mat-form-field>
-    </div>
-  </form>
-</div>
-<div class="layout" *ngIf="!loading && !matchStarted">
+        <mat-form-field>
+          <input name="match2team2score" [(ngModel)]="match2team2score" name="match2team2score" matInput type="number"
+            maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div class="layout" *ngIf="!loading && !matchStarted">
 
-  <mat-checkbox (click)="showAllToggle()">Show all players</mat-checkbox>
-  <div class="players">
-    <div class="player" [ngClass]="{selected: p.isSelected}" *ngFor="let p of filteredPlayers" (click)="togglePlayer(p)">
-      <p>{{p.username}}</p>
+    <mat-checkbox (click)="showAllToggle()">Show all players</mat-checkbox>
+    <div class="players">
+      <div class="player" [ngClass]="{selected: p.isSelected}" *ngFor="let p of filteredPlayers" (click)="togglePlayer(p)">
+        <p>{{p.username}}</p>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="startMatch">
-  <div>
-    <p *ngIf="selectedPlayers[0]">
-      {{ selectedPlayers[0].username }}
-    </p>
-    <p *ngIf="selectedPlayers[1]">
-      {{ selectedPlayers[1].username }}
-    </p>
-  </div>
-  vs
-  <div>
-    <p *ngIf="selectedPlayers[2]">
-      {{ selectedPlayers[2].username }}
-    </p>
-    <p *ngIf="selectedPlayers[3]">
-      {{ selectedPlayers[3].username }}
-    </p>
-  </div>
-  <button type="button" *ngIf="!matchStarted" mat-raised-button color="primary" [disabled]="selectedPlayers.length !== 4"
-    (click)="matchStarted = true">
-    Score
-  </button>
+  <div class="startMatch">
+    <div>
+      <p *ngIf="selectedPlayers[0]">
+        {{ selectedPlayers[0].username }}
+      </p>
+      <p *ngIf="selectedPlayers[1]">
+        {{ selectedPlayers[1].username }}
+      </p>
+    </div>
+    vs
+    <div>
+      <p *ngIf="selectedPlayers[2]">
+        {{ selectedPlayers[2].username }}
+      </p>
+      <p *ngIf="selectedPlayers[3]">
+        {{ selectedPlayers[3].username }}
+      </p>
+    </div>
+    <button type="button" *ngIf="!matchStarted" mat-raised-button color="primary" [disabled]="selectedPlayers.length !== 4"
+      (click)="matchStarted = true">
+      Score
+    </button>
 
-  <button type="button" *ngIf="matchStarted" mat-raised-button color="primary" [disabled]="!isMatchesValid" (click)="submitMatch()">
-    Tilføj
-  </button>
+    <button type="button" *ngIf="matchStarted" mat-raised-button color="primary" [disabled]="!isMatchesValid" (click)="submitMatch()">
+      Submit
+    </button>
+  </div>
+  <p>{{ errorMessage}}</p>
 </div>

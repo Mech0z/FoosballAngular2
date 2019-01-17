@@ -28,7 +28,7 @@ export class LastGamesComponent {
       this.players = result;
       this.loadingPlayers = false;
     }, error => {
-      this.errorMessage = "Error in loading players: " + error.errorMessage;
+      this.errorMessage = 'Error in loading players: ' + error.errorMessage;
       this.loadingPlayers = false;
     });
     this.matchService.getLatestMatches(10).subscribe(result => {
@@ -36,7 +36,7 @@ export class LastGamesComponent {
       this.loadingMatches = false;
 
     }, error => {
-      this.errorMessage = "Error in loading latest matches: " + error.errorMessage;
+      this.errorMessage = 'Error in loading latest matches: ' + error.errorMessage;
       this.loadingMatches = false;
       });
   }

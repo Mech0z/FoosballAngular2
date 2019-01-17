@@ -3,12 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -31,52 +30,52 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 @
-NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
-    LoginComponent,
-    AccountComponent,
-    RequestPasswordComponent,
-    ChangePasswordComponent,
-    AddMatchComponent,
-    PlayerDetailsComponent,
-    LastGamesComponent,
-    OnlineComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    BrowserAnimationsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'account', component: AccountComponent },
-      { path: 'requestpassword', component: RequestPasswordComponent },
-      { path: 'changepassword', component: ChangePasswordComponent },
-      { path: 'add-match', component: AddMatchComponent },
-      { path: 'player-details/:email', component: PlayerDetailsComponent },
-      { path: 'last-games', component: LastGamesComponent}
-    ])
-  ],
-  providers: [
-    AlertService,
-    AuthenticationService,
-    PlayerService,
-    HeadersService,
-    MatchService,
-    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true } ],
-  bootstrap: [AppComponent]
-})
+  NgModule({
+    declarations: [
+      AppComponent,
+      NavMenuComponent,
+      HomeComponent,
+      CounterComponent,
+      FetchDataComponent,
+      LoginComponent,
+      AccountComponent,
+      RequestPasswordComponent,
+      ChangePasswordComponent,
+      AddMatchComponent,
+      PlayerDetailsComponent,
+      LastGamesComponent,
+      OnlineComponent
+    ],
+    imports: [
+      BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+      HttpClientModule,
+      FormsModule,
+      MatCheckboxModule,
+      MatButtonModule,
+      MatFormFieldModule,
+      MatInputModule,
+      BrowserAnimationsModule,
+      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+      RouterModule.forRoot([
+        { path: '', component: HomeComponent, pathMatch: 'full' },
+        { path: 'fetch-data', component: FetchDataComponent },
+        { path: 'login', component: LoginComponent },
+        { path: 'account', component: AccountComponent },
+        { path: 'requestpassword', component: RequestPasswordComponent },
+        { path: 'changepassword', component: ChangePasswordComponent },
+        { path: 'add-match', component: AddMatchComponent },
+        { path: 'player-details/:email', component: PlayerDetailsComponent },
+        { path: 'last-games', component: LastGamesComponent }
+      ])
+    ],
+    providers: [
+      AlertService,
+      AuthenticationService,
+      PlayerService,
+      HeadersService,
+      MatchService,
+      { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }],
+    bootstrap: [AppComponent]
+  })
 export class AppModule {
 }
