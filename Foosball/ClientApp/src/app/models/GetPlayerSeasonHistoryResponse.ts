@@ -1,12 +1,12 @@
-import { Match } from "./SaveMatchesRequest";
+import { Match } from "./Match";
 import { PlayerLeaderboardEntry } from "./PlayerLeaderboardEntry";
 
 export interface GetPlayerSeasonHistoryResponse {
-  PlayerLeaderBoardEntries: PlayerLeaderboardEntry[];
-  EggStats: EggStats;
+  playerLeaderBoardEntries: PlayerLeaderboardEntry[];
+  eggStats: EggStats;
 }
 
 export class EggStats {
-  MatchesReceivedEgg: Match[];
-  MatchesGivenEgg: Match[];
+  matchesReceivedEgg: Match[];
+  matchesGivenEgg: Match[];
 }

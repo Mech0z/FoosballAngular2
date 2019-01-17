@@ -20,13 +20,18 @@ import { AccountComponent } from './account/account.component';
 import { ChangePasswordComponent } from './changepassword/changepassword.component';
 import { AddMatchComponent } from './add-match/add-match.component';
 import { PlayerDetailsComponent } from './player-details/player-details.component';
+import { LastGamesComponent } from './last-games/last-games.component';
+import { OnlineComponent } from './online/online.component';
 
 import { AlertService, AuthenticationService, PlayerService, HeadersService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
 import { ApiInterceptor } from './services/ApiInterceptor';
 import { MatchService } from './services/match.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
-@NgModule({
+@
+NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
@@ -38,7 +43,9 @@ import { MatchService } from './services/match.service';
     RequestPasswordComponent,
     ChangePasswordComponent,
     AddMatchComponent,
-    PlayerDetailsComponent
+    PlayerDetailsComponent,
+    LastGamesComponent,
+    OnlineComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -49,6 +56,7 @@ import { MatchService } from './services/match.service';
     MatFormFieldModule,
     MatInputModule,
     BrowserAnimationsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'fetch-data', component: FetchDataComponent },
@@ -57,7 +65,8 @@ import { MatchService } from './services/match.service';
       { path: 'requestpassword', component: RequestPasswordComponent },
       { path: 'changepassword', component: ChangePasswordComponent },
       { path: 'add-match', component: AddMatchComponent },
-      { path: 'player-details/:email', component: PlayerDetailsComponent}
+      { path: 'player-details/:email', component: PlayerDetailsComponent },
+      { path: 'last-games', component: LastGamesComponent}
     ])
   ],
   providers: [

@@ -4,6 +4,7 @@ import { HeadersService } from './headers.service';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistoryResponse';
 import { ChangeEmailRequest } from '../models/ChangeEmailRequest';
+import { User } from '../models/user.interface';
 
 @Injectable()
 export class PlayerService {
@@ -25,6 +26,10 @@ export class PlayerService {
       .map(() => {
           localStorage.setItem('username', newEmail);
         });
+  }
+
+  getUsers() {
+    return this.http.get<User[]>('/api/Player/GetUsers');
   }
 
   getPlayerHistory(email: string) {

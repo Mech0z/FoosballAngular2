@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HeadersService } from './headers.service';
 import { SaveMatchesRequest } from '../models/SaveMatchesRequest';
+import { Match } from '../models/Match';
 
 @Injectable()
 export class MatchService {
@@ -10,5 +11,9 @@ export class MatchService {
   submitMatch(request: SaveMatchesRequest) {
     var headers = this.headersService.createHttpHeaders();
     return this.http.post('/api/Match/SaveMatch', request, { headers: headers });
+  }
+
+  getLatestMatches(count: number) {
+    return this.http.get<Match[]>('/api/Match/LastGames?numberOfMatches=' + count);
   }
 }

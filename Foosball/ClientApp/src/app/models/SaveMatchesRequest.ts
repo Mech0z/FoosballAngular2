@@ -1,13 +1,8 @@
+import { Match } from '../models/Match';
+
 export class SaveMatchesRequest {
 matches: Match[];
 email: string;
-}
-
-export class Match{
-  timeStampUtc: Date;
-  playerList: string[];
-  matchResult: MatchResult;
-  submittedBy: string;
 }
 
 export class MatchResult {
