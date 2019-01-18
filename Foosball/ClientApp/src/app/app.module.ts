@@ -28,6 +28,7 @@ import { ApiInterceptor } from './services/ApiInterceptor';
 import { MatchService } from './services/match.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ChangeEmailComponent } from './change-email/change-email.component';
 
 @
   NgModule({
@@ -44,7 +45,8 @@ import { environment } from '../environments/environment';
       AddMatchComponent,
       PlayerDetailsComponent,
       LastGamesComponent,
-      OnlineComponent
+      OnlineComponent,
+      ChangeEmailComponent
     ],
     imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -63,6 +65,7 @@ import { environment } from '../environments/environment';
         { path: 'account', component: AccountComponent },
         { path: 'requestpassword', component: RequestPasswordComponent },
         { path: 'changepassword', component: ChangePasswordComponent },
+        { path: 'change-email', component: ChangeEmailComponent },
         { path: 'add-match', component: AddMatchComponent },
         { path: 'player-details/:email', component: PlayerDetailsComponent },
         { path: 'last-games', component: LastGamesComponent }

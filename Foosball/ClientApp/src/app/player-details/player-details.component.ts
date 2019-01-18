@@ -89,7 +89,7 @@ export class PlayerDetailsComponent implements OnInit {
     });
 
     return result;
-  };
+  }
 
   setName() {
     this.users.forEach(user => {

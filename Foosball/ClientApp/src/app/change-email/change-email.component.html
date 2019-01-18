@@ -1,0 +1,22 @@
+<p *ngIf="loading"><em>Changing email, this might take a while...</em></p>
+<div *ngIf="!loading">
+  <h2>Change email</h2>
+  <form name="form" (ngSubmit)="f.form.valid && changeEmail()" #f="ngForm" novalidate>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && newEmail1 != newEmail2 }">
+      <label for="newEmail1">Email</label>
+      <input type="email" class="form-control" name="newEmail1" [(ngModel)]="newEmail1" #username="ngModel" required />
+      <div *ngIf="f.submitted && !username.valid" class="help-block">Emails must be the same</div>
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && newEmail1 != newEmail2 }">
+      <label for="newEmail2">Repeat email</label>
+      <input type="email" class="form-control" name="newEmail2" [(ngModel)]="newEmail2" #username="ngModel" required />
+      <div *ngIf="f.submitted && !newEmail1.valid" class="help-block">Emails must be the same</div>
+    </div>
+    <div class="form-group">
+      <button [disabled]="loading" class="btn btn-primary">Change email</button>
+      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </div>
+
+    <div *ngIf="errorMessage" class="help-block">{{errorMessage}}</div>
+  </form>
+</div>
