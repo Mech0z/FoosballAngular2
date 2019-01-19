@@ -22,7 +22,7 @@ import { PlayerDetailsComponent } from './player-details/player-details.componen
 import { LastGamesComponent } from './last-games/last-games.component';
 import { OnlineComponent } from './online/online.component';
 
-import { AlertService, AuthenticationService, PlayerService, HeadersService } from './services/index';
+import { AlertService, AuthenticationService, PlayerService, HeadersService, AdministrationService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
 import { ApiInterceptor } from './services/ApiInterceptor';
 import { MatchService } from './services/match.service';
@@ -30,6 +30,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ChangeEmailComponent } from './change-email/change-email.component';
 import { RegisterAccountComponent } from './register-account/register-account.component';
+import { AdminComponent } from './admin/admin.component';
 
 @
   NgModule({
@@ -48,7 +49,8 @@ import { RegisterAccountComponent } from './register-account/register-account.co
       LastGamesComponent,
       OnlineComponent,
       ChangeEmailComponent,
-      RegisterAccountComponent
+      RegisterAccountComponent,
+      AdminComponent
     ],
     imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -71,7 +73,8 @@ import { RegisterAccountComponent } from './register-account/register-account.co
         { path: 'add-match', component: AddMatchComponent },
         { path: 'player-details/:email', component: PlayerDetailsComponent },
         { path: 'last-games', component: LastGamesComponent },
-        { path: 'register-account', component: RegisterAccountComponent }
+        { path: 'register-account', component: RegisterAccountComponent },
+        { path: 'admin', component: AdminComponent }
       ])
     ],
     providers: [
@@ -80,6 +83,7 @@ import { RegisterAccountComponent } from './register-account/register-account.co
       PlayerService,
       HeadersService,
       MatchService,
+      AdministrationService,
       { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }],
     bootstrap: [AppComponent]
   })

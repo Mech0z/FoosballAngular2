@@ -33,6 +33,11 @@
             <span class='glyphicon glyphicon-user'></span> Account
           </a>
         </li>
+        <li *ngIf="isAdmin" [routerLinkActive]='["link-active"]'>
+          <a [routerLink]='["/admin"]' (click)='collapse()'>
+            <span class='glyphicon glyphicon-wrench'></span> Admin
+          </a>
+        </li>
       </ul>
     </div>
   </div>

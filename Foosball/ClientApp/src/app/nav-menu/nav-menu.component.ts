@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HeadersService, AdministrationService } from '../services';
 
 @Component({
   selector: 'app-nav-menu',
@@ -7,6 +8,19 @@ import { Component } from '@angular/core';
 })
 export class NavMenuComponent {
   isExpanded = false;
+  isAdmin = false;
+
+  constructor(
+    private headerService: HeadersService,
+    private administrationService: AdministrationService
+  ) {  }
+
+  ngOnInit() {
+    const roles = this.headerService.getRoles();
+    if (roles.includes('Admin')) {
+      this.isAdmin = true;
+    }
+  }
 
   collapse() {
     this.isExpanded = false;
