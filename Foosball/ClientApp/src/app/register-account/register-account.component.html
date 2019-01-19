@@ -1,28 +1,29 @@
 <div class="col-md-6 col-md-offset-3">
-  <h2>Login</h2>
-  <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+  <h2>Register new account</h2>
+  <form name="form" (ngSubmit)="f.form.valid && createaccount()" #f="ngForm" novalidate>
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !userIsValid() }">
-      <label for="username">Username</label>
-      <input type="text" class="form-control" name=UsernameInput [(ngModel)]="username" required />
-      <div *ngIf="f.submitted && !userIsValid()" class="help-block">Username is required</div>
+      <label for="name">Name</label>
+      <input type="text" class="form-control" name=NameInput [(ngModel)]="name" required />
+      <div *ngIf="f.submitted && !nameIsValid()" class="help-block">{{nameError}}</div>
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !userIsValid() }">
+      <label for="username">Email</label>
+      <input type="email" class="form-control" name=UsernameInput [(ngModel)]="username" required email />
+      <div *ngIf="f.submitted && !userIsValid()" class="help-block">Email is required</div>
     </div>
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !passwordIsValid() }">
       <label for="password">Password</label>
       <input type="password" class="form-control" name=PasswordInput [(ngModel)]="password" required />
-      <div *ngIf="f.submitted && !passwordIsValid()" class="help-block">Password is required</div>
+      <div *ngIf="f.submitted && !passwordIsValid()" class="help-block">{{passwordError}}</div>
+    </div>
+    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !passwordIsValid() }">
+      <label for="password2">Repeat Password</label>
+      <input type="password" class="form-control" name=Password2Input [(ngModel)]="password2" required />
+      <div *ngIf="f.submitted && !passwordIsValid()" class="help-block">{{passwordError}}</div>
     </div>
     <div class="form-group">
-      <button [disabled]="loading" class="btn btn-primary">Login</button>
+      <button [disabled]="loading" class="btn btn-primary">Submit</button>
       <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-      <br />
-      <br />
-      <a [routerLink]='["/register-account"]'>
-        <span class='glyphicon glyphicon-user'></span> Create account
-      </a>
-      <br/>
-      <a [routerLink]='["/requestpassword"]'>
-        <span class='glyphicon glyphicon-envelope'></span> Request new password
-      </a>
     </div>
 
     <div *ngIf="errorMessage" class="help-block">{{errorMessage}}</div>

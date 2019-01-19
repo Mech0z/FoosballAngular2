@@ -29,6 +29,7 @@ import { MatchService } from './services/match.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ChangeEmailComponent } from './change-email/change-email.component';
+import { RegisterAccountComponent } from './register-account/register-account.component';
 
 @
   NgModule({
@@ -46,7 +47,8 @@ import { ChangeEmailComponent } from './change-email/change-email.component';
       PlayerDetailsComponent,
       LastGamesComponent,
       OnlineComponent,
-      ChangeEmailComponent
+      ChangeEmailComponent,
+      RegisterAccountComponent
     ],
     imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -68,7 +70,8 @@ import { ChangeEmailComponent } from './change-email/change-email.component';
         { path: 'change-email', component: ChangeEmailComponent },
         { path: 'add-match', component: AddMatchComponent },
         { path: 'player-details/:email', component: PlayerDetailsComponent },
-        { path: 'last-games', component: LastGamesComponent }
+        { path: 'last-games', component: LastGamesComponent },
+        { path: 'register-account', component: RegisterAccountComponent }
       ])
     ],
     providers: [

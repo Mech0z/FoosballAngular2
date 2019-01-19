@@ -5,6 +5,7 @@ import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistoryResponse';
 import { ChangeEmailRequest } from '../models/ChangeEmailRequest';
 import { User } from '../models/user.interface';
+import { CreateUserRequest } from '../models/CreateUserRequest';
 
 @Injectable()
 export class PlayerService {
@@ -15,13 +16,17 @@ export class PlayerService {
   }
 
   changePassword(request: ChangePasswordRequest) {
-    var headers = this.headersService.createHttpHeaders();
+    const headers = this.headersService.createHttpHeaders();
     return this.http.post('/api/Player/ChangePassword', request, { headers: headers });
   }
 
+  createUser(request: CreateUserRequest) {
+    return this.http.post('/api/Player/CreateUser', request);
+  }
+
   changeEmail(newEmail: string) {
-    var request = new ChangeEmailRequest(newEmail);
-    var headers = this.headersService.createHttpHeaders();
+    const request = new ChangeEmailRequest(newEmail);
+    const headers = this.headersService.createHttpHeaders();
     return this.http.post('/api/Account/ChangeEmail', request, { headers: headers })
       .map(() => {
           localStorage.setItem('username', newEmail);
