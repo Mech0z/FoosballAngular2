@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -32,60 +33,61 @@ import { ChangeEmailComponent } from './change-email/change-email.component';
 import { RegisterAccountComponent } from './register-account/register-account.component';
 import { AdminComponent } from './admin/admin.component';
 
-@
-  NgModule({
-    declarations: [
-      AppComponent,
-      NavMenuComponent,
-      HomeComponent,
-      CounterComponent,
-      FetchDataComponent,
-      LoginComponent,
-      AccountComponent,
-      RequestPasswordComponent,
-      ChangePasswordComponent,
-      AddMatchComponent,
-      PlayerDetailsComponent,
-      LastGamesComponent,
-      OnlineComponent,
-      ChangeEmailComponent,
-      RegisterAccountComponent,
-      AdminComponent
-    ],
-    imports: [
-      BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-      HttpClientModule,
-      FormsModule,
-      MatCheckboxModule,
-      MatButtonModule,
-      MatFormFieldModule,
-      MatInputModule,
-      BrowserAnimationsModule,
-      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-      RouterModule.forRoot([
-        { path: '', component: HomeComponent, pathMatch: 'full' },
-        { path: 'fetch-data', component: FetchDataComponent },
-        { path: 'login', component: LoginComponent },
-        { path: 'account', component: AccountComponent },
-        { path: 'requestpassword', component: RequestPasswordComponent },
-        { path: 'changepassword', component: ChangePasswordComponent },
-        { path: 'change-email', component: ChangeEmailComponent },
-        { path: 'add-match', component: AddMatchComponent },
-        { path: 'player-details/:email', component: PlayerDetailsComponent },
-        { path: 'last-games', component: LastGamesComponent },
-        { path: 'register-account', component: RegisterAccountComponent },
-        { path: 'admin', component: AdminComponent }
-      ])
-    ],
-    providers: [
-      AlertService,
-      AuthenticationService,
-      PlayerService,
-      HeadersService,
-      MatchService,
-      AdministrationService,
-      { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }],
-    bootstrap: [AppComponent]
-  })
+@NgModule({
+  declarations: [
+    AppComponent,
+    NavMenuComponent,
+    HomeComponent,
+    CounterComponent,
+    FetchDataComponent,
+    LoginComponent,
+    AccountComponent,
+    RequestPasswordComponent,
+    ChangePasswordComponent,
+    AddMatchComponent,
+    PlayerDetailsComponent,
+    LastGamesComponent,
+    OnlineComponent,
+    ChangeEmailComponent,
+    RegisterAccountComponent,
+    AdminComponent
+  ],
+  imports: [
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    BrowserAnimationsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    RouterModule.forRoot([
+      { path: '', component: FetchDataComponent, pathMatch: 'full' },
+      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'login', component: LoginComponent },
+      { path: 'account', component: AccountComponent },
+      { path: 'requestpassword', component: RequestPasswordComponent },
+      { path: 'changepassword', component: ChangePasswordComponent },
+      { path: 'change-email', component: ChangeEmailComponent },
+      { path: 'add-match', component: AddMatchComponent },
+      { path: 'player-details/:email', component: PlayerDetailsComponent },
+      { path: 'last-games', component: LastGamesComponent },
+      { path: 'register-account', component: RegisterAccountComponent },
+      { path: 'admin', component: AdminComponent }
+    ])
+  ],
+  providers: [
+    AlertService,
+    AuthenticationService,
+    PlayerService,
+    HeadersService,
+    MatchService,
+    AdministrationService,
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }],
+  bootstrap: [AppComponent]
+})
 export class AppModule {
 }
