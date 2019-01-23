@@ -4,6 +4,7 @@ import { PlayerService, MatchService } from '../services/index';
 import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistoryResponse';
 import { User } from '../models/user.interface';
 import { Match } from '../models/Match';
+import { PartnerPercentResult } from '../models/PartnerPercentResult';
 
 @Component({
   selector: 'app-player-details',
@@ -17,6 +18,7 @@ export class PlayerDetailsComponent implements OnInit {
   users: User[];
   selectedUser: User;
   matches: Match[];
+  partnerResult: PartnerPercentResult[];
 
   constructor(
     private route: ActivatedRoute,
@@ -58,6 +60,11 @@ export class PlayerDetailsComponent implements OnInit {
         error => {
           console.error(error);
         });
+      this.playerService.getPartnerResult(this.email).subscribe(result => {
+        this.partnerResult = result;
+      }, error => {
+        console.error(error);
+      });
   }
 
   onChange() {
