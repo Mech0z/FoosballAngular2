@@ -20,6 +20,7 @@ export class AddMatchComponent {
   isLoggedIn = false;
   haveRole = false;
   errorMessage = '';
+  message: string;
 
   match1team1score: number;
   match1team2score: number;
@@ -154,6 +155,7 @@ export class AddMatchComponent {
         error => {
           console.log('fail');
           console.log(error);
+          this.message = error.message;
         });
   }
 
