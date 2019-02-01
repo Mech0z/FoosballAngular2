@@ -10,4 +10,9 @@ export class AdministrationService {
     const headers = this.headersService.createHttpHeaders();
     return this.http.post('/api/SeasonsAdministration/StartNewSeason', null, { headers: headers });
   }
+
+  recalculate() {
+    const headers = this.headersService.createHttpHeaders();
+    return this.http.post('/api/Leaderboard/ResetLeaderboard', null, { headers: headers });
+  }
 }

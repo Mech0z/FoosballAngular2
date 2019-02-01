@@ -24,7 +24,6 @@ export class FetchDataComponent {
 
     http.get<Leaderboard[]>('/api/leaderboard/index').subscribe(result => {
       this.leaderboards = result;
-      this.leaderboards.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
       this.selectedLeaderboard = this.leaderboards[this.leaderboards.length - 1];
       this.selectedLeaderboard = this.leaderboards[0];
       this.selectedLeaderboard.entries.sort((a, b) => b.eloRating - a.eloRating);
