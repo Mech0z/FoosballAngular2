@@ -11,10 +11,10 @@ export class LoginRequest {
   password: string;
   rememberMe: Boolean;
   deviceName: string;
-};
+}
 
 export class LoginResponse {
-  expirytime: Date;
+  expiryTime: Date;
   token: string;
   loginfailed: Boolean;
   roles: string[];

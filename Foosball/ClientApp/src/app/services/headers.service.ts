@@ -7,7 +7,7 @@ export class HeadersService {
   createHttpHeaders() {
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');
-    const devicename = 'somewebsitename';
+    const devicename = this.getDeviceName();
 
     return new HttpHeaders({
       'Content-Type': 'application/json',
@@ -31,6 +31,18 @@ export class HeadersService {
       return roles;
     } else {
       return '';
+    }
+  }
+
+  getDeviceName() {
+    const deviceName = localStorage.getItem('deviceName');
+    if (deviceName != null) {
+      return deviceName;
+    } else {
+      const randomNumber = Math.floor(Math.random() * 100000);
+      const newDeviceName = 'pwa' + randomNumber;
+      localStorage.setItem('deviceName', newDeviceName);
+      return newDeviceName;
     }
   }
 }

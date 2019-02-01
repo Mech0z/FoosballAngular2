@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HeadersService, AdministrationService } from '../services';
+import { HeadersService, AdministrationService, AuthenticationService } from '../services';
 
 @Component({
   selector: 'app-nav-menu',
@@ -12,13 +12,19 @@ export class NavMenuComponent {
 
   constructor(
     private headerService: HeadersService,
-    private administrationService: AdministrationService
+    private authenticationService: AuthenticationService
   ) {  }
 
   ngOnInit() {
     const roles = this.headerService.getRoles();
     if (roles.includes('Admin')) {
       this.isAdmin = true;
+    }
+    if (this.authenticationService.checkLogin()) {
+      this.authenticationService.validateLogin().subscribe(result => { }, error => {
+        this.authenticationService.logout();
+        window.location.reload();
+      });
     }
   }
 
