@@ -29,7 +29,6 @@ export class AuthenticationService {
 
   checkLogin() {
     const username = localStorage.getItem('username');
-    console.warn('username' + username);
     if (username != null) {
       return username;
     }
