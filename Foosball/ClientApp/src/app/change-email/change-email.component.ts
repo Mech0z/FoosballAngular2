@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PlayerService } from '../services';
+import { PlayerService } from '../services/player.service';
 
 @Component({
   selector: 'app-change-email',
@@ -17,9 +17,6 @@ export class ChangeEmailComponent {
     private router: Router,
     private playerService: PlayerService
   ) { }
-
-  ngOnInit() {
-  }
 
   changeEmail() {
     if (this.newEmail1 !== this.newEmail2) {

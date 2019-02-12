@@ -5,8 +5,13 @@ import { User } from '../models/user.interface';
 import { SaveMatchesRequest, MatchResult } from '../models/SaveMatchesRequest';
 import { MatchService } from '../services/match.service';
 import { Match } from '../models/Match';
-import { HeadersService, LeaderboardService } from '../services';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { startWith, map } from 'rxjs/operators';
 import { Season } from '../models/Season.interface';
+import { HeadersService } from '../services/headers.service';
+import { LeaderboardService } from '../services/leaderboard.service';
 
 @Component({
   selector: 'app-add-match',
@@ -29,9 +34,15 @@ export class AddMatchComponent {
   match2team1score: number;
   match2team2score: number;
 
+  evenMoreFilteredPlayers: Observable<User[]>;
+  filterPlayersControl = new FormControl();
 
-  constructor(private http: HttpClient, private matchService: MatchService,
-    private headersService: HeadersService, private leaderboardService: LeaderboardService) {
+  constructor(
+    private http: HttpClient,
+    private matchService: MatchService,
+    private headersService: HeadersService,
+    private leaderboardService: LeaderboardService,
+    private router: Router) {
     if (headersService.getUsername().length > 0) {
       this.isLoggedIn = true;
     }
@@ -43,6 +54,17 @@ export class AddMatchComponent {
       this.doMagic();
     }
 
+    this.evenMoreFilteredPlayers = this.filterPlayersControl.valueChanges
+    .pipe(
+      startWith<string | User>(''),
+      map(value => typeof value === 'string' ? value : value.username),
+      map(name => name ? this._filter(name) : this.filteredPlayers.slice())
+    );
+  }
+
+  private _filter(value: string): User[] {
+    const filterValue = value.toLowerCase();
+    return filterValue.length > 0 ? this.filteredPlayers.filter(u => u.username.toLowerCase().includes(filterValue)) : this.filteredPlayers;
   }
 
   showAllToggle() {
@@ -55,6 +77,8 @@ export class AddMatchComponent {
     }
 
     player.isSelected = !player.isSelected;
+
+    this.filterPlayersControl.setValue('');
   }
 
   get filteredPlayers(): User[] {
@@ -170,6 +194,7 @@ export class AddMatchComponent {
           console.log('success');
           this.selectedPlayers.forEach(p => p.isSelected = false);
           this.matchStarted = false;
+          this.router.navigate(['fetch-data']);
         },
         error => {
           console.log('fail');

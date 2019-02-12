@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PlayerService } from '../services/index';
+import { PlayerService } from '../services/player.service';
 
 @Component({
   selector: 'app-requestpassword',
   templateUrl: './requestpassword.component.html',
 })
-export class RequestPasswordComponent {
+export class RequestPasswordComponent implements OnInit {
   public email: string;
   loading = false;
   loginUrl: string;
@@ -19,7 +19,7 @@ export class RequestPasswordComponent {
   ) { }
 
   ngOnInit() {
-    this.loginUrl = this.route.snapshot.queryParams['returnUrl'] || '/login';   
+    this.loginUrl = this.route.snapshot.queryParams['returnUrl'] || '/login';
   }
 
   requestpassword() {
@@ -30,7 +30,7 @@ export class RequestPasswordComponent {
           this.router.navigate([this.loginUrl]);
         },
         error => {
-          this.errorMessage = "Request failed!";
+          this.errorMessage = 'Request failed!';
           this.loading = false;
         });
   }

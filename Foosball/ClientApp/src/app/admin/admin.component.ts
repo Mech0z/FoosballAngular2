@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AdministrationService } from '../services/index';
+import { AdministrationService } from '../services/administration.service';
 
 @Component({
   selector: 'app-admin',
@@ -11,9 +11,6 @@ export class AdminComponent {
 
   constructor(
     private administrationSerivce: AdministrationService  ) { }
-
-  ngOnInit() {
-  }
 
   startNewSeason() {
     this.loading = true;

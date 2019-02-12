@@ -33,8 +33,11 @@
   <div class="layout" *ngIf="!loading && !matchStarted">
 
     <mat-checkbox (click)="showAllToggle()">Show all players</mat-checkbox>
+    <mat-form-field>
+      <input matInput class="filter-players" placeholder="Filter players" aria-label="FilterPlayers" [formControl]="filterPlayersControl">
+    </mat-form-field>
     <div class="players">
-      <div class="player" [ngClass]="{selected: p.isSelected}" *ngFor="let p of filteredPlayers" (click)="togglePlayer(p)">
+      <div class="player" [ngClass]="{selected: p.isSelected}" *ngFor="let p of evenMoreFilteredPlayers | async" (click)="togglePlayer(p)">
         <p>{{p.username}}</p>
       </div>
     </div>
