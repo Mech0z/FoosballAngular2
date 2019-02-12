@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService, PlayerService } from '../services/index';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.interface';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit {
   public user: User;
   public userEmail: string;
   public checked: boolean;

@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PlayerService } from '../services/index';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
-import { AuthenticationService } from '../services/index';
+import { PlayerService } from '../services/player.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-changepassword',
   templateUrl: './changepassword.component.html',
 })
-export class ChangePasswordComponent {
+export class ChangePasswordComponent implements OnInit{
   public password1: string;
   public password2: string;
   loading = false;

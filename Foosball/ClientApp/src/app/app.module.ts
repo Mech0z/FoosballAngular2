@@ -22,11 +22,6 @@ import { AddMatchComponent } from './add-match/add-match.component';
 import { PlayerDetailsComponent } from './player-details/player-details.component';
 import { LastGamesComponent } from './last-games/last-games.component';
 import { OnlineComponent } from './online/online.component';
-
-import { AlertService,
-  AuthenticationService,
-  PlayerService,
-  HeadersService, AdministrationService, LeaderboardService, MatchService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
 import { ApiInterceptor } from './services/ApiInterceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -34,6 +29,13 @@ import { environment } from '../environments/environment';
 import { ChangeEmailComponent } from './change-email/change-email.component';
 import { RegisterAccountComponent } from './register-account/register-account.component';
 import { AdminComponent } from './admin/admin.component';
+import { AlertService } from './services/alert.service';
+import { AuthenticationService } from './services/authentication.service';
+import { PlayerService } from './services/player.service';
+import { HeadersService } from './services/headers.service';
+import { MatchService } from './services/match.service';
+import { AdministrationService } from './services/administration.service';
+import { LeaderboardService } from './services/leaderboard.service';
 
 @NgModule({
   declarations: [
@@ -88,6 +90,7 @@ import { AdminComponent } from './admin/admin.component';
     HeadersService,
     MatchService,
     AdministrationService,
+    LeaderboardService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })

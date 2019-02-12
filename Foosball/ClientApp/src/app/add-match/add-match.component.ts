@@ -5,12 +5,13 @@ import { User } from '../models/user.interface';
 import { SaveMatchesRequest, MatchResult } from '../models/SaveMatchesRequest';
 import { MatchService } from '../services/match.service';
 import { Match } from '../models/Match';
-import { HeadersService } from '../services';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { Season } from '../models/Season.interface';
+import { HeadersService } from '../services/headers.service';
+import { LeaderboardService } from '../services/leaderboard.service';
 
 @Component({
   selector: 'app-add-match',

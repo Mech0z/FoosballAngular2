@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { HeadersService, AdministrationService, AuthenticationService } from '../services';
+import { HeadersService } from '../services/headers.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-nav-menu',

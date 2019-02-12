@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
-import { PlayerService, MatchService } from '../services/index';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.interface';
 import { Match } from '../models/match';
+import { PlayerService } from '../services/player.service';
+import { MatchService } from '../services/match.service';
 
 @Component({
   selector: 'app-last-games',
   templateUrl: './last-games.component.html'
 })
-export class LastGamesComponent {
+export class LastGamesComponent implements OnInit{
   errorMessage: string;
   loadingPlayers: boolean;
   loadingMatches: boolean;

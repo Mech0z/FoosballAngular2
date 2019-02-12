@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PlayerService, MatchService } from '../services/index';
 import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistoryResponse';
 import { User } from '../models/user.interface';
 import { Match } from '../models/Match';
@@ -9,6 +8,8 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { PartnerPercentResult } from '../models/PartnerPercentResult';
+import { PlayerService } from '../services/player.service';
+import { MatchService } from '../services/match.service';
 
 @Component({
   selector: 'app-player-details',

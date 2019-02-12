@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PlayerService } from '../services';
 import { CreateUserRequest } from '../models/CreateUserRequest';
+import { PlayerService } from '../services/player.service';
 
 @Component({
   selector: 'app-register-account',
@@ -8,7 +8,7 @@ import { CreateUserRequest } from '../models/CreateUserRequest';
   templateUrl: 'register-account.component.html'
 })
 
-export class RegisterAccountComponent implements OnInit {
+export class RegisterAccountComponent {
   name: string;
   nameError: string;
   username: string;
@@ -21,9 +21,6 @@ export class RegisterAccountComponent implements OnInit {
   constructor(
     private playerService: PlayerService
   ) { }
-
-  ngOnInit() {
-  }
 
   nameIsValid() {
   if (this.name == null) {
