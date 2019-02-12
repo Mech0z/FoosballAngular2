@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { PartnerPercentResult } from '../models/PartnerPercentResult';
 
 @Component({
   selector: 'app-player-details',
@@ -23,6 +24,7 @@ export class PlayerDetailsComponent implements OnInit {
   matches: Match[];
   selectUserControl = new FormControl();
   filteredUsers: Observable<User[]>;
+  partnerResult: PartnerPercentResult[];
 
   constructor(
     private route: ActivatedRoute,
@@ -82,6 +84,11 @@ export class PlayerDetailsComponent implements OnInit {
         error => {
           console.error(error);
         });
+      this.playerService.getPartnerResult(this.email).subscribe(result => {
+        this.partnerResult = result;
+      }, error => {
+        console.error(error);
+      });
   }
 
   onChange(event: MatAutocompleteSelectedEvent) {

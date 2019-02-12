@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.username, this.password)
       .subscribe(
       data => {
-        if (data.loginFailed) {
+        if (data.loginfailed) {
           this.loading = false;
           this.errorMessage = 'Login failed!';
         } else {

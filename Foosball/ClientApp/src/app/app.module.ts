@@ -23,10 +23,12 @@ import { PlayerDetailsComponent } from './player-details/player-details.componen
 import { LastGamesComponent } from './last-games/last-games.component';
 import { OnlineComponent } from './online/online.component';
 
-import { AlertService, AuthenticationService, PlayerService, HeadersService, AdministrationService } from './services/index';
+import { AlertService,
+  AuthenticationService,
+  PlayerService,
+  HeadersService, AdministrationService, LeaderboardService, MatchService } from './services/index';
 import { RequestPasswordComponent } from './requestpassword/requestpassword.component';
 import { ApiInterceptor } from './services/ApiInterceptor';
-import { MatchService } from './services/match.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ChangeEmailComponent } from './change-email/change-email.component';

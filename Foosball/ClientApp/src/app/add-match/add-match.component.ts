@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
+import { Season } from '../models/Season.interface';
 
 @Component({
   selector: 'app-add-match',
@@ -24,6 +25,7 @@ export class AddMatchComponent {
   isLoggedIn = false;
   haveRole = false;
   errorMessage = '';
+  message: string;
 
   match1team1score: number;
   match1team2score: number;
@@ -38,6 +40,7 @@ export class AddMatchComponent {
     private http: HttpClient,
     private matchService: MatchService,
     private headersService: HeadersService,
+    private leaderboardService: LeaderboardService,
     private router: Router) {
     if (headersService.getUsername().length > 0) {
       this.isLoggedIn = true;
@@ -99,20 +102,37 @@ export class AddMatchComponent {
       this.players = users;
       this.players.sort((p1, p2) => p1.username.localeCompare(p2.username));
 
-      this.http.get<Leaderboard[]>('/api/leaderboard/index').subscribe(leaderboards => {
-        leaderboards.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
-        const l = leaderboards[0];
+      this.leaderboardService.getSeasons().subscribe(seasons => {
 
-        this.players.forEach(p => {
-          p.currentElo = l.entries.filter(e => e.userName === p.email).map(e => e.eloRating)[0];
-          if (!p.currentElo) {
-            p.currentElo = 1500;
-            p.noElo = true;
+        const now = Date.now();
+
+        let currentSeason: Season;
+        seasons.forEach(season => {
+          if (new Date(season.startDate).getTime() <= now && (new Date(season.endDate).getTime() >= now || season.endDate === null)) {
+            currentSeason = season;
           }
         });
 
-        this.loading = false;
+        this.http.get<Leaderboard[]>('/api/leaderboard/index').subscribe(leaderboards => {
+          leaderboards.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
 
+          let l: Leaderboard;
+          leaderboards.forEach(leaderboard => {
+            if (leaderboard.seasonName === currentSeason.name) {
+              l = leaderboard;
+            }
+          });
+
+          this.players.forEach(p => {
+            p.currentElo = l.entries.filter(e => e.userName === p.email).map(e => e.eloRating)[0];
+            if (!p.currentElo) {
+              p.currentElo = 1500;
+              p.noElo = true;
+            }
+          });
+
+          this.loading = false;
+        });
       });
     });
   }
@@ -178,6 +198,7 @@ export class AddMatchComponent {
         error => {
           console.log('fail');
           console.log(error);
+          this.message = error.message;
         });
   }
 

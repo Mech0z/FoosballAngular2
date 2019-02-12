@@ -6,6 +6,7 @@ import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistory
 import { ChangeEmailRequest } from '../models/ChangeEmailRequest';
 import { User } from '../models/user.interface';
 import { CreateUserRequest } from '../models/CreateUserRequest';
+import { PartnerPercentResult } from '../models/PartnerPercentResult';
 
 @Injectable()
 export class PlayerService {
@@ -39,5 +40,9 @@ export class PlayerService {
 
   getPlayerHistory(email: string) {
     return this.http.get<GetPlayerSeasonHistoryResponse>('/api/Player/GetPlayerHistory?email=' + email);
+  }
+
+  getPartnerResult(email: string) {
+    return this.http.get<PartnerPercentResult[]>('/api/Player/GetPlayerPartnerResults?email=' + email);
   }
 }

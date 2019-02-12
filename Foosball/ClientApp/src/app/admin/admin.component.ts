@@ -25,4 +25,15 @@ export class AdminComponent {
       this.message = error.message;
     });
   }
+
+  resetLeaderboard() {
+    this.loading = true;
+    this.administrationSerivce.recalculate().subscribe(() => {
+      this.loading = false;
+
+    }, error => {
+      this.loading = false;
+      this.message = error.message;
+    });
+  }
 }
