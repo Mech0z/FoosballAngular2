@@ -56,8 +56,7 @@ export class AddMatchComponent {
 
     this.evenMoreFilteredPlayers = this.filterPlayersControl.valueChanges
     .pipe(
-      startWith<string | User>(''),
-      map(value => typeof value === 'string' ? value : value.username),
+      startWith<string>(''),
       map(name => name ? this._filter(name) : this.filteredPlayers.slice())
     );
   }
@@ -69,8 +68,10 @@ export class AddMatchComponent {
 
   showAllToggle() {
     this.showAll = !this.showAll;
-
+    // Trigger the filter observable to emit its current value when toggling
+    this.filterPlayersControl.setValue(this.filterPlayersControl.value);
   }
+
   togglePlayer(player: User) {
     if (!player.isSelected && this.selectedPlayers.length >= 4) {
       return;

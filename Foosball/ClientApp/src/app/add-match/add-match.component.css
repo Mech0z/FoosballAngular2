@@ -17,17 +17,16 @@ mat-form-field {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
 .addedplayers {
   min-height: 80px;
   border: 1px dotted #555555;
-  margin-left: -1px;
 }
 
 .player {
   padding: 8px;
-
   border: 1px solid #555555;
   margin: 2px;
   width: 24%;
@@ -42,7 +41,7 @@ mat-form-field {
 }
 
 .selected {
-  border: 2px solid #555555;
+  outline: 2px solid #555555;
   background: #b4cad2;
 }
 

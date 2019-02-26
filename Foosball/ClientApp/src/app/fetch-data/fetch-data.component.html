@@ -14,13 +14,15 @@
     <table class="table" >
       <thead>
         <tr>
+          <th>RANK</th>
           <th>NAME</th>
           <th>STATS</th>
           <th>ELO RATING</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let leaderboardEntry of selectedLeaderboard.entries" >
+        <tr *ngFor="let leaderboardEntry of selectedLeaderboard.entries; let i = index" >
+          <td>{{ i + 1 }}</td>
           <td><a routerLink="/player-details/{{leaderboardEntry.userName}}">{{ leaderboardEntry.displayName }}</a></td>
           <td>{{ leaderboardEntry.wins }} / {{leaderboardEntry.numberOfGames}} ({{(leaderboardEntry.wins/leaderboardEntry.numberOfGames*100)| number : '1.2-2'}}%)</td>
           <td>{{ leaderboardEntry.eloRating }}</td>
