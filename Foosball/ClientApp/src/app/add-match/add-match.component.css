@@ -1,7 +1,6 @@
 .layout {
   display: flex;
   flex-direction: column;
-
 }
 
 mat-form-field {
@@ -46,11 +45,29 @@ mat-form-field {
 }
 
 .startMatch {
+  padding: 8px;
+  margin-bottom: 8px;
+  position: sticky;
+  position: -webkit-sticky; /* safari */
+  bottom: 0px;
+  background: whitesmoke;
+}
+
+.player-section {
   display: flex;
   justify-content: space-between;
-  padding: 8px;
-    position: sticky;
-    position: -webkit-sticky; /* safari */
-    bottom: 0px;
-    background: whitesmoke;
+}
+
+.player-col {
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: center;
+  height: 100px;
+}
+
+.switch-button {
+  margin-bottom: 8px;
+  height: 30px; 
+  width: 50px
 }

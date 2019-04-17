@@ -20,6 +20,7 @@ import { LeaderboardService } from '../services/leaderboard.service';
 })
 export class AddMatchComponent {
   players: User[] = [];
+  selectedPlayers: User[] = [];
   loading = true;
   showAll = false;
   matchStarted = false;
@@ -78,7 +79,7 @@ export class AddMatchComponent {
     }
 
     player.isSelected = !player.isSelected;
-
+    this.setTeamsBasedOnElo();
     this.filterPlayersControl.setValue('');
   }
 
@@ -90,13 +91,13 @@ export class AddMatchComponent {
     return fPlayers;
   }
 
-  get selectedPlayers(): User[] {
+  setTeamsBasedOnElo() {
     let sPlayers = !this.players ? [] : this.players.filter(p => p.isSelected);
     sPlayers.sort((a, b) => b.currentElo - a.currentElo);
     if (sPlayers.length === 4) {
       sPlayers = [sPlayers[0], sPlayers[3], sPlayers[1], sPlayers[2]];
     }
-    return sPlayers;
+    this.selectedPlayers = sPlayers;
   }
 
   private doMagic() {
@@ -170,6 +171,12 @@ export class AddMatchComponent {
       this.errorMessage = '';
     }
     return match1Valid;
+  }
+
+  switchPlayers(index1: number, index2: number) {
+    const tmp = this.selectedPlayers[index1];
+    this.selectedPlayers[index1] = this.selectedPlayers[index2];
+    this.selectedPlayers[index2] = tmp;
   }
 
   submitMatch() {
