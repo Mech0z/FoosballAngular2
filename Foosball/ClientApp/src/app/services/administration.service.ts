@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HeadersService } from './headers.service';
+import { Observable } from 'rxjs/Observable';
+import { GetUserMappingsResponse } from '../models/GetUserMappingsResponse';
+import { ChangeUserRolesRequest } from '../models/ChangeUserRolesRequest';
 
 @Injectable()
 export class AdministrationService {
@@ -14,5 +17,15 @@ export class AdministrationService {
   recalculate() {
     const headers = this.headersService.createHttpHeaders();
     return this.http.post('/api/Leaderboard/ResetLeaderboard', null, { headers: headers });
+  }
+
+  getUserMappings(): Observable<GetUserMappingsResponse> {
+    const headers = this.headersService.createHttpHeaders();
+    return this.http.post<GetUserMappingsResponse>('/api/Administration/GetUserMappings', null, { headers: headers });
+  }
+
+  addPlayerRole(request: ChangeUserRolesRequest) {
+    const headers = this.headersService.createHttpHeaders();
+    return this.http.post('/api/Administration/ChangeUserRoles', request, { headers: headers });
   }
 }

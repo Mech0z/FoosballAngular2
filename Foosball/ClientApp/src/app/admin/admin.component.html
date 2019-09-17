@@ -12,4 +12,31 @@ Reset leaderboard
   Submit
 </button>
 
+<br/><br/>
+
+<button type="button" (click)="getUserMappingsResponse()">
+  Get User mappings
+</button>
+
+<ul class="users">
+  <li *ngFor="let user of usersMappings"
+    [class.selected]="user === selectedUser"
+    (click)="onUserMappingSelect(user)">
+    <span >{{user.email}}</span>
+  </li>
+</ul>
+
+<ul *ngIf="selectedUser && !usersMappings" class="users">
+  Roles: 
+  <li *ngFor="let role of selectedUser.roles">
+    <span >{{role}}</span>
+  </li>
+</ul>
+
+<ul *ngIf="selectedUser && !usersMappings">  
+  <button type="button" (click)="addPlayerRole()">
+    Add Player role to user
+  </button>
+</ul>
+
 <div *ngIf="message" class="help-block">{{message}}</div>
