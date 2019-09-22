@@ -20,7 +20,7 @@
         </td>
         <td>{{ getName(match.playerList[0]) }} & {{ getName(match.playerList[1])}} <br />{{match.matchResult.team1Score}}</td>
         <td>{{ getName(match.playerList[2])}} & {{ getName(match.playerList[3])}} <br /> {{match.matchResult.team2Score}}</td>
-        <td>{{ match.points}}</td>
+        <td>{{ match.points}} <button *ngIf="isAdmin" (click)="deleteMatch(match)">X</button></td>
       </tr>
       </tbody>
     </table>

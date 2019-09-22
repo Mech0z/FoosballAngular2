@@ -3,6 +3,7 @@ import { User } from '../models/user.interface';
 import { Match } from '../models/match';
 import { PlayerService } from '../services/player.service';
 import { MatchService } from '../services/match.service';
+import { HeadersService } from '../services/headers.service';
 
 @Component({
   selector: 'app-last-games',
@@ -14,16 +15,23 @@ export class LastGamesComponent implements OnInit{
   loadingMatches: boolean;
   matches: Match[];
   players: User[];
+  isAdmin = false;
 
   constructor(
     private playerService: PlayerService,
-    private matchService: MatchService
+    private matchService: MatchService,
+    private headerService: HeadersService,
   ) {
   }
 
   ngOnInit() {
     this.loadingMatches = true;
     this.loadingPlayers = true;
+
+    const roles = this.headerService.getRoles();
+    if (roles.includes('Admin')) {
+      this.isAdmin = true;
+    }
 
     this.playerService.getUsers().subscribe(result => {
       this.players = result;
@@ -51,5 +59,9 @@ export class LastGamesComponent implements OnInit{
     });
 
     return result;
-  };
+  }
+
+  public deleteMatch(match: Match) {
+    console.error('deleting match ' + match.points);
+  }
 }

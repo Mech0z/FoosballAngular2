@@ -7,9 +7,10 @@
     {{ leaderboard.seasonName }}
   </option>
 </select>
+<button *ngIf="selectedLeaderboard && isAdmin" (click)="recalculateSeason()">RECALCULATE</button>
 
 <div *ngIf="selectedLeaderboard">
-  <h2>{{selectedLeaderboard.seasonName | uppercase}} Details</h2>
+  <h2>{{selectedLeaderboard.seasonName | uppercase}}</h2> 
   <div>
     <table class="table" >
       <thead>

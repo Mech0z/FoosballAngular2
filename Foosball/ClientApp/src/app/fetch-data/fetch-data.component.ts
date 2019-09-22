@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Leaderboard } from '../models/leaderboard.interface';
 import { User } from '../models/user.interface';
+import { HeadersService } from '../services/headers.service';
+
 
 @Component({
   selector: 'app-fetch-data',
@@ -12,8 +14,14 @@ export class FetchDataComponent {
   public leaderboards: Leaderboard[];
   public selectedLeaderboard: Leaderboard;
   public players: User[];
+  isAdmin = false;
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient,
+    private headerService: HeadersService) {
+      const roles = this.headerService.getRoles();
+      if (roles.includes('Admin')) {
+        this.isAdmin = true;
+      }
 
     http.get<User[]>('/api/Player/GetUsers').subscribe(result => {
       this.players = result;
