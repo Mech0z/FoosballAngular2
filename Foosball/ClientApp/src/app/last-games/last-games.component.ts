@@ -25,6 +25,10 @@ export class LastGamesComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.getLatestGames();
+  }
+
+  public getLatestGames() {
     this.loadingMatches = true;
     this.loadingPlayers = true;
 
@@ -51,17 +55,21 @@ export class LastGamesComponent implements OnInit{
   }
 
   public getName(email: string) {
-    var result = "";
+    let result = '';
     this.players.forEach(player => {
       if (player.email === email) {
         result = player.username;
-      };
+      }
     });
 
     return result;
   }
 
   public deleteMatch(match: Match) {
-    console.error('deleting match ' + match.points);
+    this.matchService.deleteMatch(match.id).subscribe(() => {
+      this.getLatestGames();
+    }, error => {
+      this.errorMessage = 'Error deleting match: ' + error.errorMessage;
+      });
   }
 }

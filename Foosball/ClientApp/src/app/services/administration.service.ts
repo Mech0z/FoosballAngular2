@@ -16,7 +16,12 @@ export class AdministrationService {
 
   recalculate() {
     const headers = this.headersService.createHttpHeaders();
-    return this.http.post('/api/Leaderboard/ResetLeaderboard', null, { headers: headers });
+    return this.http.post('/api/Leaderboard/ResetLeaderboards', null, { headers: headers });
+  }
+
+  recalculateSingleSeason(seasonName: string) {
+    const headers = this.headersService.createHttpHeaders();
+    return this.http.post('/api/Leaderboard/ResetLeaderboard?seasonName=' + seasonName, null, { headers: headers });
   }
 
   getUserMappings(): Observable<GetUserMappingsResponse> {

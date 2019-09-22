@@ -21,4 +21,9 @@ export class MatchService {
   getPlayerLatestMatches(email: string): Observable<Match[]> {
     return this.http.get<Match[]>('/api/Player/GetPlayerMatches?email=' + email);
   }
+
+  deleteMatch(matchId: string) {
+    const headers = this.headersService.createHttpHeaders();
+    return this.http.post('/api/Match/DeleteMatch?matchId=' + matchId, null, { headers: headers });
+  }
 }

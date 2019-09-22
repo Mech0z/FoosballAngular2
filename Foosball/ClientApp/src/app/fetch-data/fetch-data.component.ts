@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Leaderboard } from '../models/leaderboard.interface';
 import { User } from '../models/user.interface';
 import { HeadersService } from '../services/headers.service';
+import { AdministrationService } from '../services/administration.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class FetchDataComponent {
   isAdmin = false;
 
   constructor(http: HttpClient,
-    private headerService: HeadersService) {
+    private headerService: HeadersService,
+    private administrationService: AdministrationService) {
       const roles = this.headerService.getRoles();
       if (roles.includes('Admin')) {
         this.isAdmin = true;
@@ -52,5 +54,11 @@ export class FetchDataComponent {
         });
       });
     });
+  }
+
+  public recalculateSeason() {
+    this.administrationService.recalculateSingleSeason(this.selectedLeaderboard.seasonName).subscribe(() => {
+      console.log('Season has been recalculated, please reload');
+    }, error => console.error(error));
   }
 }
