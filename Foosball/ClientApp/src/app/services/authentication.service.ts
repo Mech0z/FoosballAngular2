@@ -12,7 +12,7 @@ export class AuthenticationService {
     return this.http.post<LoginResponse>('/api/Account/Login', new LoginRequest(username, password, this.headersService.getDeviceName()))
       .map(response => {
         // login successful if there's a jwt token in the response
-        if (response.loginfailed) {
+        if (response.loginFailed) {
           return response;
         }
         if (response) {
@@ -47,7 +47,7 @@ export class AuthenticationService {
     return this.http.post<LoginResponse>('/api/Account/ValidateLogin', null, { headers: headers })
       .map(response => {
         // login successful if there's a jwt token in the response
-        if (response.loginfailed) {
+        if (response.loginFailed) {
           this.logout();
           window.location.reload();
           return response;
