@@ -4,6 +4,7 @@ import { Leaderboard } from '../models/leaderboard.interface';
 import { User } from '../models/user.interface';
 import { HeadersService } from '../services/headers.service';
 import { AdministrationService } from '../services/administration.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class FetchDataComponent {
 
   constructor(http: HttpClient,
     private headerService: HeadersService,
-    private administrationService: AdministrationService) {
+    private administrationService: AdministrationService,
+    private _snackBar: MatSnackBar) {
       const roles = this.headerService.getRoles();
       if (roles.includes('Admin')) {
         this.isAdmin = true;
@@ -58,7 +60,7 @@ export class FetchDataComponent {
 
   public recalculateSeason() {
     this.administrationService.recalculateSingleSeason(this.selectedLeaderboard.seasonName).subscribe(() => {
-      console.log('Season has been recalculated, please reload');
+      this._snackBar.open('Season has been recalculated, please reload', '', null);
     }, error => console.error(error));
   }
 }
