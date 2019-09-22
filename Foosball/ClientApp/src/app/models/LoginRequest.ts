@@ -16,6 +16,6 @@ export class LoginRequest {
 export class LoginResponse {
   expiryTime: Date;
   token: string;
-  loginfailed: Boolean;
+  loginFailed: Boolean;
   roles: string[];
 }
