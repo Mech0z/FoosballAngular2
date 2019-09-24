@@ -24,7 +24,7 @@
       <li *ngFor="let user of usersMappings"
         [class.selected]="user === selectedUser"
         (click)="onUserMappingSelect(user)">
-        <span >{{user.email}}</span>
+        <span >{{getName(user.email)}}</span>
       </li>
     </ul>
 
@@ -49,7 +49,6 @@
           Get Deleted Matches
       </button>
       <ul *ngIf="deletedMatches" class="users">
-        Deleted Matches: 
         <li *ngFor="let match of deletedMatches">
           <span >{{id}}</span>
         </li>

@@ -3,6 +3,8 @@ import { AdministrationService } from '../services/administration.service';
 import { UserMappingsResponseEntry } from '../models/UserMappingsResponseEntry';
 import { ChangeUserRolesRequest } from '../models/ChangeUserRolesRequest';
 import { Match } from '../models/Match';
+import { PlayerService } from '../services/player.service';
+import { User } from '../models/user.interface';
 
 @Component({
   selector: 'app-admin',
@@ -14,9 +16,11 @@ export class AdminComponent {
   selectedUser: UserMappingsResponseEntry;
   usersMappings: UserMappingsResponseEntry[];
   deletedMatches: Match[];
+  players: User[];
 
   constructor(
-    private administrationSerivce: AdministrationService  ) { }
+    private administrationSerivce: AdministrationService,
+    private playerService: PlayerService ) { }
 
   startNewSeason() {
     this.loading = true;
@@ -43,6 +47,11 @@ export class AdminComponent {
   getUserMappingsResponse() {
     this.loading = true;
     this.message = '';
+    this.playerService.getUsers().subscribe(result => {
+      this.players = result;
+    }, error => {
+      this.message = 'Error in loading players: ' + error.errorMessage;
+    });
     this.administrationSerivce.getUserMappings().subscribe(result => {
       this.loading = false;
       this.usersMappings = result.users;
@@ -67,6 +76,17 @@ export class AdminComponent {
   onUserMappingSelect(userMapping: UserMappingsResponseEntry) {
     this.selectedUser = userMapping;
     this.usersMappings = null;
+  }
+
+  public getName(email: string) {
+    let result = '';
+    this.players.forEach(player => {
+      if (player.email === email) {
+        result = player.username;
+      }
+    });
+
+    return result;
   }
 
   addPlayerRole() {
