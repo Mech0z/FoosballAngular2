@@ -4,7 +4,9 @@ import { Match } from '../models/match';
 import { PlayerService } from '../services/player.service';
 import { MatchService } from '../services/match.service';
 import { HeadersService } from '../services/headers.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { LastGamesDialogComponent } from './last-games-dialog.component';
 
 @Component({
   selector: 'app-last-games',
@@ -22,7 +24,8 @@ export class LastGamesComponent implements OnInit{
     private playerService: PlayerService,
     private matchService: MatchService,
     private headerService: HeadersService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
   }
 
@@ -68,11 +71,17 @@ export class LastGamesComponent implements OnInit{
   }
 
   public deleteMatch(match: Match) {
-    this.matchService.deleteMatch(match.id).subscribe(() => {
-      this.getLatestGames();
-      this._snackBar.open('Match has been deleted!', '', null);
-    }, error => {
-      this.errorMessage = 'Error deleting match: ' + error.errorMessage;
-      });
+    const dialogRef = this.dialog.open(LastGamesDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.matchService.deleteMatch(match.id).subscribe(() => {
+          this.getLatestGames();
+          this._snackBar.open('Match has been deleted!', '', null);
+        }, error => {
+          this.errorMessage = 'Error deleting match: ' + error.errorMessage;
+          });
+      }
+    });
   }
 }

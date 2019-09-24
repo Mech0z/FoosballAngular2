@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule } from '@angular/material/';
-import { MatInputModule, MatCheckboxModule } from '@angular/material/';
+import { MatInputModule, MatCheckboxModule, MatDialogModule, MatTabsModule } from '@angular/material/';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -32,6 +32,7 @@ import { HeadersService } from './services/headers.service';
 import { MatchService } from './services/match.service';
 import { AdministrationService } from './services/administration.service';
 import { LeaderboardService } from './services/leaderboard.service';
+import { LastGamesDialogComponent } from './last-games/last-games-dialog.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { LeaderboardService } from './services/leaderboard.service';
     AddMatchComponent,
     PlayerDetailsComponent,
     LastGamesComponent,
+    LastGamesDialogComponent,
     OnlineComponent,
     ChangeEmailComponent,
     RegisterAccountComponent,
@@ -63,7 +65,9 @@ import { LeaderboardService } from './services/leaderboard.service';
     MatInputModule,
     MatAutocompleteModule,
     MatIconModule,
+    MatDialogModule,
     MatSnackBarModule,
+    MatTabsModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     RouterModule.forRoot([
@@ -81,6 +85,7 @@ import { LeaderboardService } from './services/leaderboard.service';
       { path: 'admin', component: AdminComponent }
     ])
   ],
+  entryComponents: [LastGamesDialogComponent],
   providers: [
     AlertService,
     AuthenticationService,
@@ -90,6 +95,7 @@ import { LeaderboardService } from './services/leaderboard.service';
     AdministrationService,
     LeaderboardService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }],
+    exports: [ LastGamesDialogComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

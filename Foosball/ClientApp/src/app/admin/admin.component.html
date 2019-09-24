@@ -1,42 +1,60 @@
 <h3>Administration</h3>
 
-Start new season from tomorrow
-<br/>
-<button type="button" (click)="startNewSeason()">
-  Submit
-</button>
-<br/>
-Reset leaderboard
-<br/>
-<button type="button" (click)="resetLeaderboard()">
-  Submit
-</button>
+<mat-tab-group>
+  <mat-tab label="Season">
+    Start new season from tomorrow
+    <br/>
+    <button type="button" (click)="startNewSeason()">
+      Submit
+    </button>
+  </mat-tab>
+  <mat-tab label="Leaderboard">
+      Reset leaderboard
+      <br/>
+      <button type="button" (click)="resetLeaderboard()">
+        Submit
+      </button>
+  </mat-tab>
+  <mat-tab label="Roles">
+    <button type="button" (click)="getUserMappingsResponse()">
+      Get User mappings
+    </button>
+    
+    <ul class="users">
+      <li *ngFor="let user of usersMappings"
+        [class.selected]="user === selectedUser"
+        (click)="onUserMappingSelect(user)">
+        <span >{{user.email}}</span>
+      </li>
+    </ul>
 
-<br/><br/>
+    <ul *ngIf="selectedUser && !usersMappings" class="users">
+      Roles: 
+      <li *ngFor="let role of selectedUser.roles">
+        <span >{{role}}</span>
+      </li>
+    </ul>
 
-<button type="button" (click)="getUserMappingsResponse()">
-  Get User mappings
-</button>
+    <ul *ngIf="selectedUser && !usersMappings">  
+        <button type="button" (click)="addPlayerRole()">
+          Add Player role to user
+        </button>
+      </ul>
+  </mat-tab>
 
-<ul class="users">
-  <li *ngFor="let user of usersMappings"
-    [class.selected]="user === selectedUser"
-    (click)="onUserMappingSelect(user)">
-    <span >{{user.email}}</span>
-  </li>
-</ul>
-
-<ul *ngIf="selectedUser && !usersMappings" class="users">
-  Roles: 
-  <li *ngFor="let role of selectedUser.roles">
-    <span >{{role}}</span>
-  </li>
-</ul>
-
-<ul *ngIf="selectedUser && !usersMappings">  
-  <button type="button" (click)="addPlayerRole()">
-    Add Player role to user
-  </button>
-</ul>
+  <mat-tab label="Matches">
+      Undelete deleted Matches
+      <br/>
+      <button type="button" (click)="getDeletedMatches()">
+          Get Deleted Matches
+      </button>
+      <ul *ngIf="deletedMatches" class="users">
+        Deleted Matches: 
+        <li *ngFor="let match of deletedMatches">
+          <span >{{id}}</span>
+        </li>
+      </ul>
+  </mat-tab>
+</mat-tab-group>
 
 <div *ngIf="message" class="help-block">{{message}}</div>

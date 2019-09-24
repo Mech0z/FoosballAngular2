@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AdministrationService } from '../services/administration.service';
 import { UserMappingsResponseEntry } from '../models/UserMappingsResponseEntry';
 import { ChangeUserRolesRequest } from '../models/ChangeUserRolesRequest';
+import { Match } from '../models/Match';
 
 @Component({
   selector: 'app-admin',
@@ -12,6 +13,7 @@ export class AdminComponent {
   loading: boolean;
   selectedUser: UserMappingsResponseEntry;
   usersMappings: UserMappingsResponseEntry[];
+  deletedMatches: Match[];
 
   constructor(
     private administrationSerivce: AdministrationService  ) { }
@@ -44,6 +46,18 @@ export class AdminComponent {
     this.administrationSerivce.getUserMappings().subscribe(result => {
       this.loading = false;
       this.usersMappings = result.users;
+    }, error => {
+      this.loading = false;
+      this.message = error.message;
+    });
+  }
+
+  getDeletedMatches() {
+    this.loading = true;
+    this.message = '';
+    this.administrationSerivce.getDeletedMatches().subscribe(result => {
+      this.loading = false;
+      this.deletedMatches = result;
     }, error => {
       this.loading = false;
       this.message = error.message;

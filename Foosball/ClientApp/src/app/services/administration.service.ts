@@ -4,6 +4,7 @@ import { HeadersService } from './headers.service';
 import { Observable } from 'rxjs/Observable';
 import { GetUserMappingsResponse } from '../models/GetUserMappingsResponse';
 import { ChangeUserRolesRequest } from '../models/ChangeUserRolesRequest';
+import { Match } from '../models/Match';
 
 @Injectable()
 export class AdministrationService {
@@ -27,6 +28,11 @@ export class AdministrationService {
   getUserMappings(): Observable<GetUserMappingsResponse> {
     const headers = this.headersService.createHttpHeaders();
     return this.http.post<GetUserMappingsResponse>('/api/Administration/GetUserMappings', null, { headers: headers });
+  }
+
+  getDeletedMatches(): Observable<Match[]> {
+    const headers = this.headersService.createHttpHeaders();
+    return this.http.get<Match[]>('/api/Match/GetDeletedMatchesAsync', { headers: headers });
   }
 
   addPlayerRole(request: ChangeUserRolesRequest) {
