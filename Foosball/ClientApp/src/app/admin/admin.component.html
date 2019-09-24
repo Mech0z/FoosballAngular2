@@ -48,11 +48,31 @@
       <button type="button" (click)="getDeletedMatches()">
           Get Deleted Matches
       </button>
-      <ul *ngIf="deletedMatches" class="users">
-        <li *ngFor="let match of deletedMatches">
-          <span >{{id}}</span>
-        </li>
-      </ul>
+      <div>
+          <table class="table">
+            <thead>
+            <tr>
+              <th>DATE</th>
+              <th>Team 1</th>
+              <th>Team 2</th>
+              <th>ELO Points</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let match of deletedMatches">
+              <td style="min-width: 60px">
+                {{ match.timeStampUtc | date : "H:mm" }}
+                <br>
+                {{ match.timeStampUtc | date : "dd MMM" }}
+                <!--<br />{{match.submittedBy}}-->
+              </td>
+              <td>{{ getName(match.playerList[0]) }} & {{ getName(match.playerList[1])}} <br />{{match.matchResult.team1Score}}</td>
+              <td>{{ getName(match.playerList[2])}} & {{ getName(match.playerList[3])}} <br /> {{match.matchResult.team2Score}}</td>
+              <td>{{ match.points}} <button *ngIf="isAdmin" (click)="deleteMatch(match)">X</button></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
   </mat-tab>
 </mat-tab-group>
 

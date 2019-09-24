@@ -20,7 +20,13 @@ export class AdminComponent {
 
   constructor(
     private administrationSerivce: AdministrationService,
-    private playerService: PlayerService ) { }
+    private playerService: PlayerService ) { 
+      this.playerService.getUsers().subscribe(result => {
+        this.players = result;
+      }, error => {
+        this.message = 'Error in loading players: ' + error.errorMessage;
+      });
+    }
 
   startNewSeason() {
     this.loading = true;
@@ -47,11 +53,6 @@ export class AdminComponent {
   getUserMappingsResponse() {
     this.loading = true;
     this.message = '';
-    this.playerService.getUsers().subscribe(result => {
-      this.players = result;
-    }, error => {
-      this.message = 'Error in loading players: ' + error.errorMessage;
-    });
     this.administrationSerivce.getUserMappings().subscribe(result => {
       this.loading = false;
       this.usersMappings = result.users;
