@@ -27,7 +27,7 @@ export class AdministrationService {
 
   getUserMappings(): Observable<GetUserMappingsResponse> {
     const headers = this.headersService.createHttpHeaders();
-    return this.http.post<GetUserMappingsResponse>('/api/Administration/GetUserMappings', null, { headers: headers });
+    return this.http.get<GetUserMappingsResponse>('/api/Administration/GetUserMappings', { headers: headers });
   }
 
   getDeletedMatches(): Observable<Match[]> {
