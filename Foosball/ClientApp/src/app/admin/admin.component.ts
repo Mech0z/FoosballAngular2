@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { AdministrationService } from '../services/administration.service';
 import { UserMappingsResponseEntry } from '../models/UserMappingsResponseEntry';
 import { ChangeUserRolesRequest } from '../models/ChangeUserRolesRequest';
 import { Match } from '../models/Match';
 import { PlayerService } from '../services/player.service';
+import { MatchService } from '../services/match.service';
 import { User } from '../models/user.interface';
+import { LastGamesDialogComponent } from '../last-games/last-games-dialog.component';
 
 @Component({
   selector: 'app-admin',
@@ -12,6 +16,8 @@ import { User } from '../models/user.interface';
 })
 export class AdminComponent {
   message: string;
+  deletedMessage: string;
+  rolesMessage: string;
   loading: boolean;
   selectedUser: UserMappingsResponseEntry;
   usersMappings: UserMappingsResponseEntry[];
@@ -20,11 +26,16 @@ export class AdminComponent {
 
   constructor(
     private administrationSerivce: AdministrationService,
-    private playerService: PlayerService ) { 
+    private playerService: PlayerService,
+    private matchService: MatchService,
+    private _snackBar: MatSnackBar,
+    private dialog: MatDialog ) {
       this.playerService.getUsers().subscribe(result => {
         this.players = result;
       }, error => {
-        this.message = 'Error in loading players: ' + error.errorMessage;
+        this._snackBar.open('Error in loading players: ' + error.errorMessage, '', {
+          duration: 3000
+        });
       });
     }
 
@@ -32,7 +43,6 @@ export class AdminComponent {
     this.loading = true;
     this.administrationSerivce.startNewSeason().subscribe(() => {
       this.loading = false;
-
     }, error => {
       this.loading = false;
       this.message = error.message;
@@ -52,25 +62,30 @@ export class AdminComponent {
 
   getUserMappingsResponse() {
     this.loading = true;
-    this.message = '';
+    this.rolesMessage = '';
     this.administrationSerivce.getUserMappings().subscribe(result => {
       this.loading = false;
       this.usersMappings = result.users;
     }, error => {
       this.loading = false;
-      this.message = error.message;
+      this.rolesMessage = error.message;
     });
   }
 
   getDeletedMatches() {
     this.loading = true;
-    this.message = '';
+    this.deletedMessage = '';
     this.administrationSerivce.getDeletedMatches().subscribe(result => {
       this.loading = false;
       this.deletedMatches = result;
+      if(this.deletedMatches.length === 0) {
+        this._snackBar.open('No deleted matches found!', '', {
+          duration: 3000
+        });
+      }
     }, error => {
       this.loading = false;
-      this.message = error.message;
+      this.deletedMessage = error.message;
     });
   }
 
@@ -110,7 +125,29 @@ export class AdminComponent {
         this.message = error.message;
     });
     } else {
-      this.message = 'User already have this role';
+      this._snackBar.open('User already have this role: ', '', {
+        duration: 3000
+      });
     }
+  }
+
+  public undeleteMatch(match: Match) {
+    const dialogRef = this.dialog.open(LastGamesDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.matchService.undeleteMatch(match.id).subscribe(() => {
+          this.getDeletedMatches();
+          this._snackBar.open('Match has been undeleted!', '', {
+            duration: 3000
+          });
+        }, error => {
+          this._snackBar.open('Error deleting match: ' + error.errorMessage, '', {
+            duration: 3000
+          });
+          this.deletedMessage = 'Error deleting match: ' + error.errorMessage;
+          });
+      }
+    });
   }
 }

@@ -77,7 +77,9 @@ export class LastGamesComponent implements OnInit{
       if(result) {
         this.matchService.deleteMatch(match.id).subscribe(() => {
           this.getLatestGames();
-          this._snackBar.open('Match has been deleted!', '', null);
+          this._snackBar.open('Match has been deleted!', '', {
+            duration: 5000
+          });
         }, error => {
           this.errorMessage = 'Error deleting match: ' + error.errorMessage;
           });

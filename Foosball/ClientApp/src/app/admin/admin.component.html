@@ -1,25 +1,19 @@
 <h3>Administration</h3>
 
 <mat-tab-group>
-  <mat-tab label="Season">
-    Start new season from tomorrow
-    <br/>
-    <button type="button" (click)="startNewSeason()">
-      Submit
-    </button>
-  </mat-tab>
-  <mat-tab label="Leaderboard">
+  
+  <!-- <mat-tab label="Leaderboard">
       Reset leaderboard
       <br/>
       <button type="button" (click)="resetLeaderboard()">
         Submit
       </button>
-  </mat-tab>
+  </mat-tab> -->
   <mat-tab label="Roles">
+    <div *ngIf="message" class="help-block">{{message}}</div>
     <button type="button" (click)="getUserMappingsResponse()">
       Get User mappings
-    </button>
-    
+    </button>    
     <ul class="users">
       <li *ngFor="let user of usersMappings"
         [class.selected]="user === selectedUser"
@@ -29,13 +23,15 @@
     </ul>
 
     <ul *ngIf="selectedUser && !usersMappings" class="users">
-      Roles: 
+      <div *ngIf="message" class="help-block">{{message}}</div>
+        {{getName(selectedUser.email)}} existing Roles: 
       <li *ngFor="let role of selectedUser.roles">
         <span >{{role}}</span>
       </li>
     </ul>
 
     <ul *ngIf="selectedUser && !usersMappings">  
+      
         <button type="button" (click)="addPlayerRole()">
           Add Player role to user
         </button>
@@ -43,6 +39,7 @@
   </mat-tab>
 
   <mat-tab label="Matches">
+      <div *ngIf="deletedMessage" class="help-block">{{message}}</div>
       Undelete deleted Matches
       <br/>
       <button type="button" (click)="getDeletedMatches()">
@@ -56,6 +53,7 @@
               <th>Team 1</th>
               <th>Team 2</th>
               <th>ELO Points</th>
+              <th>Un-delete</th>
             </tr>
             </thead>
             <tbody>
@@ -68,12 +66,19 @@
               </td>
               <td>{{ getName(match.playerList[0]) }} & {{ getName(match.playerList[1])}} <br />{{match.matchResult.team1Score}}</td>
               <td>{{ getName(match.playerList[2])}} & {{ getName(match.playerList[3])}} <br /> {{match.matchResult.team2Score}}</td>
-              <td>{{ match.points}} <button *ngIf="isAdmin" (click)="deleteMatch(match)">X</button></td>
+              <td>{{ match.points}}</td>
+              <td><button (click)="undeleteMatch(match)">X</button></td>
             </tr>
             </tbody>
           </table>
         </div>
   </mat-tab>
+  <mat-tab label="Season">
+    <div *ngIf="message" class="help-block">{{message}}</div>
+    Start new season from tomorrow
+    <br/>
+    <button type="button" (click)="startNewSeason()">
+      Submit
+    </button>
+  </mat-tab>
 </mat-tab-group>
-
-<div *ngIf="message" class="help-block">{{message}}</div>

@@ -26,4 +26,9 @@ export class MatchService {
     const headers = this.headersService.createHttpHeaders();
     return this.http.post('/api/Match/DeleteMatch?matchId=' + matchId, null, { headers: headers });
   }
+
+  undeleteMatch(matchId: string) {
+    const headers = this.headersService.createHttpHeaders();
+    return this.http.post('/api/Match/UnDeleteMatch?matchId=' + matchId, null, { headers: headers });
+  }
 }
