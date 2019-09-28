@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
-import { Season } from '../models/Season.interface';
 import { HeadersService } from '../services/headers.service';
 import { LeaderboardService } from '../services/leaderboard.service';
 
@@ -106,15 +105,14 @@ export class AddMatchComponent {
       this.players.sort((p1, p2) => p1.username.localeCompare(p2.username));
 
       this.leaderboardService.getSeasons().subscribe(seasons => {
-
-        const now = Date.now();
-
-        let currentSeason: Season;
-        seasons.forEach(season => {
-          if (new Date(season.startDate).getTime() <= now && (new Date(season.endDate).getTime() >= now || season.endDate === null)) {
-            currentSeason = season;
-          }
+        const activeSeasons = seasons.filter(function (item) {
+          return new Date(item.startDate).getTime() <= Date.now();
         });
+
+        const orderedSeasons = activeSeasons.sort(function (a, b) {
+          return  a.startDate > b.startDate ? 1 : 0;
+        });
+        const currentSeason = orderedSeasons[orderedSeasons.length - 1];
 
         this.http.get<Leaderboard[]>('/api/leaderboard/index').subscribe(leaderboards => {
           leaderboards.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());

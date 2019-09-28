@@ -11,7 +11,7 @@
   </mat-tab> -->
   <mat-tab label="Roles">
     <div *ngIf="message" class="help-block">{{message}}</div>
-    <button type="button" (click)="getUserMappingsResponse()">
+    <button type="button" mat-stroked-button (click)="getUserMappingsResponse()">
       Get User mappings
     </button>    
     <ul class="users">
@@ -32,7 +32,7 @@
 
     <ul *ngIf="selectedUser && !usersMappings">  
       
-        <button type="button" (click)="addPlayerRole()">
+        <button type="button" mat-stroked-button (click)="addPlayerRole()">
           Add Player role to user
         </button>
       </ul>
@@ -42,7 +42,7 @@
       <div *ngIf="deletedMessage" class="help-block">{{message}}</div>
       Undelete deleted Matches
       <br/>
-      <button type="button" (click)="getDeletedMatches()">
+      <button type="button" mat-stroked-button (click)="getDeletedMatches()">
           Get Deleted Matches
       </button>
       <div>
@@ -67,7 +67,7 @@
               <td>{{ getName(match.playerList[0]) }} & {{ getName(match.playerList[1])}} <br />{{match.matchResult.team1Score}}</td>
               <td>{{ getName(match.playerList[2])}} & {{ getName(match.playerList[3])}} <br /> {{match.matchResult.team2Score}}</td>
               <td>{{ match.points}}</td>
-              <td><button (click)="undeleteMatch(match)">X</button></td>
+              <td><button mat-stroked-button (click)="undeleteMatch(match)">X</button></td>
             </tr>
             </tbody>
           </table>
@@ -77,7 +77,7 @@
     <div *ngIf="message" class="help-block">{{message}}</div>
     Start new season from tomorrow
     <br/>
-    <button type="button" (click)="startNewSeason()">
+    <button mat-stroked-button type="button" (click)="startNewSeason()">
       Submit
     </button>
   </mat-tab>
