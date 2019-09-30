@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule } from '@angular/material/';
-import { MatInputModule, MatCheckboxModule, MatDialogModule, MatTabsModule } from '@angular/material/';
+import { MatInputModule, MatCheckboxModule, MatDialogModule, MatTabsModule, MatDatepickerModule } from '@angular/material/';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -68,6 +68,7 @@ import { LastGamesDialogComponent } from './last-games/last-games-dialog.compone
     MatDialogModule,
     MatSnackBarModule,
     MatTabsModule,
+    MatDatepickerModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     RouterModule.forRoot([

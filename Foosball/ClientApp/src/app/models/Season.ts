@@ -1,4 +1,4 @@
-export interface Season {
+export class Season {
   name: string;
   startDate: Date;
 }

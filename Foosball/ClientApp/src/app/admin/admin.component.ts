@@ -9,6 +9,7 @@ import { PlayerService } from '../services/player.service';
 import { MatchService } from '../services/match.service';
 import { User } from '../models/user.interface';
 import { LastGamesDialogComponent } from '../last-games/last-games-dialog.component';
+import { Season } from '../models/Season';
 
 @Component({
   selector: 'app-admin',
@@ -22,6 +23,8 @@ export class AdminComponent {
   selectedUser: UserMappingsResponseEntry;
   usersMappings: UserMappingsResponseEntry[];
   deletedMatches: Match[];
+  seasons: Season[];
+  newSeason: Season;
   players: User[];
 
   constructor(
@@ -37,6 +40,7 @@ export class AdminComponent {
           duration: 3000
         });
       });
+      this.newSeason = new Season();
     }
 
   startNewSeason() {
@@ -70,6 +74,31 @@ export class AdminComponent {
       this.loading = false;
       this.rolesMessage = error.message;
     });
+  }
+
+  getSeasons() {
+    this.loading = true;
+    this.deletedMessage = '';
+    this.administrationSerivce.getSeasons().subscribe(result => {
+      this.loading = false;
+      this.seasons = result.sort(function (a, b) {
+        return  a.startDate > b.startDate ? 0 : 1;
+      });
+      this.seasons = result;
+      if (this.seasons.length === 0) {
+        this._snackBar.open('No seasons found!', '', {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+  seasonStarted(season: Season) {
+    if (new Date(season.startDate).getTime() > Date.now()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getDeletedMatches() {
