@@ -10,6 +10,8 @@ import { MatchService } from '../services/match.service';
 import { User } from '../models/user.interface';
 import { LastGamesDialogComponent } from '../last-games/last-games-dialog.component';
 import { Season } from '../models/Season';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { UpsertSeasonRequest } from '../models/UpsertSeasonRequest';
 
 @Component({
   selector: 'app-admin',
@@ -45,7 +47,10 @@ export class AdminComponent {
 
   startNewSeason() {
     this.loading = true;
-    this.administrationSerivce.startNewSeason().subscribe(() => {
+    console.error(this.newSeason.name);
+    console.error(this.newSeason.startDate);
+    const request = new UpsertSeasonRequest(this.newSeason.name, this.newSeason.startDate);
+    this.administrationSerivce.startNewSeason(request).subscribe(() => {
       this.loading = false;
     }, error => {
       this.loading = false;
@@ -91,6 +96,10 @@ export class AdminComponent {
         });
       }
     });
+  }
+
+  seasonDateChanged(event: MatDatepickerInputEvent<Date>) {
+    this.newSeason.startDate = event.value;
   }
 
   seasonStarted(season: Season) {

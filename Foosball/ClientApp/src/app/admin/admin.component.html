@@ -101,17 +101,19 @@
     </div>
 
     <br/>
-    Add new upcoming season
-    <!-- <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
-      <input type="text" class="form-control" name="seasonName" [(ngModel)]="newSeason.name" #username="ngModel" required />
+    <h3>Add new upcoming season</h3>
 
-      <button [disabled]="loading" class="btn" (click)="startNewSeason()">Add season</button>
-    </form> -->
-    <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-        <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker> -->
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput type="text" placeholder="Season name" class="form-control" name="seasonName" [(ngModel)]="newSeason.name" #username="ngModel" required />
       </mat-form-field>
-      
+    </form>         
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" (dateChange)=seasonDateChanged($event) placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br/>
+      <button [disabled]="loading" class="btn" (click)="startNewSeason()">Add season</button>
   </mat-tab>
 </mat-tab-group>

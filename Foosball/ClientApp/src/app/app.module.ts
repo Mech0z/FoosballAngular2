@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule } from '@angular/material/';
 import { MatInputModule, MatCheckboxModule, MatDialogModule, MatTabsModule, MatDatepickerModule } from '@angular/material/';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -67,6 +68,7 @@ import { LastGamesDialogComponent } from './last-games/last-games-dialog.compone
     MatIconModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatNativeDateModule,
     MatTabsModule,
     MatDatepickerModule,
     BrowserAnimationsModule,
@@ -95,7 +97,8 @@ import { LastGamesDialogComponent } from './last-games/last-games-dialog.compone
     MatchService,
     AdministrationService,
     LeaderboardService,
-    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }],
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
+    {provide: MAT_DATE_LOCALE, useValue: 'da-DK'}],
     exports: [ LastGamesDialogComponent ],
   bootstrap: [AppComponent]
 })
