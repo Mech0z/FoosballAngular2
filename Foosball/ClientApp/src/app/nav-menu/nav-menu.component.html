@@ -38,6 +38,11 @@
             <span class='glyphicon glyphicon-wrench'></span> Admin
           </a>
         </li>
+        <li [routerLinkActive]='["link-active"]'>
+          <a [routerLink]='["/activity"]' (click)='collapse()'>
+            <span class='glyphicon glyphicon-heart-empty'></span> Activity
+          </a>
+        </li>
       </ul>
     </div>
   </div>

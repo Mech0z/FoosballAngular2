@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
+import { ActivityComponent } from './activity/activity.component';
 import { AccountComponent } from './account/account.component';
 import { ChangePasswordComponent } from './changepassword/changepassword.component';
 import { AddMatchComponent } from './add-match/add-match.component';
@@ -34,6 +35,7 @@ import { MatchService } from './services/match.service';
 import { AdministrationService } from './services/administration.service';
 import { LeaderboardService } from './services/leaderboard.service';
 import { LastGamesDialogComponent } from './last-games/last-games-dialog.component';
+import { ActivityService } from './services/activity.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { LastGamesDialogComponent } from './last-games/last-games-dialog.compone
     OnlineComponent,
     ChangeEmailComponent,
     RegisterAccountComponent,
-    AdminComponent
+    AdminComponent,
+    ActivityComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -85,7 +88,8 @@ import { LastGamesDialogComponent } from './last-games/last-games-dialog.compone
       { path: 'player-details/:email', component: PlayerDetailsComponent },
       { path: 'last-games', component: LastGamesComponent },
       { path: 'register-account', component: RegisterAccountComponent },
-      { path: 'admin', component: AdminComponent }
+      { path: 'admin', component: AdminComponent },
+      { path: 'activity', component: ActivityComponent }
     ])
   ],
   entryComponents: [LastGamesDialogComponent],
@@ -97,6 +101,7 @@ import { LastGamesDialogComponent } from './last-games/last-games-dialog.compone
     MatchService,
     AdministrationService,
     LeaderboardService,
+    ActivityService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     {provide: MAT_DATE_LOCALE, useValue: 'da-DK'}],
     exports: [ LastGamesDialogComponent ],
