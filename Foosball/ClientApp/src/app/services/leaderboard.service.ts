@@ -9,6 +9,7 @@ export class LeaderboardService {
   constructor(private http: HttpClient, private headersService: HeadersService) { }
 
   getSeasons(): Observable<Season[]> {
-    return this.http.post<Season[]>('/api/SeasonsAdministration/GetSeasons', null);
+    const headers = this.headersService.createHttpHeaders();
+    return this.http.get<Season[]>('/api/SeasonsAdministration/GetSeasonsAsync', { headers: headers });
   }
 }
