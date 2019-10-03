@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import * as signalR from '@aspnet/signalr';
 
 @Component({
   selector: 'app-root',
@@ -20,5 +21,20 @@ export class AppComponent implements OnInit {
         }
       });
     }
+
+    const connection = new signalR.HubConnectionBuilder()
+      .configureLogging(signalR.LogLevel.Information)
+      .withUrl('http://localhost:5000/activitySensorHub')
+      .build();
+
+    connection.start().then(function () {
+      console.log('Connected!');
+    }).catch(function (err) {
+      return console.error(err.toString());
+    });
+
+    connection.on('BroadcastMessage', (type: string, payload: string) => {
+      console.error({ severity: type, summary: payload, detail: 'Via SignalR' });
+    });
   }
 }
