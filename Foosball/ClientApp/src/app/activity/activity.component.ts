@@ -7,7 +7,8 @@ import { ActivityService } from '../services/activity.service';
 })
 export class ActivityComponent {
     activityText: string;
-    activityMinutes: number;
+    activitySeconds: number;
+    activity: boolean;
 
     constructor(
         private activityService: ActivityService
@@ -17,12 +18,13 @@ export class ActivityComponent {
 
     refreshActivity() {
         this.activityService.getActivity().subscribe(response => {
+            this.activity = response.activity;
             if (response.activity) {
                 this.activityText = 'Room is busy!';
             } else {
                 this.activityText = 'Room is free!';
             }
-            this.activityMinutes = response.duration;
+            this.activitySeconds = response.duration;
         });
     }
 }
