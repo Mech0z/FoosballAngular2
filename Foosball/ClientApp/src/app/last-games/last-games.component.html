@@ -1,44 +1,43 @@
 <p *ngIf="!matches || !players"><em>Loading...</em></p>
 <div *ngIf="matches && players">
   <div>
-    <div class="sticky match-row" style="display: flex; flex-direction: row; align-items: center; ">
-      <div style="padding: 0 8px ; min-width: 80px; width: 80px">
+    <div class="sticky match-row">
+      <div class="date">
         <p><b>Date</b></p>
       </div>
 
-      <div style="width: 100%" class="players">
+      <div class="players">
         <p><b>Team 1</b></p>
       </div>
-      <div style="padding-right: 8px; min-width: 60px; width: 60px">
-          <p style="text-align: center;"><b>Score</b></p>
-      </div>
-      <div style="width: 100%" class="players">
+      <div class="players">
         <p><b>Team 2</b></p>
       </div>
-      <div style="min-width: 40px; width: 40px">
+      <div  class="score">
+        <p style="text-align: center;"><b>Score</b></p>
+      </div>
+      <div class="points">
         <p><b>Points</b></p>
       </div>
       <div *ngIf="isAdmin" style="min-width: 40px; width: 40px">
         <p><b></b></p>
       </div>
     </div>
-    <div class="match-row" *ngFor="let match of matches"
-      style="display: flex; flex-direction: row; align-items: center;">
-      <div style="padding: 8px; min-width: 80px; width: 80px"> {{ match.timeStampUtc | date : "H:mm" }}
+    <div class="match-row" *ngFor="let match of matches">
+      <div class="date"> {{ match.timeStampUtc | date : "H:mm" }}
         <br>
         {{ match.timeStampUtc | date : "dd. MMM" }}
       </div>
 
-      <div style="width: 100%" class="players">
+      <div class="players">
         <p>{{ getName(match.playerList[0]) }}</p>
         <p>{{ getName(match.playerList[1]) }}</p>
       </div>
-      <div style="padding-right: 8px; min-width: 60px; width: 60px">
-        <p style="text-align: center;">{{match.matchResult.team1Score}} vs {{match.matchResult.team2Score}} </p>
-      </div>
-      <div style="width: 100%" class="players">
+      <div class="players">
         <p>{{ getName(match.playerList[2]) }}</p>
         <p>{{ getName(match.playerList[3]) }}</p>
+      </div>
+      <div class="score">
+        <p style="text-align: center;">{{match.matchResult.team1Score}} vs {{match.matchResult.team2Score}} </p>
       </div>
       <div style="min-width: 40px; width: 40px">
         <p>+/- {{ match.points}}</p>

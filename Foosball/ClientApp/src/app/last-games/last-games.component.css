@@ -8,13 +8,35 @@ p {
   flex-direction: row;
 }
 
+.score {
+  padding-right: 8px;
+  min-width: 60px;
+  width: 60px;
+}
+
+.points {
+  min-width: 40px;
+  width: 40px;
+}
+
 .players {
+  width: 100%;
+  max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.date {
+  padding: 0 8px;
+  min-width: 80px;
+  width: 80px;
+}
+
 .match-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   padding: 4px;
 }
 
