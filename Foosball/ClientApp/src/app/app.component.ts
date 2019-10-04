@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
-      .withUrl('http://localhost:5000/activitySensorHub')
+      .withUrl('https://betafoosballapi.azurewebsites.net/activitySensorHub')
       .build();
 
     connection.start().then(function () {
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
       return console.error(err.toString());
     });
 
-    connection.on('BroadcastMessage', (type: string, payload: string) => {
+    connection.on('SendMessageToClient', (type: string, payload: string) => {
       console.error({ severity: type, summary: payload, detail: 'Via SignalR' });
     });
   }
