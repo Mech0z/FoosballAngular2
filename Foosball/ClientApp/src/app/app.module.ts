@@ -36,6 +36,7 @@ import { AdministrationService } from './services/administration.service';
 import { LeaderboardService } from './services/leaderboard.service';
 import { LastGamesDialogComponent } from './last-games/last-games-dialog.component';
 import { ActivityService } from './services/activity.service';
+import { ResponsiveOverviewComponent } from './views/responsive-overview/responsive-overview.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import { ActivityService } from './services/activity.service';
     OnlineComponent,
     ChangeEmailComponent,
     RegisterAccountComponent,
-    ResponsiveOverviewComponent
+    ResponsiveOverviewComponent,
     AdminComponent,
     ActivityComponent
   ],
