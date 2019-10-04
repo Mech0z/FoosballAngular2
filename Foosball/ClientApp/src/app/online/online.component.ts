@@ -4,8 +4,7 @@ import { mapTo } from 'rxjs/operators';
 
 @Component({
   selector: 'app-online',
-  //moduleId: module.id,
-  template: '<p><em>{{isOnlineMessage}}</em></p>'
+  template: '<p *ngIf="isOnlineMessage"><em>{{isOnlineMessage}}</em></p>'
 })
 
 export class OnlineComponent {

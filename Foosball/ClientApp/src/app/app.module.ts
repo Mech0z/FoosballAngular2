@@ -33,6 +33,7 @@ import { MatchService } from './services/match.service';
 import { AdministrationService } from './services/administration.service';
 import { LeaderboardService } from './services/leaderboard.service';
 import { LastGamesDialogComponent } from './last-games/last-games-dialog.component';
+import { ResponsiveOverviewComponent } from './views/responsive-overview/responsive-overview.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { LastGamesDialogComponent } from './last-games/last-games-dialog.compone
     OnlineComponent,
     ChangeEmailComponent,
     RegisterAccountComponent,
-    AdminComponent
+    AdminComponent,
+    ResponsiveOverviewComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

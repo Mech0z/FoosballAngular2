@@ -1,0 +1,23 @@
+p {
+  margin: 0px;
+}
+
+.match {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
+.players {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.match-row {
+  padding: 4px;
+}
+
+.match-row:nth-child(odd) {
+  background-color: white;
+}
