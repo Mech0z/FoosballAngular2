@@ -5,14 +5,16 @@ import { Observable } from 'rxjs/Observable';
 import { GetUserMappingsResponse } from '../models/GetUserMappingsResponse';
 import { ChangeUserRolesRequest } from '../models/ChangeUserRolesRequest';
 import { Match } from '../models/Match';
+import { Season } from '../models/Season';
+import { UpsertSeasonRequest } from '../models/UpsertSeasonRequest';
 
 @Injectable()
 export class AdministrationService {
   constructor(private http: HttpClient, private headersService: HeadersService) { }
 
-  startNewSeason() {
+  startNewSeason(request: UpsertSeasonRequest) {
     const headers = this.headersService.createHttpHeaders();
-    return this.http.post('/api/SeasonsAdministration/StartNewSeason', null, { headers: headers });
+    return this.http.post('/api/SeasonsAdministration/StartNewSeason', request, { headers: headers });
   }
 
   recalculate() {
@@ -38,5 +40,10 @@ export class AdministrationService {
   addPlayerRole(request: ChangeUserRolesRequest) {
     const headers = this.headersService.createHttpHeaders();
     return this.http.post('/api/Administration/ChangeUserRoles', request, { headers: headers });
+  }
+
+  getSeasons(): Observable<Season[]> {
+    const headers = this.headersService.createHttpHeaders();
+    return this.http.get<Season[]>('/api/SeasonsAdministration/GetSeasonsAsync', { headers: headers });
   }
 }

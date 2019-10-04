@@ -75,10 +75,45 @@
   </mat-tab>
   <mat-tab label="Season">
     <div *ngIf="message" class="help-block">{{message}}</div>
-    Start new season from tomorrow
-    <br/>
-    <button mat-stroked-button type="button" (click)="startNewSeason()">
-      Submit
+    
+    <button mat-stroked-button type="button" (click)="getSeasons()">
+      Get Seasons
     </button>
+    <div>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>NAME</th>
+          <th>Start Date</th>
+          <th>DELETE</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let season of seasons">
+          <td style="min-width: 60px">{{season.name}}</td>
+          <td>{{ season.startDate | date : "d/M/yy" }}</td>
+          <td>
+            <button *ngIf="seasonStarted(season)" mat-button (click)="deleteUnstartedSeason(season)">X</button>
+          </td>          
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <br/>
+    <h3>Add new upcoming season</h3>
+
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput type="text" placeholder="Season name" class="form-control" name="seasonName" [(ngModel)]="newSeason.name" #username="ngModel" required />
+      </mat-form-field>
+    </form>         
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" (dateChange)=seasonDateChanged($event) placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br/>
+      <button [disabled]="loading" class="btn" (click)="startNewSeason()">Add season</button>
   </mat-tab>
 </mat-tab-group>

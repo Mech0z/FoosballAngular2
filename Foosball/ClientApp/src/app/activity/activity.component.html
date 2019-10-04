@@ -1,0 +1,10 @@
+Activity: {{activityText}}
+<br />
+<div *ngIf="activity">
+  Seconds of activity: {{activitySeconds}}
+</div>
+
+<br />
+<button mat-stroked-button (click)="refreshActivity()">
+    Refresh
+</button>

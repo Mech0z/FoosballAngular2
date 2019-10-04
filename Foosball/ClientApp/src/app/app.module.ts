@@ -5,13 +5,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule } from '@angular/material/';
-import { MatInputModule, MatCheckboxModule, MatDialogModule, MatTabsModule } from '@angular/material/';
+import { MatInputModule, MatCheckboxModule, MatDialogModule, MatTabsModule, MatDatepickerModule } from '@angular/material/';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
+import { ActivityComponent } from './activity/activity.component';
 import { AccountComponent } from './account/account.component';
 import { ChangePasswordComponent } from './changepassword/changepassword.component';
 import { AddMatchComponent } from './add-match/add-match.component';
@@ -33,7 +35,7 @@ import { MatchService } from './services/match.service';
 import { AdministrationService } from './services/administration.service';
 import { LeaderboardService } from './services/leaderboard.service';
 import { LastGamesDialogComponent } from './last-games/last-games-dialog.component';
-import { ResponsiveOverviewComponent } from './views/responsive-overview/responsive-overview.component';
+import { ActivityService } from './services/activity.service';
 
 @NgModule({
   declarations: [
@@ -53,8 +55,9 @@ import { ResponsiveOverviewComponent } from './views/responsive-overview/respons
     OnlineComponent,
     ChangeEmailComponent,
     RegisterAccountComponent,
-    AdminComponent,
     ResponsiveOverviewComponent
+    AdminComponent,
+    ActivityComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -69,7 +72,9 @@ import { ResponsiveOverviewComponent } from './views/responsive-overview/respons
     MatIconModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatNativeDateModule,
     MatTabsModule,
+    MatDatepickerModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     RouterModule.forRoot([
@@ -84,7 +89,8 @@ import { ResponsiveOverviewComponent } from './views/responsive-overview/respons
       { path: 'player-details/:email', component: PlayerDetailsComponent },
       { path: 'last-games', component: LastGamesComponent },
       { path: 'register-account', component: RegisterAccountComponent },
-      { path: 'admin', component: AdminComponent }
+      { path: 'admin', component: AdminComponent },
+      { path: 'activity', component: ActivityComponent }
     ])
   ],
   entryComponents: [LastGamesDialogComponent],
@@ -96,7 +102,9 @@ import { ResponsiveOverviewComponent } from './views/responsive-overview/respons
     MatchService,
     AdministrationService,
     LeaderboardService,
-    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }],
+    ActivityService,
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
+    {provide: MAT_DATE_LOCALE, useValue: 'da-DK'}],
     exports: [ LastGamesDialogComponent ],
   bootstrap: [AppComponent]
 })
