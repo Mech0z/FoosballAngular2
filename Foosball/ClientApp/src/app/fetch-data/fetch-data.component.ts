@@ -18,14 +18,16 @@ export class FetchDataComponent {
   public players: User[];
   isAdmin = false;
 
+  delay = false;
+
   constructor(http: HttpClient,
     private headerService: HeadersService,
     private administrationService: AdministrationService,
     private _snackBar: MatSnackBar) {
-      const roles = this.headerService.getRoles();
-      if (roles.includes('Admin')) {
-        this.isAdmin = true;
-      }
+    const roles = this.headerService.getRoles();
+    if (roles.includes('Admin')) {
+      this.isAdmin = true;
+    }
 
     http.get<User[]>('/api/Player/GetUsers').subscribe(result => {
       this.players = result;
@@ -42,6 +44,7 @@ export class FetchDataComponent {
 
       if (this.players != null) {
         this.setNames(this.players);
+        setTimeout(() => { this.delay = true; }, 100);
       }
     }, error => console.error(error));
   }

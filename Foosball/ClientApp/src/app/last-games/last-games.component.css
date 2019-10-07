@@ -1,22 +1,37 @@
 p {
   margin: 0px;
+  color: white;;
 }
+
+h2 {
+  margin: 4px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* #588e43
+#77C35A
+#6bbb4c
+#5f8a4e
+*/
 
 .match {
+  padding: 8px;
+  background-color: #6bbb4c;
+  margin: 4px;
+  border: #5f8a4e 1px solid
+}
+
+.header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
   flex-direction: row;
-}
-
-.score {
-  padding-right: 8px;
-  min-width: 60px;
-  width: 60px;
-}
-
-.points {
-  min-width: 40px;
-  width: 40px;
+  padding: 4px 12px;
 }
 
 .players {
@@ -27,19 +42,3 @@ p {
   text-overflow: ellipsis;
 }
 
-.date {
-  padding: 0 8px;
-  min-width: 80px;
-  width: 80px;
-}
-
-.match-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 4px;
-}
-
-.match-row:nth-child(odd) {
-  background-color: white;
-}

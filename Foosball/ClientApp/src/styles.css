@@ -17,3 +17,15 @@ body, html {
   z-index: 999;
   background: whitesmoke;
 }
+
+.spinner {
+  position: absolute;
+  height: 50%;
+  width: 50%;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}

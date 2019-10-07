@@ -1,2 +1,59 @@
-tr:nth-child(odd)		{ background-color:#fff; }
-tr:nth-child(even)		{ background-color:#eee; }
+
+h2 {
+  margin: 4px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.block {
+  width: 20px;
+  height: 20px;
+  margin-top: 20px;
+  background-color: black;
+  transition: margin 3s ease-in 2s;
+}
+
+.player {
+  padding: 8px;
+  background-color: #6bbb4c;
+  margin: 8px;
+  border: #5f8a4e 1px solid;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+a {
+  font-weight: bold;
+  margin: 0px;
+  font-size: 16px;
+  color: white;
+}
+
+p {
+  margin: 0px;
+  color: white;
+}
+
+.gold {
+  box-shadow: 4px 4px 2px 0px  grey;
+  margin: 8px 12px 4px 2px;
+  transition: all 500ms linear;
+  transition-delay: 500ms;
+}
+
+.silver {
+  box-shadow: 3px 3px 2px 0px  grey;
+  margin: 8px 10px 4px 4px;
+  transition: all 500ms linear;
+  transition-delay: 250ms;
+}
+
+.bronze {
+  box-shadow: 2px 2px 2px 0px grey;
+  margin: 8px 8px 4px 6px;
+  transition: all 500ms linear;
+  transition-delay: 0ms;
+}

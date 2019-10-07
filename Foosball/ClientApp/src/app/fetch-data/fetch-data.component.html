@@ -1,7 +1,33 @@
-<p *ngIf="!leaderboards"><em>Loading...</em></p>
+<div *ngIf="leaderboards">
+  <div style="display: flex; justify-content: space-between;">
+    <h2>{{selectedLeaderboard.seasonName }}</h2>
+    <div style="margin-bottom: -8px;">
+      <button mat-button [matMenuTriggerFor]="menu" *ngIf="selectedLeaderboard">Seaon</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item *ngFor="let l of leaderboards" (click)="selectedLeaderboard = l"> {{ l.seasonName }}</button>
+      </mat-menu>
+    </div>
+  </div>
+  <div class="player" [ngClass]="{'gold': i === 0 && delay, 'silver': i === 1 && delay, 'bronze': i === 2 && delay}"
+    *ngFor="let leaderboardEntry of selectedLeaderboard.entries; let i = index">
+    <div class="header">
+      <p>{{ i + 1 }}.</p>
+      <p>{{ leaderboardEntry.eloRating }}</p>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: -8px;">
+      <a routerLink="/player-details/{{leaderboardEntry.userName}}">{{ leaderboardEntry.displayName }}</a>
+      <p>{{ leaderboardEntry.wins }} / {{leaderboardEntry.numberOfGames}}
+        ({{(leaderboardEntry.wins/leaderboardEntry.numberOfGames*100)| number : '1.2-2'}}%)</p>
+    </div>
+  </div>
+</div>
 
-<br/>
+<div class="spinner" *ngIf="!leaderboards">
+  <mat-spinner diameter="24"></mat-spinner>
+</div>
 
+
+<!--
 <select *ngIf="selectedLeaderboard" [(ngModel)]="selectedLeaderboard">
   <option *ngFor="let leaderboard of leaderboards" [ngValue]="leaderboard">
     {{ leaderboard.seasonName }}
@@ -10,7 +36,7 @@
 <button *ngIf="selectedLeaderboard && isAdmin" (click)="recalculateSeason()">RECALCULATE</button>
 
 <div *ngIf="selectedLeaderboard">
-  <h2>{{selectedLeaderboard.seasonName | uppercase}}</h2> 
+  <h2>{{selectedLeaderboard.seasonName | uppercase}}</h2>
   <div>
     <table class="table" >
       <thead>
@@ -31,4 +57,4 @@
       </tbody>
     </table>
   </div>
-</div>
+</div> -->
