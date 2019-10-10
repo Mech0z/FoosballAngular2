@@ -36,6 +36,7 @@ import { AdministrationService } from './services/administration.service';
 import { LeaderboardService } from './services/leaderboard.service';
 import { LastGamesDialogComponent } from './last-games/last-games-dialog.component';
 import { ActivityService } from './services/activity.service';
+import { FoosballHubService } from './services/foosballhub.service';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { ActivityService } from './services/activity.service';
     AdministrationService,
     LeaderboardService,
     ActivityService,
+    FoosballHubService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     {provide: MAT_DATE_LOCALE, useValue: 'da-DK'}],
     exports: [ LastGamesDialogComponent ],

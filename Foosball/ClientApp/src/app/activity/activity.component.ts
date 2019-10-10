@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivityService } from '../services/activity.service';
+import { FoosballHubService } from '../services/foosballhub.service';
 
 @Component({
   selector: 'app-activity',
@@ -9,11 +10,21 @@ export class ActivityComponent {
     activityText: string;
     activitySeconds: number;
     activity: boolean;
+    lastActivityChange: Date;
 
     constructor(
-        private activityService: ActivityService
+        private activityService: ActivityService,
+        private foosballHubService: FoosballHubService
     ) {
         this.refreshActivity();
+
+        this.foosballHubService.connect();
+        foosballHubService.connection.on('ActivityUpdated', (activity: boolean, duration: number, lastActivity: Date) => {
+            this.activity = activity;
+            this.activitySeconds = duration;
+            this.lastActivityChange = lastActivity;
+            this.refreshActivity();
+        });
      }
 
     refreshActivity() {

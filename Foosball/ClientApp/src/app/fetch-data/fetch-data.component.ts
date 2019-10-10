@@ -5,6 +5,7 @@ import { User } from '../models/user.interface';
 import { HeadersService } from '../services/headers.service';
 import { AdministrationService } from '../services/administration.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FoosballHubService } from '../services/foosballhub.service';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class FetchDataComponent {
   constructor(http: HttpClient,
     private headerService: HeadersService,
     private administrationService: AdministrationService,
-    private _snackBar: MatSnackBar) {
+    private _snackBar: MatSnackBar,
+    private foosballHubService: FoosballHubService) {
       const roles = this.headerService.getRoles();
       if (roles.includes('Admin')) {
         this.isAdmin = true;
@@ -44,6 +46,17 @@ export class FetchDataComponent {
         this.setNames(this.players);
       }
     }, error => console.error(error));
+
+    this.foosballHubService.connect();
+        foosballHubService.connection.on('MatchAdded', () => {
+            this.matchAddedEvent();
+        });
+  }
+
+  public matchAddedEvent() {
+    this._snackBar.open('New Match have been added, please reload!', '', {
+      duration: 3000
+    });
   }
 
   public setNames(players: User[]) {
@@ -60,7 +73,9 @@ export class FetchDataComponent {
 
   public recalculateSeason() {
     this.administrationService.recalculateSingleSeason(this.selectedLeaderboard.seasonName).subscribe(() => {
-      this._snackBar.open('Season has been recalculated, please reload', '', null);
+      this._snackBar.open('Season has been recalculated, please reload', '', {
+        duration: 3000
+      });
     }, error => console.error(error));
   }
 }
