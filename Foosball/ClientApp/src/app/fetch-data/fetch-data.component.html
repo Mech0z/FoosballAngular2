@@ -7,6 +7,7 @@
           </i></button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item *ngFor="let l of leaderboards" (click)="selectedLeaderboard = l"> {{ l.seasonName }}</button>
+        <button mat-menu-item *ngIf="selectedLeaderboard && isAdmin" (click)="recalculateSeason()" style="font-weight: bold;">RECALCULATE</button>
       </mat-menu>
     </div>
   </div>
