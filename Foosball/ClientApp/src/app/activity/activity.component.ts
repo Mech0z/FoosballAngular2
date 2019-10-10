@@ -23,19 +23,24 @@ export class ActivityComponent {
             this.activity = activity;
             this.activitySeconds = duration;
             this.lastActivityChange = lastActivity;
-            this.refreshActivity();
+            this.setActivityText();
         });
      }
 
     refreshActivity() {
         this.activityService.getActivity().subscribe(response => {
             this.activity = response.activity;
-            if (response.activity) {
-                this.activityText = 'Room is busy!';
-            } else {
-                this.activityText = 'Room is free!';
-            }
-            this.activitySeconds = response.duration;
+            this.setActivityText();
         });
+    }
+
+    setActivityText() {
+        if (this.activity) {
+            this.activityText = 'Room is busy!';
+        } else {
+            this.activityText = 'Room is free!';
+        }
+
+        this.activitySeconds = this.activitySeconds;
     }
 }
