@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import * as signalR from '@aspnet/signalr';
+import { FoosballHubService } from './services/foosballhub.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import * as signalR from '@aspnet/signalr';
 })
 export class AppComponent implements OnInit {
   title = 'Foosball';
-  constructor(private swUpdate: SwUpdate) {
+  constructor(private swUpdate: SwUpdate, private foosballHubService: FoosballHubService) {
 
   }
 
@@ -21,20 +21,5 @@ export class AppComponent implements OnInit {
         }
       });
     }
-
-    const connection = new signalR.HubConnectionBuilder()
-      .configureLogging(signalR.LogLevel.Information)
-      .withUrl('https://betafoosballapi.azurewebsites.net/activitySensorHub')
-      .build();
-
-    connection.start().then(function () {
-      console.log('Connected!');
-    }).catch(function (err) {
-      return console.error(err.toString());
-    });
-
-    connection.on('SendMessageToClient', (type: string, payload: string) => {
-      console.error({ severity: type, summary: payload, detail: 'Via SignalR' });
-    });
   }
 }
