@@ -2,7 +2,9 @@
   <div style="display: flex; justify-content: space-between;">
     <h2>{{selectedLeaderboard.seasonName }}</h2>
     <div style="margin-bottom: -8px;">
-      <button mat-button [matMenuTriggerFor]="menu" *ngIf="selectedLeaderboard">Seaon</button>
+      <button mat-button [matMenuTriggerFor]="menu" *ngIf="selectedLeaderboard"><i class="material-icons">
+          expand_more
+          </i></button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item *ngFor="let l of leaderboards" (click)="selectedLeaderboard = l"> {{ l.seasonName }}</button>
       </mat-menu>

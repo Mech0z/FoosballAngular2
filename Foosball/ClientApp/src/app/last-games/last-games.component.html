@@ -5,6 +5,11 @@
     <div class="header">
       <p><b>{{ match.points}} points</b></p>
       <p>{{ match.timeStampUtc | date : "EEEE HH:mm" }}</p>
+      <div *ngIf="isAdmin" style="max-height: 16px; margin-top: -28px; margin-right: -12px; color: white;">
+        <button mat-icon-button (click)="deleteMatch(match)"><i class="material-icons">
+            clear
+          </i></button>
+      </div>
     </div>
     <div class="content">
       <div class="players">

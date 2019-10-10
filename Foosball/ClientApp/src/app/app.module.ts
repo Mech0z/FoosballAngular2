@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule, MatProgressSpinnerModule, MatMenuModule } from '@angular/material/';
+import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule, MatProgressSpinnerModule, MatMenuModule, MatSlideToggleModule } from '@angular/material/';
 import { MatInputModule, MatCheckboxModule, MatDialogModule, MatTabsModule, MatDatepickerModule } from '@angular/material/';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/';
 import { AppComponent } from './app.component';
@@ -75,6 +75,7 @@ import { ResponsiveOverviewComponent } from './views/responsive-overview/respons
     MatSnackBarModule,
     MatNativeDateModule,
     MatMenuModule,
+    MatSlideToggleModule,
     MatTabsModule,
     MatDatepickerModule,
     BrowserAnimationsModule,
