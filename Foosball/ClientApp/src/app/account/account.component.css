@@ -1,0 +1,16 @@
+.layout {
+  padding: 4px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.button-content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  align-items: center;
+}

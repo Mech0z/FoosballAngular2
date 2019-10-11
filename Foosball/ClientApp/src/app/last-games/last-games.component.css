@@ -1,0 +1,46 @@
+p {
+  margin: 0px;
+  color: white;;
+}
+
+h2 {
+  margin: 4px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* #588e43
+#77C35A
+#6bbb4c
+#5f8a4e
+*/
+
+.match {
+  padding: 8px;
+  max-width: 100%;
+  background-color: #6bbb4c;
+  margin: 4px;
+  border: #5f8a4e 1px solid
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 4px 12px;
+}
+
+.players {
+  width: 100%;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

@@ -10,9 +10,10 @@ import { LastGamesDialogComponent } from './last-games-dialog.component';
 
 @Component({
   selector: 'app-last-games',
-  templateUrl: './last-games.component.html'
+  templateUrl: './last-games.component.html',
+  styleUrls: ['./last-games.component.css']
 })
-export class LastGamesComponent implements OnInit{
+export class LastGamesComponent implements OnInit {
   errorMessage: string;
   loadingPlayers: boolean;
   loadingMatches: boolean;
@@ -56,7 +57,7 @@ export class LastGamesComponent implements OnInit{
     }, error => {
       this.errorMessage = 'Error in loading latest matches: ' + error.errorMessage;
       this.loadingMatches = false;
-      });
+    });
   }
 
   public getName(email: string) {
@@ -74,7 +75,7 @@ export class LastGamesComponent implements OnInit{
     const dialogRef = this.dialog.open(LastGamesDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.matchService.deleteMatch(match.id).subscribe(() => {
           this.getLatestGames();
           this._snackBar.open('Match has been deleted!', '', {
@@ -82,7 +83,7 @@ export class LastGamesComponent implements OnInit{
           });
         }, error => {
           this.errorMessage = 'Error deleting match: ' + error.errorMessage;
-          });
+        });
       }
     });
   }

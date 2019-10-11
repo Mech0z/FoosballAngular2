@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule } from '@angular/material/';
+import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule, MatProgressSpinnerModule, MatMenuModule, MatSlideToggleModule } from '@angular/material/';
 import { MatInputModule, MatCheckboxModule, MatDialogModule, MatTabsModule, MatDatepickerModule } from '@angular/material/';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/';
 import { AppComponent } from './app.component';
@@ -36,6 +36,7 @@ import { AdministrationService } from './services/administration.service';
 import { LeaderboardService } from './services/leaderboard.service';
 import { LastGamesDialogComponent } from './last-games/last-games-dialog.component';
 import { ActivityService } from './services/activity.service';
+import { ResponsiveOverviewComponent } from './views/responsive-overview/responsive-overview.component';
 import { FoosballHubService } from './services/foosballhub.service';
 
 @NgModule({
@@ -56,6 +57,7 @@ import { FoosballHubService } from './services/foosballhub.service';
     OnlineComponent,
     ChangeEmailComponent,
     RegisterAccountComponent,
+    ResponsiveOverviewComponent,
     AdminComponent,
     ActivityComponent
   ],
@@ -73,9 +75,12 @@ import { FoosballHubService } from './services/foosballhub.service';
     MatDialogModule,
     MatSnackBarModule,
     MatNativeDateModule,
+    MatMenuModule,
+    MatSlideToggleModule,
     MatTabsModule,
     MatDatepickerModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     RouterModule.forRoot([
       { path: '', component: FetchDataComponent, pathMatch: 'full' },

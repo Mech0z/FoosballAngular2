@@ -2,6 +2,35 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 p {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  margin: 0px;
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: whitesmoke;
+  margin: 0;
+  overflow: hidden;
+}
+
+.sticky {
+  position: sticky;
+  top: 0px;
+  z-index: 999;
+  background: whitesmoke;
+}
+
+.spinner {
+  position: absolute;
+  height: 50%;
+  width: 50%;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }

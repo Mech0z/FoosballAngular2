@@ -32,16 +32,21 @@ mat-form-field {
   min-width: 140px;
   max-height: 80px;
   text-overflow: ellipsis;
+  background: white;
 }
 
 .player:hover {
   cursor: pointer;
-  background-color: #b4cad2;
+
 }
 
 .selected {
-  outline: 2px solid #555555;
-  background: #b4cad2;
+  background: #6bbb4c;
+  color: white;
+
+  transition: box-shadow 200ms linear;
+  box-shadow: 2px 2px 2px 0px grey;
+
 }
 
 .startMatch {
@@ -59,15 +64,20 @@ mat-form-field {
 }
 
 .player-col {
-  display: flex; 
+  display: flex;
   flex-direction: column;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
   height: 100px;
+  margin-bottom: 8px;
+
+  border: 1px solid black;
+  padding: 4px;
+  background-color: #6bbb4c;
 }
 
 .switch-button {
   margin-bottom: 8px;
-  height: 30px; 
+  height: 30px;
   width: 50px
 }

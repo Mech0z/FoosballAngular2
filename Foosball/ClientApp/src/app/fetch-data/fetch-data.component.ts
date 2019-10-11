@@ -19,6 +19,8 @@ export class FetchDataComponent {
   public players: User[];
   isAdmin = false;
 
+  delay = false;
+
   constructor(http: HttpClient,
     private headerService: HeadersService,
     private administrationService: AdministrationService,
@@ -44,6 +46,7 @@ export class FetchDataComponent {
 
       if (this.players != null) {
         this.setNames(this.players);
+        setTimeout(() => { this.delay = true; }, 100);
       }
     }, error => console.error(error));
 
