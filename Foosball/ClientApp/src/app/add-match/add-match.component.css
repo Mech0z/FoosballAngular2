@@ -69,6 +69,11 @@ mat-form-field {
   justify-content: space-between;
   align-items: center;
   height: 100px;
+  margin-bottom: 8px;
+
+  border: 1px solid black;
+  padding: 4px;
+  background-color: #6bbb4c;
 }
 
 .switch-button {
