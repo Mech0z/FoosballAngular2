@@ -32,6 +32,13 @@
         </i>
       </a>
     </div>
+    <div [routerLinkActive]='["link-active"]'>
+      <a [routerLink]='["/activity"]'>
+        <i class="material-icons">
+          sports
+        </i>
+      </a>
+    </div>
     <div *ngIf="isAdmin" [routerLinkActive]='["link-active"]'>
       <a [routerLink]='["/admin"]'>
         <i class="material-icons">
