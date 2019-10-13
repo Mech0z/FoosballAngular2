@@ -15,9 +15,13 @@ h2 {
 
 .player {
   padding: 8px;
-  background-color: #6bbb4c;
+  background-color: #141264;
   margin: 8px;
   border: #5f8a4e 1px solid;
+}
+
+.player:hover {
+  cursor: pointer;
 }
 
 .header {
