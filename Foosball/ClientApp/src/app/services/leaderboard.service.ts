@@ -10,6 +10,6 @@ export class LeaderboardService {
 
   getSeasons(): Observable<Season[]> {
     const headers = this.headersService.createHttpHeaders();
-    return this.http.get<Season[]>('/api/SeasonsAdministration/GetSeasonsAsync', { headers: headers });
+    return this.http.get<Season[]>('/api/SeasonsAdministration/GetSeasons', { headers: headers });
   }
 }
