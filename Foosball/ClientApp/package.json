@@ -1,5 +1,5 @@
 {
-  "name": "Foosball",
+  "name": "foosball",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -31,6 +31,7 @@
     "@nguniversal/module-map-ngfactory-loader": "^5.0.0-beta.5",
     "aspnet-prerendering": "^3.0.1",
     "core-js": "^2.4.1",
+    "hammerjs": "^2.0.8",
     "npm": "^6.5.0",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.2.2",

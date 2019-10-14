@@ -15,7 +15,7 @@ import { LeaderboardService } from '../services/leaderboard.service';
 @Component({
   selector: 'app-add-match',
   templateUrl: './add-match.component.html',
-  styleUrls: ['./add-match.component.css']
+  styleUrls: ['./add-match.component.scss']
 })
 export class AddMatchComponent {
   players: User[] = [];

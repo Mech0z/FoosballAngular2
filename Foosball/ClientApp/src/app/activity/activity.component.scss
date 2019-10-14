@@ -1,0 +1,20 @@
+@import '~styles/variables';
+
+.status {
+  font-style: italic;
+  color: $dark;
+}
+
+.indicator {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.free {
+  background-color: $accent;
+}
+
+.taken {
+  background-color: $warn;
+}

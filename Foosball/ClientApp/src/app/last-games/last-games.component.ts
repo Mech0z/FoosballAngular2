@@ -11,7 +11,7 @@ import { LastGamesDialogComponent } from './last-games-dialog.component';
 @Component({
   selector: 'app-last-games',
   templateUrl: './last-games.component.html',
-  styleUrls: ['./last-games.component.css']
+  styleUrls: ['./last-games.component.scss']
 })
 export class LastGamesComponent implements OnInit {
   errorMessage: string;

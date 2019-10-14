@@ -5,7 +5,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 @Component({
   selector: 'app-responsive-overview',
   templateUrl: './responsive-overview.component.html',
-  styleUrls: ['./responsive-overview.component.css']
+  styleUrls: ['./responsive-overview.component.scss']
 })
 export class ResponsiveOverviewComponent implements OnInit {
 

@@ -4,48 +4,47 @@
     <router-outlet></router-outlet>
   </div>
   <div class="navigation">
-    <div [routerLinkActive]='["link-active"]'>
-      <a [routerLink]='["/fetch-data"]'>
+    <div>
+      <a routerLink="/fetch-data" routerLinkActive="link-active">
         <i class="material-icons">
           format_list_numbered
         </i>
       </a>
     </div>
-    <div [routerLinkActive]='["link-active"]'>
-      <a [routerLink]='["/last-games"]'>
+    <div>
+      <a routerLink="/last-games" routerLinkActive="link-active">
         <i class="material-icons">
           list
         </i>
       </a>
     </div>
-    <div [routerLinkActive]='["link-active"]'>
-      <a [routerLink]='["/add-match"]'>
+    <div>
+      <a routerLink="/add-match" routerLinkActive="link-active">
         <i class="material-icons">
           add
         </i>
       </a>
     </div>
-    <div [routerLinkActive]='["link-active"]'>
-      <a [routerLink]='["/account"]'>
-        <i class="material-icons">
+    <div>
+      <a routerLink="/account" routerLinkActive="link-active">
+      <i class="material-icons">
           account_circle
         </i>
       </a>
     </div>
-    <div [routerLinkActive]='["link-active"]'>
-      <a [routerLink]='["/activity"]'>
-        <i class="material-icons">
+    <div>
+      <a routerLink="/activity" routerLinkActive="link-active">
+      <i class="material-icons">
           sports
         </i>
       </a>
     </div>
-    <div *ngIf="isAdmin" [routerLinkActive]='["link-active"]'>
-      <a [routerLink]='["/admin"]'>
-        <i class="material-icons">
+    <div *ngIf="isAdmin">
+      <a routerLink="/admin" routerLinkActive="link-active">
+      <i class="material-icons">
           build
         </i>
       </a>
     </div>
   </div>
-
 </div>

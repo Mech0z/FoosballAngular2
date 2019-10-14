@@ -23,9 +23,9 @@ export class OnlineComponent {
   public networkStatus() {
     this.online$.subscribe(value => {
       if (value) {
-         this.isOnlineMessage = "";
+         this.isOnlineMessage = '';
       } else {
-        this.isOnlineMessage = "You are currently offline! Data might not be up-to-date";
+        this.isOnlineMessage = 'You are currently offline! Data might not be up-to-date';
       }
     });
   }
