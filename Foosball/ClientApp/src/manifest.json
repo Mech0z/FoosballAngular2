@@ -1,7 +1,7 @@
 {
   "name": "Foosball",
   "short_name": "Foosball",
-  "theme_color": "#1976d2",
+  "theme_color": "#006bb3",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",

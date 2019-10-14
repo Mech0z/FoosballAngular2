@@ -41,7 +41,7 @@ mat-form-field {
 }
 
 .selected {
-  background: #141264;
+  background: #006bb3;
   color: white;
 
   transition: box-shadow 200ms linear;
@@ -73,7 +73,7 @@ mat-form-field {
 
   border: 1px solid black;
   padding: 4px;
-  background-color: #141264;
+  background-color: #006bb3;
 }
 
 .switch-button {
