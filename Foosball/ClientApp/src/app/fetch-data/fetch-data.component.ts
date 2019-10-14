@@ -6,6 +6,8 @@ import { HeadersService } from '../services/headers.service';
 import { AdministrationService } from '../services/administration.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FoosballHubService } from '../services/foosballhub.service';
+import { LeaderboardService } from '../services/leaderboard.service';
+import { PlayerService } from '../services/player.service';
 
 
 @Component({
@@ -25,41 +27,48 @@ export class FetchDataComponent {
     private headerService: HeadersService,
     private administrationService: AdministrationService,
     private _snackBar: MatSnackBar,
-    private foosballHubService: FoosballHubService) {
+    private foosballHubService: FoosballHubService,
+    private leaderboardService: LeaderboardService,
+    private playerService: PlayerService) {
       const roles = this.headerService.getRoles();
       if (roles.includes('Admin')) {
         this.isAdmin = true;
       }
 
-    http.get<User[]>('/api/Player/GetUsers').subscribe(result => {
+    this.playerService.getUsers().subscribe(result => {
       this.players = result;
       if (this.leaderboards != null) {
         this.setNames(this.players);
       }
     }, error => console.error(error));
 
-    http.get<Leaderboard[]>('/api/leaderboard/index').subscribe(result => {
-      this.leaderboards = result;
-      this.selectedLeaderboard = this.leaderboards[this.leaderboards.length - 1];
-      this.selectedLeaderboard = this.leaderboards[0];
-      this.selectedLeaderboard.entries.sort((a, b) => b.eloRating - a.eloRating);
+    this.getLeaderboardData();
 
+    this.foosballHubService.connect();
+    foosballHubService.connection.on('MatchAdded', () => {
+      this.matchAddedEvent();
+    });
+  }
+
+  private getLeaderboardData() {
+    this.leaderboardService.getLeaderboards().subscribe(result => {
+      this.leaderboards = result;
       if (this.players != null) {
         this.setNames(this.players);
+        this.setSelectedLeaderboard();
         setTimeout(() => { this.delay = true; }, 100);
       }
     }, error => console.error(error));
+  }
 
-    this.foosballHubService.connect();
-        foosballHubService.connection.on('MatchAdded', () => {
-            this.matchAddedEvent();
-        });
+  private setSelectedLeaderboard() {
+    this.selectedLeaderboard = this.leaderboards[this.leaderboards.length - 1];
+    this.selectedLeaderboard = this.leaderboards[0];
+    this.selectedLeaderboard.entries.sort((a, b) => b.eloRating - a.eloRating);
   }
 
   public matchAddedEvent() {
-    this._snackBar.open('New Match have been added, please reload!', '', {
-      duration: 3000
-    });
+    this.getLeaderboardData();
   }
 
   public setNames(players: User[]) {
