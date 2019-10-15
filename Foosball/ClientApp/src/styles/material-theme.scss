@@ -7,3 +7,8 @@ $accent : mat-palette($mat-green);
 $warn   : mat-palette($mat-red);
 
 $foos-theme: mat-light-theme($primary, $accent, $warn);
+
+
+.mat-raised-button, .mat-button {
+  border-radius: 0 !important;
+}

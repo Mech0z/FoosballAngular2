@@ -16,6 +16,7 @@ import { UpsertSeasonRequest } from '../models/UpsertSeasonRequest';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent {
   message: string;

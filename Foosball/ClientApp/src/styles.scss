@@ -3,6 +3,15 @@
 
 @include angular-material-theme($foos-theme);
 
+body, html {
+  height: 100%;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: whitesmoke;
+  margin: 0;
+  overflow: hidden;
+}
+
 p, a, h2, h2, h3, h4, h5 {
   font-family: 'Roboto', Arial, Helvetica;
 }
@@ -13,17 +22,8 @@ p {
 }
 
 h1 {
-  font-size: 20px;
-  margin: 0px;
-}
-
-body, html {
-  height: 100%;
-  width: 100%;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: whitesmoke;
-  margin: 0;
-  overflow: hidden;
+  font-size: 26px;
+  margin: 8px 0;
 }
 
 .sticky {

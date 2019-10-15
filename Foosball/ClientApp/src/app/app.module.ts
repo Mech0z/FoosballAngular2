@@ -1,6 +1,6 @@
 
 // tslint:disable-next-line:max-line-length
-import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule, MatProgressSpinnerModule, MatMenuModule, MatSlideToggleModule } from '@angular/material/';
+import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule, MatProgressSpinnerModule, MatMenuModule, MatSlideToggleModule, MatSelectModule } from '@angular/material/';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatCheckboxModule, MatDialogModule, MatTabsModule, MatDatepickerModule } from '@angular/material/';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/';
 import { AppComponent } from './app.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { LoginComponent } from './login/login.component';
 import { ActivityComponent } from './activity/activity.component';
 import { AccountComponent } from './account/account.component';
@@ -41,7 +41,7 @@ import { FoosballHubService } from './services/foosballhub.service';
 @NgModule({
   declarations: [
     AppComponent,
-    FetchDataComponent,
+    LeaderboardComponent,
     LoginComponent,
     AccountComponent,
     RequestPasswordComponent,
@@ -75,12 +75,13 @@ import { FoosballHubService } from './services/foosballhub.service';
     MatSlideToggleModule,
     MatTabsModule,
     MatDatepickerModule,
+    MatSelectModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     RouterModule.forRoot([
-      { path: '', component: FetchDataComponent, pathMatch: 'full' },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: '', redirectTo: 'leaderboard', pathMatch: 'full' },
+      { path: 'leaderboard', component: LeaderboardComponent },
       { path: 'login', component: LoginComponent },
       { path: 'account', component: AccountComponent },
       { path: 'requestpassword', component: RequestPasswordComponent },

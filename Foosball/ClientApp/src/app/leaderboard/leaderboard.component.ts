@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { Leaderboard } from '../models/leaderboard.interface';
 import { User } from '../models/user.interface';
 import { HeadersService } from '../services/headers.service';
@@ -11,11 +10,11 @@ import { PlayerService } from '../services/player.service';
 
 
 @Component({
-  selector: 'app-fetch-data',
-  templateUrl: './fetch-data.component.html',
-  styleUrls: ['./fetch-data.component.scss']
+  selector: 'app-leaderboard',
+  templateUrl: './leaderboard.component.html',
+  styleUrls: ['./leaderboard.component.scss']
 })
-export class FetchDataComponent {
+export class LeaderboardComponent {
   public leaderboards: Leaderboard[];
   public selectedLeaderboard: Leaderboard;
   public players: User[];
@@ -23,7 +22,7 @@ export class FetchDataComponent {
 
   delay = false;
 
-  constructor(http: HttpClient,
+  constructor(
     private headerService: HeadersService,
     private administrationService: AdministrationService,
     private _snackBar: MatSnackBar,

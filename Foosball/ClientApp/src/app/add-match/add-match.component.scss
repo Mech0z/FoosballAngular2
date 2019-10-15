@@ -1,5 +1,12 @@
 @import '~styles/variables';
 
+.top-content {
+  min-height: calc(100vh - 256px);
+  @media screen and (min-width: 512px) {
+    min-height: calc(100vh - 220px);
+  }
+}
+
 .layout {
   display: flex;
   flex-direction: column;
@@ -23,16 +30,17 @@ mat-form-field {
   justify-content: flex-start;
   flex-wrap: wrap;
   margin-bottom: 16px;
+  min-height: calc(100% - 100px);
 }
 
 .addedplayers {
   min-height: 80px;
-  border: 1px dotted $dark;
+  border: 1px dotted darkgrey;
 }
 
 .player {
-  padding: 8px;
-  border: 2px solid $dark;
+  padding: 10px 8px;
+  border: 2px solid darkgrey;
   margin: 2px;
   width: 100%;
   max-width: calc(50% - 24px);
@@ -49,18 +57,33 @@ mat-form-field {
 .selected {
   background: $primary;
   color: white;
-  transition: box-shadow 200ms linear;
+  transition: all 200ms linear;
   box-shadow: 2px 2px 2px 0px $dark;
 
 }
 
-.startMatch {
-  padding: 16px 0;
+.start-match {
   position: sticky;
-  position: -webkit-sticky; /* safari */
+  position: -webkit-sticky; // Safari
   bottom: -16px;
-  background: whitesmoke;
+  margin: 0 -16px -16px -16px;
+  height: 164px;
+  padding: 16px;
+  width: 100%;
   color: white;
+  background: whitesmoke;
+  border-top: 2px solid darkgrey;
+  overflow: hidden;
+  transition: transform .2s ease-out;
+}
+
+.visible {
+  transform: translateY(0%);
+  position: sticky;
+}
+.hidden {
+  transform: translateY(100%);
+  position: fixed;
 }
 
 .player-section {
@@ -73,11 +96,12 @@ mat-form-field {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
   height: 100px;
-  width: calc(50% - 50px);
-  margin-bottom: 8px;
+  width: calc(50% - 25px);
+  margin-bottom: 16px;
 
-  border: 2px solid $dark;
+  border: 2px solid darkgrey;
   padding: 4px;
   background-color: $primary;
 }
@@ -89,6 +113,10 @@ mat-form-field {
   justify-content: center;
   height: 100%;
   color: $dark;
+  button {
+    padding: 0;
+    min-width: 50px;
+  }
 }
 
 .switch-button {

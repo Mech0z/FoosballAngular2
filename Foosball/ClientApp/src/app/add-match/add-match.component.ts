@@ -6,7 +6,7 @@ import { SaveMatchesRequest, MatchResult } from '../models/SaveMatchesRequest';
 import { MatchService } from '../services/match.service';
 import { Match } from '../models/Match';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { HeadersService } from '../services/headers.service';
@@ -25,8 +25,9 @@ export class AddMatchComponent {
   matchStarted = false;
   isLoggedIn = false;
   haveRole = false;
-  errorMessage = '';
-  message: string;
+  errorMessage$ = new BehaviorSubject<string>('');
+  message$ = new BehaviorSubject<string>('');
+  matchesValid$ = new BehaviorSubject<boolean>(false);
 
   match1team1score: number;
   match1team2score: number;
@@ -36,6 +37,18 @@ export class AddMatchComponent {
 
   evenMoreFilteredPlayers: Observable<User[]>;
   filterPlayersControl = new FormControl();
+
+  private set errorMessage(val: string) {
+    this.errorMessage$.next(val);
+  }
+
+  private set message(val: string) {
+    this.message$.next(val);
+  }
+
+  setValidStatus() {
+    this.matchesValid$.next(this.areMatchesValid);
+  }
 
   constructor(
     private http: HttpClient,
@@ -138,7 +151,7 @@ export class AddMatchComponent {
     });
   }
 
-  get isMatchesValid(): boolean {
+  get areMatchesValid(): boolean {
     const match1Valid = (this.match1team1score >= 0 && this.match1team2score >= 0 &&
       ((this.match1team1score === 8 && this.match1team2score >= 0 && this.match1team2score <= 6
         || this.match1team2score === 8 && this.match1team1score >= 0 && this.match1team1score <= 6)
@@ -200,7 +213,7 @@ export class AddMatchComponent {
           console.log('success');
           this.selectedPlayers.forEach(p => p.isSelected = false);
           this.matchStarted = false;
-          this.router.navigate(['fetch-data']);
+          this.router.navigate(['leaderboard']);
         },
         error => {
           console.log('fail');

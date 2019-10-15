@@ -4,6 +4,11 @@
   flex-direction: column;
 }
 
+.mat-button {
+  padding: 8px 16px;
+  margin: 0 -16px
+}
+
 .button-content {
   display: flex;
   justify-content: space-between;

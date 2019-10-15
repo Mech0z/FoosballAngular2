@@ -1,11 +1,11 @@
-<div>
+<div class="top-content">
 
-  <div *ngIf="!isLoggedIn">Login first</div>
+  <a *ngIf="!isLoggedIn" routerLink="/login">Login first</a>
   <div *ngIf="isLoggedIn && !haveRole">You need 'Player' role to submit matches, talk to an admin</div>
   <div *ngIf="isLoggedIn && haveRole">
     <div *ngIf="matchStarted">
   
-      <form #matchForm="ngForm" class="submit-form">
+      <form #matchForm="ngForm" class="submit-form" (input)="setValidStatus()">
         <p>Match 1</p>
         <div class="matchinput">
           <mat-form-field>
@@ -33,8 +33,8 @@
       </form>
     </div>
     <div class="layout" *ngIf="!loading && !matchStarted">
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px 0 4px;">
-        <mat-form-field style="max-width: 140px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px">
+        <mat-form-field style="width: 50%;">
           <input matInput class="filter-players" placeholder="Find player..." aria-label="FilterPlayers"
             [formControl]="filterPlayersControl">
         </mat-form-field>
@@ -47,64 +47,65 @@
         </div>
       </div>
     </div>
-  
-    <div class="startMatch" *ngIf="selectedPlayers.length === 4">
-      <div class="player-section">
-        <div class="player-col">
-          <p *ngIf="selectedPlayers[0]">
-            {{ selectedPlayers[0].username }}
-          </p>
-  
-          <button mat-button (click)="switchPlayers(0, 1)">
-            <mat-icon style="transform: rotate(90deg)">compare_arrows</mat-icon>
-          </button>
-  
-          <p *ngIf="selectedPlayers[1]">
-            {{ selectedPlayers[1].username }}
-          </p>
-        </div>
-  
-        <div class="vs">
-          <button mat-button (click)="switchPlayers(0, 2)">
-            <mat-icon>compare_arrows</mat-icon>
-          </button>
-          vs
-          <button mat-button (click)="switchPlayers(1, 3)">
-            <mat-icon>compare_arrows</mat-icon>
-          </button>
-        </div>
-  
-  
-        <div class="player-col">
-          <p *ngIf="selectedPlayers[2]">
-            {{ selectedPlayers[2].username }}
-          </p>
-  
-          <button mat-button (click)="switchPlayers(2, 3)">
-            <mat-icon style="transform: rotate(90deg)">compare_arrows</mat-icon>
-          </button>
-  
-          <p *ngIf="selectedPlayers[3]">
-            {{ selectedPlayers[3].username }}
-          </p>
-        </div>
-      </div>
-  
-      <div style="display: flex; justify-content: flex-end;">
-        <button style="width: 100px; color: white" type="button" *ngIf="!matchStarted" mat-raised-button color="accent"
-          [disabled]="selectedPlayers.length !== 4" (click)="matchStarted = true">
-          Score
-        </button>
-  
-        <button style="width: 100px; color: white" type="button" *ngIf="matchStarted" mat-raised-button color="accent"
-          [disabled]="!isMatchesValid" (click)="submitMatch()">
-          Submit
-        </button>
-      </div>
-      </div>
-  
-    <p>{{ errorMessage}}</p>
+
+    <p>{{ errorMessage$ | async }}</p>
+
   </div>
   
-  <p>{{ message}}</p>
+  <p>{{ message$ | async }}</p>
+</div>
+
+<div class="start-match" [ngClass]="selectedPlayers.length === 4 ? 'visible' : 'hidden'">
+  <div class="player-section">
+    <div class="player-col">
+      <p *ngIf="selectedPlayers[0]">
+        {{ selectedPlayers[0].username }}
+      </p>
+
+      <button mat-button (click)="switchPlayers(0, 1)">
+        <mat-icon style="transform: rotate(90deg)">compare_arrows</mat-icon>
+      </button>
+
+      <p *ngIf="selectedPlayers[1]">
+        {{ selectedPlayers[1].username }}
+      </p>
+    </div>
+
+    <div class="vs">
+      <button mat-button (click)="switchPlayers(0, 2)">
+        <mat-icon>compare_arrows</mat-icon>
+      </button>
+      vs
+      <button mat-button (click)="switchPlayers(1, 3)">
+        <mat-icon>compare_arrows</mat-icon>
+      </button>
+    </div>
+
+
+    <div class="player-col">
+      <p *ngIf="selectedPlayers[2]">
+        {{ selectedPlayers[2].username }}
+      </p>
+
+      <button mat-button (click)="switchPlayers(2, 3)">
+        <mat-icon style="transform: rotate(90deg)">compare_arrows</mat-icon>
+      </button>
+
+      <p *ngIf="selectedPlayers[3]">
+        {{ selectedPlayers[3].username }}
+      </p>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: flex-end;">
+    <button style="width: 100px; color: white" type="button" *ngIf="!matchStarted" mat-raised-button color="accent"
+      [disabled]="selectedPlayers.length !== 4" (click)="matchStarted = true">
+      Score
+    </button>
+
+    <button style="width: 100px; color: white" type="button" *ngIf="matchStarted" mat-raised-button color="accent"
+      [disabled]="!(matchesValid$ | async)" (click)="submitMatch()">
+      Submit
+    </button>
+  </div>
 </div>

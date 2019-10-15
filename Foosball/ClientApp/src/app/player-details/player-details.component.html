@@ -2,11 +2,13 @@
 <p *ngIf="!playerSeasonHistory"><em>Loading...</em></p>
 
 <div *ngIf="playerSeasonHistory">
-  <select *ngIf="email" (change)="onChange()" [(ngModel)]="selectedUser">
-    <option *ngFor="let user of users" [ngValue]="user">
-      {{ user.username }}
-    </option>
-  </select>
+  <mat-form-field>
+    <mat-select *ngIf="email" (selectionChange)="onChange()" [(ngModel)]="selectedUser">
+      <mat-option *ngFor="let user of users" [value]="user">
+        {{ user.username }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <!-- <mat-form-field>
     <input type="text" placeholder="Select user" aria-label="User" matInput [formControl]="selectUserControl" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" autoActiveFirstOption (optionSelected)="onChange($event)">

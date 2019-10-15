@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { GetPlayerSeasonHistoryResponse } from '../models/GetPlayerSeasonHistoryResponse';
 import { User } from '../models/user.interface';
 import { Match } from '../models/Match';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { PartnerPercentResult } from '../models/PartnerPercentResult';
 import { PlayerService } from '../services/player.service';
 import { MatchService } from '../services/match.service';
 
 @Component({
   selector: 'app-player-details',
-  templateUrl: 'player-details.component.html'
+  templateUrl: 'player-details.component.html',
+  styleUrls: ['./player-details.component.scss']
 })
 
 export class PlayerDetailsComponent implements OnInit {
@@ -29,6 +29,7 @@ export class PlayerDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private playerService: PlayerService,
     private matchService: MatchService
     ) { }
@@ -92,12 +93,12 @@ export class PlayerDetailsComponent implements OnInit {
       });
   }
 
-  onChange(event: MatAutocompleteSelectedEvent) {
-    this.selectedUser = event.option.value;
+  onChange() {
     this.playerSeasonHistory = null;
     this.email = this.selectedUser.email;
     this.selectedUser = this.selectedUser;
     this.setName();
+    this.updateUrl();
     this.getPlayerHistory();
   }
 
@@ -130,5 +131,9 @@ export class PlayerDetailsComponent implements OnInit {
         this.username = user.username;
       }
     });
+  }
+
+  private updateUrl() {
+    this.router.navigate(['player-details', this.selectedUser.email]);
   }
 }
