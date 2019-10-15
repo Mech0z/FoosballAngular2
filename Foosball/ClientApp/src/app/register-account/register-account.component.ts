@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CreateUserRequest } from '../models/CreateUserRequest';
 import { PlayerService } from '../services/player.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register-account',
@@ -8,7 +9,8 @@ import { PlayerService } from '../services/player.service';
   templateUrl: 'register-account.component.html'
 })
 
-export class RegisterAccountComponent {
+export class RegisterAccountComponent implements OnDestroy {
+  private subs: Subscription[] = [];
   name: string;
   nameError: string;
   username: string;
@@ -22,16 +24,20 @@ export class RegisterAccountComponent {
     private playerService: PlayerService
   ) { }
 
-  nameIsValid() {
-  if (this.name == null) {
-    return false;
+  ngOnDestroy() {
+    this.subs.forEach(s => s.unsubscribe());
   }
 
-  if (this.name.length < 6) {
-    this.nameError = 'Minimum name length is 6';
-    return false;
-  }
-  return true;
+  nameIsValid() {
+    if (this.name == null) {
+      return false;
+    }
+
+    if (this.name.length < 6) {
+      this.nameError = 'Minimum name length is 6';
+      return false;
+    }
+    return true;
   }
 
   userIsValid() {
@@ -59,12 +65,14 @@ export class RegisterAccountComponent {
   createaccount() {
     this.loading = true;
     const request = new CreateUserRequest(this.name, this.username, this.password);
-    this.playerService.createUser(request).subscribe(() => {
-      this.errorMessage = 'User created';
-      this.loading = false;
-    }, error => {
-      this.errorMessage = 'Failed ' + error.errorMessage;
-      this.loading = false;
-    });
+    this.subs.push(
+      this.playerService.createUser(request).subscribe(() => {
+        this.errorMessage = 'User created';
+        this.loading = false;
+      }, error => {
+        this.errorMessage = 'Failed ' + error.errorMessage;
+        this.loading = false;
+      })
+    );
   }
 }

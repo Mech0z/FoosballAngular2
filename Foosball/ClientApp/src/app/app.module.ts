@@ -14,7 +14,6 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { LoginComponent } from './login/login.component';
 import { ActivityComponent } from './activity/activity.component';
 import { AccountComponent } from './account/account.component';
-import { ChangePasswordComponent } from './changepassword/changepassword.component';
 import { AddMatchComponent } from './add-match/add-match.component';
 import { PlayerDetailsComponent } from './player-details/player-details.component';
 import { LastGamesComponent } from './last-games/last-games.component';
@@ -37,6 +36,7 @@ import { LastGamesDialogComponent } from './last-games/last-games-dialog.compone
 import { ActivityService } from './services/activity.service';
 import { ResponsiveOverviewComponent } from './views/responsive-overview/responsive-overview.component';
 import { FoosballHubService } from './services/foosballhub.service';
+import { ChangePasswordComponent } from './changepassword/changepassword.component';
 
 @NgModule({
   declarations: [

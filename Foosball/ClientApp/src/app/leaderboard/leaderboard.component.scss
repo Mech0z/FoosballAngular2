@@ -22,6 +22,11 @@
 .header {
   display: flex;
   justify-content: space-between;
+  p.green {
+    color: $accent;
+    font-size: 14px;
+    font-weight: bold;
+  }
 }
 
 a {

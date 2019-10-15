@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { PlayerService } from '../services/player.service';
@@ -8,7 +8,7 @@ import { AuthenticationService } from '../services/authentication.service';
   selector: 'app-changepassword',
   templateUrl: './changepassword.component.html',
 })
-export class ChangePasswordComponent implements OnInit{
+export class ChangePasswordComponent implements OnInit {
   public password1: string;
   public password2: string;
   loading = false;
@@ -30,7 +30,7 @@ export class ChangePasswordComponent implements OnInit{
       this.router.navigate([this.loginUrl]);
     }
   }
-   
+
   valid() {
     if (this.password1 === this.password2) {
       return true;
@@ -41,16 +41,16 @@ export class ChangePasswordComponent implements OnInit{
 
   changepassword() {
     this.loading = true;
-    var request = new ChangePasswordRequest(this.username, this.password1);
-       
+    const request = new ChangePasswordRequest(this.username, this.password1);
+
     if (!this.valid()) {
-      this.message = "Passwords are not the same";
+      this.message = 'Passwords are not the same';
       this.loading = false;
       return;
     }
 
     if (this.password1.length < 6) {
-      this.message = "Password needs to be at least 6 characters long";
+      this.message = 'Password needs to be at least 6 characters long';
       this.loading = false;
       return;
     }
@@ -59,12 +59,12 @@ export class ChangePasswordComponent implements OnInit{
       .subscribe(
       () => {
         this.loading = false;
-        this.password1 = "";
-        this.password2 = "";
-        this.message = "Success";
+        this.password1 = '';
+        this.password2 = '';
+        this.message = 'Success';
       },
       () => {
-        this.message = "Request failed!";
+        this.message = 'Request failed!';
         this.loading = false;
       });
   }

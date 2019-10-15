@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.interface';
 import { AuthenticationService } from '../services/authentication.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
+  private subs: Subscription[] = [];
   public user: User;
   public userEmail: string;
   public checked: boolean;
@@ -35,14 +37,18 @@ export class AccountComponent implements OnInit {
       return;
     }
 
-    this.http.get<User[]>('/api/Player/GetUsers').subscribe(result => {
+    this.subs.push(
+      this.http.get<User[]>('/api/Player/GetUsers').subscribe(result => {
+        result.forEach(function (user) {
+          if (user.email == this.userEmail) {
+            this.user = user;
+          }
+        }.bind(this));
+      }, error => console.error(error))
+    );
+  }
 
-      result.forEach(function (user) {
-        if (user.email == this.userEmail) {
-          this.user = user;
-        }
-      }.bind(this));
-
-    }, error => console.error(error));
+  ngOnDestroy() {
+    this.subs.forEach(s => s.unsubscribe());
   }
 }

@@ -1,0 +1,27 @@
+@import '~styles/variables';
+
+mat-form-field {
+  margin-top: 0;
+}
+
+.user {
+  color: $dark;
+  font-style: italic;
+}
+
+h3 {
+  margin: 0 0 16px 0;
+}
+
+table {
+  margin-bottom: 16px;
+  border-collapse: collapse;
+  th {
+    border-bottom: 2px solid darkgray;
+    padding-right: 8px;
+    text-align: left;
+  }
+  td {
+    padding-right: 8px;
+  }
+}

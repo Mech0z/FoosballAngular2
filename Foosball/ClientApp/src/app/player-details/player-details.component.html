@@ -1,22 +1,20 @@
-<br />
-<p *ngIf="!playerSeasonHistory"><em>Loading...</em></p>
-
+<h1>Player stats <span class="user">{{selectedUser?.username}}</span></h1>
 <div *ngIf="playerSeasonHistory">
-  <mat-form-field>
+  <!-- <mat-form-field>
     <mat-select *ngIf="email" (selectionChange)="onChange()" [(ngModel)]="selectedUser">
       <mat-option *ngFor="let user of users" [value]="user">
         {{ user.username }}
       </mat-option>
     </mat-select>
-  </mat-form-field>
-  <!-- <mat-form-field>
+  </mat-form-field> -->
+  <mat-form-field>
     <input type="text" placeholder="Select user" aria-label="User" matInput [formControl]="selectUserControl" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" autoActiveFirstOption (optionSelected)="onChange($event)">
       <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
         {{user.username}}
       </mat-option>
     </mat-autocomplete>
-  </mat-form-field>  -->
+  </mat-form-field> 
   <h3>Season History</h3>
   <table class="table">
     <thead>
@@ -54,7 +52,6 @@
           {{ match.timeStampUtc | date : "H:mm dd MMM" }}
         </td>
         <td>{{ getName(match.playerList[0]) }} & {{ getName(match.playerList[1])}} <br />{{match.matchResult.team1Score}}</td>
-        <td> VS </td>
         <td>{{ getName(match.playerList[2])}} & {{ getName(match.playerList[3])}} <br />
           {{match.matchResult.team2Score}}</td>
         <td>{{ match.points}}</td>

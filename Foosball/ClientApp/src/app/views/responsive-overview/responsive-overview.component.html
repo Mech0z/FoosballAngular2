@@ -4,47 +4,35 @@
     <router-outlet></router-outlet>
   </div>
   <div class="navigation">
-    <div>
-      <a routerLink="/leaderboard" routerLinkActive="link-active">
-        <i class="material-icons">
-          format_list_numbered
-        </i>
-      </a>
-    </div>
-    <div>
-      <a routerLink="/last-games" routerLinkActive="link-active">
-        <i class="material-icons">
-          list
-        </i>
-      </a>
-    </div>
-    <div>
-      <a routerLink="/add-match" routerLinkActive="link-active">
-        <i class="material-icons">
-          add
-        </i>
-      </a>
-    </div>
-    <div>
-      <a routerLink="/account" routerLinkActive="link-active">
+    <button mat-button routerLink="/leaderboard" routerLinkActive="link-active">
       <i class="material-icons">
-          account_circle
-        </i>
-      </a>
-    </div>
-    <div>
-      <a routerLink="/activity" routerLinkActive="link-active">
+        format_list_numbered
+      </i>
+    </button>
+    <button mat-button routerLink="/last-games" routerLinkActive="link-active">
       <i class="material-icons">
-          sports
-        </i>
-      </a>
-    </div>
-    <div *ngIf="isAdmin">
-      <a routerLink="/admin" routerLinkActive="link-active">
+        list
+      </i>
+    </button>
+    <button mat-button routerLink="/add-match" routerLinkActive="link-active">
       <i class="material-icons">
-          build
-        </i>
-      </a>
-    </div>
+        add
+      </i>
+    </button>
+    <button mat-button routerLink="/account" routerLinkActive="link-active">
+      <i class="material-icons">
+        account_circle
+      </i>
+    </button>
+    <button mat-button routerLink="/activity" routerLinkActive="link-active">
+    <i class="material-icons">
+        sports
+      </i>
+    </button>
+    <button mat-button *ngIf="isAdmin" routerLink="/admin" routerLinkActive="link-active">
+      <i class="material-icons">
+        build
+      </i>
+    </button>
   </div>
 </div>

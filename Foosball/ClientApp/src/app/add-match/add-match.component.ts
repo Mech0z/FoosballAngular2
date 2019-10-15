@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Leaderboard } from '../models/leaderboard.interface';
 import { User } from '../models/user.interface';
@@ -6,7 +6,7 @@ import { SaveMatchesRequest, MatchResult } from '../models/SaveMatchesRequest';
 import { MatchService } from '../services/match.service';
 import { Match } from '../models/Match';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { HeadersService } from '../services/headers.service';
@@ -17,7 +17,8 @@ import { LeaderboardService } from '../services/leaderboard.service';
   templateUrl: './add-match.component.html',
   styleUrls: ['./add-match.component.scss']
 })
-export class AddMatchComponent {
+export class AddMatchComponent implements OnInit, OnDestroy {
+  private subs: Subscription[] = [];
   players: User[] = [];
   selectedPlayers: User[] = [];
   loading = true;
@@ -55,11 +56,13 @@ export class AddMatchComponent {
     private matchService: MatchService,
     private headersService: HeadersService,
     private leaderboardService: LeaderboardService,
-    private router: Router) {
-    if (headersService.getUsername().length > 0) {
+    private router: Router) { }
+
+  ngOnInit() {
+    if (this.headersService.getUsername().length > 0) {
       this.isLoggedIn = true;
     }
-    const roles = headersService.getRoles();
+    const roles = this.headersService.getRoles();
     if (roles.includes('Player') || roles.includes('Admin')) {
       this.haveRole = true;
     }
@@ -68,10 +71,14 @@ export class AddMatchComponent {
     }
 
     this.evenMoreFilteredPlayers = this.filterPlayersControl.valueChanges
-    .pipe(
-      startWith<string>(''),
-      map(name => name ? this._filter(name) : this.filteredPlayers.slice())
-    );
+      .pipe(
+        startWith<string>(''),
+        map(name => name ? this._filter(name) : this.filteredPlayers.slice())
+      );
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach(s => s.unsubscribe());
   }
 
   private _filter(value: string): User[] {
@@ -116,38 +123,41 @@ export class AddMatchComponent {
     this.http.get<User[]>('/api/Player/GetUsers').subscribe(users => {
       this.players = users;
       this.players.sort((p1, p2) => p1.username.localeCompare(p2.username));
-
-      this.leaderboardService.getSeasons().subscribe(seasons => {
-        const activeSeasons = seasons.filter(function (item) {
-          return new Date(item.startDate).getTime() <= Date.now();
-        });
-
-        const orderedSeasons = activeSeasons.sort(function (a, b) {
-          return  a.startDate > b.startDate ? 1 : 0;
-        });
-        const currentSeason = orderedSeasons[orderedSeasons.length - 1];
-
-        this.http.get<Leaderboard[]>('/api/leaderboard/index').subscribe(leaderboards => {
-          leaderboards.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
-
-          let l: Leaderboard;
-          leaderboards.forEach(leaderboard => {
-            if (leaderboard.seasonName === currentSeason.name) {
-              l = leaderboard;
-            }
+      this.subs.push(
+        this.leaderboardService.getSeasons().subscribe(seasons => {
+          const activeSeasons = seasons.filter(function (item) {
+            return new Date(item.startDate).getTime() <= Date.now();
           });
 
-          this.players.forEach(p => {
-            p.currentElo = l.entries.filter(e => e.userName === p.email).map(e => e.eloRating)[0];
-            if (!p.currentElo) {
-              p.currentElo = 1500;
-              p.noElo = true;
-            }
+          const orderedSeasons = activeSeasons.sort(function (a, b) {
+            return a.startDate > b.startDate ? 1 : 0;
           });
+          const currentSeason = orderedSeasons[orderedSeasons.length - 1];
 
-          this.loading = false;
-        });
-      });
+          this.subs.push(
+            this.http.get<Leaderboard[]>('/api/leaderboard/index').subscribe(leaderboards => {
+              leaderboards.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+
+              let l: Leaderboard;
+              leaderboards.forEach(leaderboard => {
+                if (leaderboard.seasonName === currentSeason.name) {
+                  l = leaderboard;
+                }
+              });
+
+              this.players.forEach(p => {
+                p.currentElo = l.entries.filter(e => e.userName === p.email).map(e => e.eloRating)[0];
+                if (!p.currentElo) {
+                  p.currentElo = 1500;
+                  p.noElo = true;
+                }
+              });
+
+              this.loading = false;
+            })
+          );
+        })
+      );
     });
   }
 
@@ -207,19 +217,21 @@ export class AddMatchComponent {
         matchResult: new MatchResult(this.match2team1score, this.match2team2score)
       } as Match);
     }
-    this.matchService.submitMatch(request)
-      .subscribe(
-        () => {
-          console.log('success');
-          this.selectedPlayers.forEach(p => p.isSelected = false);
-          this.matchStarted = false;
-          this.router.navigate(['leaderboard']);
-        },
-        error => {
-          console.log('fail');
-          console.log(error);
-          this.message = error.message;
-        });
+    this.subs.push(
+      this.matchService.submitMatch(request)
+        .subscribe(
+          () => {
+            console.log('success');
+            this.selectedPlayers.forEach(p => p.isSelected = false);
+            this.matchStarted = false;
+            this.router.navigate(['leaderboard']);
+          },
+          error => {
+            console.log('fail');
+            console.log(error);
+            this.message = error.message;
+          })
+    );
   }
 
 }

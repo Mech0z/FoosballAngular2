@@ -1,7 +1,7 @@
 @import '~styles/variables';
 
 .top-content {
-  min-height: calc(100vh - 256px);
+  min-height: calc(100vh - 264px);
   @media screen and (min-width: 512px) {
     min-height: calc(100vh - 220px);
   }
@@ -104,18 +104,26 @@ mat-form-field {
   border: 2px solid darkgrey;
   padding: 4px;
   background-color: $primary;
+  button.switch {
+    color: $accent;
+  }
 }
 
 .vs {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 100%;
-  color: $dark;
+  color: white;
+  p {
+    color: black;
+    margin: 12px 0;
+  }
   button {
     padding: 0;
-    min-width: 50px;
+    min-width: 40px;
+    color: $accent;
   }
 }
 

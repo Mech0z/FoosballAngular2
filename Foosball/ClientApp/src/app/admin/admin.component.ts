@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { AdministrationService } from '../services/administration.service';
@@ -18,7 +18,8 @@ import { UpsertSeasonRequest } from '../models/UpsertSeasonRequest';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent {
+export class AdminComponent implements OnInit, OnDestroy {
+  private subs: Subscription[] = [];
   message: string;
   deletedMessage: string;
   rolesMessage: string;
@@ -35,68 +36,84 @@ export class AdminComponent {
     private playerService: PlayerService,
     private matchService: MatchService,
     private _snackBar: MatSnackBar,
-    private dialog: MatDialog ) {
+    private dialog: MatDialog) { }
+
+  ngOnInit() {
+    this.subs.push(
       this.playerService.getUsers().subscribe(result => {
         this.players = result;
       }, error => {
         this._snackBar.open('Error in loading players: ' + error.errorMessage, '', {
           duration: 3000
         });
-      });
-      this.newSeason = new Season();
-    }
+      })
+    );
+    this.newSeason = new Season();
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach(s => s.unsubscribe());
+  }
 
   startNewSeason() {
     this.loading = true;
     console.error(this.newSeason.name);
     console.error(this.newSeason.startDate);
     const request = new UpsertSeasonRequest(this.newSeason.name, this.newSeason.startDate);
-    this.administrationSerivce.startNewSeason(request).subscribe(() => {
-      this.loading = false;
-    }, error => {
-      this.loading = false;
-      this.message = error.message;
-    });
+    this.subs.push(
+      this.administrationSerivce.startNewSeason(request).subscribe(() => {
+        this.loading = false;
+      }, error => {
+        this.loading = false;
+        this.message = error.message;
+      })
+    );
   }
 
   resetLeaderboard() {
     this.loading = true;
-    this.administrationSerivce.recalculate().subscribe(() => {
-      this.loading = false;
+    this.subs.push(
+      this.administrationSerivce.recalculate().subscribe(() => {
+        this.loading = false;
 
-    }, error => {
-      this.loading = false;
-      this.message = error.message;
-    });
+      }, error => {
+        this.loading = false;
+        this.message = error.message;
+      })
+    );
   }
 
   getUserMappingsResponse() {
     this.loading = true;
     this.rolesMessage = '';
-    this.administrationSerivce.getUserMappings().subscribe(result => {
-      this.loading = false;
-      this.usersMappings = result.users;
-    }, error => {
-      this.loading = false;
-      this.rolesMessage = error.message;
-    });
+    this.subs.push(
+      this.administrationSerivce.getUserMappings().subscribe(result => {
+        this.loading = false;
+        this.usersMappings = result.users;
+      }, error => {
+        this.loading = false;
+        this.rolesMessage = error.message;
+      })
+    );
   }
 
   getSeasons() {
     this.loading = true;
     this.deletedMessage = '';
-    this.administrationSerivce.getSeasons().subscribe(result => {
-      this.loading = false;
-      this.seasons = result.sort(function (a, b) {
-        return  a.startDate > b.startDate ? 0 : 1;
-      });
-      this.seasons = result;
-      if (this.seasons.length === 0) {
-        this._snackBar.open('No seasons found!', '', {
-          duration: 3000
+    this.subs.push(
+      this.administrationSerivce.getSeasons().subscribe(result => {
+        this.loading = false;
+        this.seasons = result.sort(function (a, b) {
+          return a.startDate > b.startDate ? 0 : 1;
         });
-      }
-    });
+        this.seasons = result;
+        if (this.seasons.length === 0) {
+          this._snackBar.open('No seasons found!', '', {
+            duration: 3000
+          });
+        }
+      })
+    );
   }
 
   seasonDateChanged(event: MatDatepickerInputEvent<Date>) {
@@ -114,18 +131,20 @@ export class AdminComponent {
   getDeletedMatches() {
     this.loading = true;
     this.deletedMessage = '';
-    this.administrationSerivce.getDeletedMatches().subscribe(result => {
-      this.loading = false;
-      this.deletedMatches = result;
-      if (this.deletedMatches.length === 0) {
-        this._snackBar.open('No deleted matches found!', '', {
-          duration: 3000
-        });
-      }
-    }, error => {
-      this.loading = false;
-      this.deletedMessage = error.message;
-    });
+    this.subs.push(
+      this.administrationSerivce.getDeletedMatches().subscribe(result => {
+        this.loading = false;
+        this.deletedMatches = result;
+        if (this.deletedMatches.length === 0) {
+          this._snackBar.open('No deleted matches found!', '', {
+            duration: 3000
+          });
+        }
+      }, error => {
+        this.loading = false;
+        this.deletedMessage = error.message;
+      })
+    );
   }
 
   onUserMappingSelect(userMapping: UserMappingsResponseEntry) {
@@ -156,13 +175,15 @@ export class AdminComponent {
     }
 
     if (request != null) {
-      this.administrationSerivce.addPlayerRole(request).subscribe(() => {
-        this.loading = false;
-        this.selectedUser = null;
-      }, error => {
-        this.loading = false;
-        this.message = error.message;
-    });
+      this.subs.push(
+        this.administrationSerivce.addPlayerRole(request).subscribe(() => {
+          this.loading = false;
+          this.selectedUser = null;
+        }, error => {
+          this.loading = false;
+          this.message = error.message;
+        })
+      );
     } else {
       this._snackBar.open('User already have this role: ', '', {
         duration: 3000
@@ -173,20 +194,22 @@ export class AdminComponent {
   public undeleteMatch(match: Match) {
     const dialogRef = this.dialog.open(LastGamesDialogComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.matchService.undeleteMatch(match.id).subscribe(() => {
-          this.getDeletedMatches();
-          this._snackBar.open('Match has been undeleted!', '', {
-            duration: 3000
+    this.subs.push(
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.matchService.undeleteMatch(match.id).subscribe(() => {
+            this.getDeletedMatches();
+            this._snackBar.open('Match has been undeleted!', '', {
+              duration: 3000
+            });
+          }, error => {
+            this._snackBar.open('Error deleting match: ' + error.errorMessage, '', {
+              duration: 3000
+            });
+            this.deletedMessage = 'Error deleting match: ' + error.errorMessage;
           });
-        }, error => {
-          this._snackBar.open('Error deleting match: ' + error.errorMessage, '', {
-            duration: 3000
-          });
-          this.deletedMessage = 'Error deleting match: ' + error.errorMessage;
-          });
-      }
-    });
+        }
+      })
+    );
   }
 }
