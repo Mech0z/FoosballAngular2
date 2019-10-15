@@ -1,10 +1,16 @@
+@import '~styles/variables';
+
 .layout {
   display: flex;
   flex-direction: column;
 }
 
 mat-form-field {
-  max-width: 285px;
+  width: 100%;
+  max-width: calc(50% - 8px);
+  &:not(:first-child) {
+    margin-left: 16px;
+  }
 }
 
 .matchinput {
@@ -21,41 +27,40 @@ mat-form-field {
 
 .addedplayers {
   min-height: 80px;
-  border: 1px dotted #555555;
+  border: 1px dotted $dark;
 }
 
 .player {
   padding: 8px;
-  border: 1px solid #555555;
+  border: 2px solid $dark;
   margin: 2px;
-  width: 24%;
-  min-width: 140px;
+  width: 100%;
+  max-width: calc(50% - 24px);
   max-height: 80px;
   text-overflow: ellipsis;
   background: white;
+  flex-grow: 1;
 }
 
 .player:hover {
   cursor: pointer;
-
 }
 
 .selected {
-  background: #006BB4;
+  background: $primary;
   color: white;
-
   transition: box-shadow 200ms linear;
-  box-shadow: 2px 2px 2px 0px grey;
+  box-shadow: 2px 2px 2px 0px $dark;
 
 }
 
 .startMatch {
-  padding: 8px;
-  margin-bottom: 8px;
+  padding: 16px 0;
   position: sticky;
   position: -webkit-sticky; /* safari */
-  bottom: 0px;
+  bottom: -16px;
   background: whitesmoke;
+  color: white;
 }
 
 .player-section {
@@ -69,11 +74,21 @@ mat-form-field {
   justify-content: space-between;
   align-items: center;
   height: 100px;
+  width: calc(50% - 50px);
   margin-bottom: 8px;
 
-  border: 1px solid black;
+  border: 2px solid $dark;
   padding: 4px;
-  background-color: #006BB4;
+  background-color: $primary;
+}
+
+.vs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: $dark;
 }
 
 .switch-button {

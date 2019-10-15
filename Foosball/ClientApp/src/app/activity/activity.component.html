@@ -1,10 +1,12 @@
-Activity: {{activityText}}
-<br />
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <h1>Activity: <span class="status">{{activityText}}</span></h1>
+  <div class="indicator" [ngClass]="activity ? 'taken': 'free'"></div>
+</div>
+<br/>
 <div *ngIf="activity">
   Seconds of activity: {{activitySeconds}}
 </div>
-
 <br />
-<button mat-stroked-button (click)="refreshActivity()">
-    Refresh
+<button mat-raised-button color="primary" (click)="refreshActivity()">
+  Refresh
 </button>

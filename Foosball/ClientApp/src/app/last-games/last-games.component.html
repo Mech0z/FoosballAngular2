@@ -1,9 +1,9 @@
-<h2>Match history</h2>
+<h1>Match history</h1>
 <p *ngIf="!matches || !players"><em>Loading...</em></p>
 <div *ngIf="matches && players" style="max-width: 666px;">
   <div *ngFor="let match of matches" class="match">
     <div class="header">
-      <p><b>{{ match.points}} points</b></p>
+      <p class="green"><b>{{ match.points}} points</b></p>
       <p>{{ match.timeStampUtc | date : "EEEE HH:mm" }}</p>
       <div *ngIf="isAdmin" style="max-height: 16px; margin-top: -28px; margin-right: -12px; color: white;">
         <button mat-icon-button (click)="deleteMatch(match)"><i class="material-icons">
@@ -26,6 +26,7 @@
     </div>
   </div>
 </div>
+
 <!-- <div *ngIf="matches && players">
   <div>
     <div class="sticky match-row">

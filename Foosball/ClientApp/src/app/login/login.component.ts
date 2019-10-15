@@ -5,8 +5,8 @@ import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-login',
-  moduleId: module.id,
-  templateUrl: 'login.component.html'
+  templateUrl: 'login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 
 export class LoginComponent implements OnInit {

@@ -1,3 +1,5 @@
+@import '~styles/variables';
+
 p {
   margin: 0px;
   color: white;;
@@ -18,9 +20,13 @@ h2 {
 .match {
   padding: 8px;
   max-width: 100%;
-  background-color: #006BB4;
-  margin: 4px;
-  border: #5f8a4e 1px solid
+  background-color: #006bb3;
+  margin: 8px 0;
+  border: darkgray 4px solid;
+}
+
+.green {
+  color: $accent;
 }
 
 .header {

@@ -1,107 +1,110 @@
-<div *ngIf="!isLoggedIn">Login first</div>
-<div *ngIf="isLoggedIn && !haveRole">You need 'Player' role to submit matches, talk to an admin</div>
-<div *ngIf="isLoggedIn && haveRole">
-  <div *ngIf="matchStarted">
+<div>
 
-    <form #matchForm="ngForm" class="submit-form">
-      <p>Match 1</p>
-      <div class="matchinput">
-        <mat-form-field>
-          <input name="match1team1score" [(ngModel)]="match1team1score" name="match1team1score" matInput type="number"
-            maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
+  <div *ngIf="!isLoggedIn">Login first</div>
+  <div *ngIf="isLoggedIn && !haveRole">You need 'Player' role to submit matches, talk to an admin</div>
+  <div *ngIf="isLoggedIn && haveRole">
+    <div *ngIf="matchStarted">
+  
+      <form #matchForm="ngForm" class="submit-form">
+        <p>Match 1</p>
+        <div class="matchinput">
+          <mat-form-field>
+            <input name="match1team1score" [(ngModel)]="match1team1score" name="match1team1score" matInput type="number"
+              maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
+          </mat-form-field>
+  
+          <mat-form-field>
+            <input name="match1team2score" [(ngModel)]="match1team2score" name="match1team2score" matInput type="number"
+              maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
+          </mat-form-field>
+        </div>
+        <p>Match 2</p>
+        <div class="matchinput">
+          <mat-form-field>
+            <input name="match2team1score" [(ngModel)]="match2team1score" name="match2team1score" matInput type="number"
+              maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
+          </mat-form-field>
+  
+          <mat-form-field>
+            <input name="match2team2score" [(ngModel)]="match2team2score" name="match2team2score" matInput type="number"
+              maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+    <div class="layout" *ngIf="!loading && !matchStarted">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px 0 4px;">
+        <mat-form-field style="max-width: 140px;">
+          <input matInput class="filter-players" placeholder="Find player..." aria-label="FilterPlayers"
+            [formControl]="filterPlayersControl">
         </mat-form-field>
-
-        <mat-form-field>
-          <input name="match1team1score" [(ngModel)]="match1team2score" name="match1team1score" matInput type="number"
-            maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
-        </mat-form-field>
+        <mat-slide-toggle (click)="showAllToggle()">Show all players</mat-slide-toggle>
       </div>
-      <p>Match 2</p>
-      <div class="matchinput">
-        <mat-form-field>
-          <input name="match2team1score" [(ngModel)]="match2team1score" name="match2team1score" matInput type="number"
-            maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input name="match2team2score" [(ngModel)]="match2team2score" name="match2team2score" matInput type="number"
-            maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
-        </mat-form-field>
+      <div class="players">
+        <div class="player" [ngClass]="{selected: p.isSelected}" *ngFor="let p of evenMoreFilteredPlayers | async"
+          (click)="togglePlayer(p)">
+          <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  ">{{p.username}}</p>
+        </div>
       </div>
-    </form>
+    </div>
+  
+    <div class="startMatch" *ngIf="selectedPlayers.length === 4">
+      <div class="player-section">
+        <div class="player-col">
+          <p *ngIf="selectedPlayers[0]">
+            {{ selectedPlayers[0].username }}
+          </p>
+  
+          <button mat-button (click)="switchPlayers(0, 1)">
+            <mat-icon style="transform: rotate(90deg)">compare_arrows</mat-icon>
+          </button>
+  
+          <p *ngIf="selectedPlayers[1]">
+            {{ selectedPlayers[1].username }}
+          </p>
+        </div>
+  
+        <div class="vs">
+          <button mat-button (click)="switchPlayers(0, 2)">
+            <mat-icon>compare_arrows</mat-icon>
+          </button>
+          vs
+          <button mat-button (click)="switchPlayers(1, 3)">
+            <mat-icon>compare_arrows</mat-icon>
+          </button>
+        </div>
+  
+  
+        <div class="player-col">
+          <p *ngIf="selectedPlayers[2]">
+            {{ selectedPlayers[2].username }}
+          </p>
+  
+          <button mat-button (click)="switchPlayers(2, 3)">
+            <mat-icon style="transform: rotate(90deg)">compare_arrows</mat-icon>
+          </button>
+  
+          <p *ngIf="selectedPlayers[3]">
+            {{ selectedPlayers[3].username }}
+          </p>
+        </div>
+      </div>
+  
+      <div style="display: flex; justify-content: flex-end;">
+        <button style="width: 100px; color: white" type="button" *ngIf="!matchStarted" mat-raised-button color="accent"
+          [disabled]="selectedPlayers.length !== 4" (click)="matchStarted = true">
+          Score
+        </button>
+  
+        <button style="width: 100px; color: white" type="button" *ngIf="matchStarted" mat-raised-button color="accent"
+          [disabled]="!isMatchesValid" (click)="submitMatch()">
+          Submit
+        </button>
+      </div>
+      </div>
+  
+    <p>{{ errorMessage}}</p>
   </div>
-  <div class="layout" *ngIf="!loading && !matchStarted">
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px 0 4px;">
-      <mat-form-field style="max-width: 140px;">
-        <input matInput class="filter-players" placeholder="Find player..." aria-label="FilterPlayers"
-          [formControl]="filterPlayersControl">
-      </mat-form-field>
-      <mat-slide-toggle (click)="showAllToggle()">Show all players</mat-slide-toggle>
-    </div>
-    <div class="players">
-      <div class="player" [ngClass]="{selected: p.isSelected}" *ngFor="let p of evenMoreFilteredPlayers | async"
-        (click)="togglePlayer(p)">
-        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  ">{{p.username}}</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="startMatch" *ngIf="selectedPlayers.length === 4">
-    <div class="player-section">
-      <div class="player-col">
-        <p *ngIf="selectedPlayers[0]">
-          {{ selectedPlayers[0].username }}
-        </p>
-
-        <button mat-button (click)="switchPlayers(0, 1)">
-          <mat-icon style="transform: rotate(90deg)">compare_arrows</mat-icon>
-        </button>
-
-        <p *ngIf="selectedPlayers[1]">
-          {{ selectedPlayers[1].username }}
-        </p>
-      </div>
-
-      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-        <button mat-button (click)="switchPlayers(0, 2)">
-          <mat-icon>compare_arrows</mat-icon>
-        </button>
-        vs
-        <button mat-button (click)="switchPlayers(1, 3)">
-          <mat-icon>compare_arrows</mat-icon>
-        </button>
-      </div>
-
-
-      <div class="player-col">
-        <p *ngIf="selectedPlayers[2]">
-          {{ selectedPlayers[2].username }}
-        </p>
-
-        <button mat-button (click)="switchPlayers(2, 3)">
-          <mat-icon style="transform: rotate(90deg)">compare_arrows</mat-icon>
-        </button>
-
-        <p *ngIf="selectedPlayers[3]">
-          {{ selectedPlayers[3].username }}
-        </p>
-      </div>
-    </div>
-
-    <div style="display: flex; justify-content: flex-end;">
-      <button style="width: 100px;" type="button" *ngIf="!matchStarted" mat-raised-button color="primary"
-        [disabled]="selectedPlayers.length !== 4" (click)="matchStarted = true">
-        Score
-      </button>
-
-      <button style="width: 100px;" type="button" *ngIf="matchStarted" mat-raised-button color="primary"
-        [disabled]="!isMatchesValid" (click)="submitMatch()">
-        Submit
-      </button>
-    </div>
-  </div>
-
-  <p>{{ errorMessage}}</p>
+  
+  <p>{{ message}}</p>
 </div>
-
-<p>{{ message}}</p>

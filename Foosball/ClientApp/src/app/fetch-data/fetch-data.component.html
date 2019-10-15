@@ -1,6 +1,6 @@
 <div *ngIf="leaderboards" style="max-width: 600px;">
-  <div style="display: flex; justify-content: space-between;">
-    <h2>{{selectedLeaderboard.seasonName }}</h2>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>{{selectedLeaderboard.seasonName }}</h1>
     <div style="margin-bottom: -8px;">
       <button mat-button [matMenuTriggerFor]="menu" *ngIf="selectedLeaderboard"><i class="material-icons">
           expand_more
@@ -28,7 +28,6 @@
 <div class="spinner" *ngIf="!leaderboards">
   <mat-spinner diameter="24"></mat-spinner>
 </div>
-
 
 <!--
 <select *ngIf="selectedLeaderboard" [(ngModel)]="selectedLeaderboard">

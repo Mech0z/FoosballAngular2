@@ -116,7 +116,7 @@ export class AdminComponent {
     this.administrationSerivce.getDeletedMatches().subscribe(result => {
       this.loading = false;
       this.deletedMatches = result;
-      if(this.deletedMatches.length === 0) {
+      if (this.deletedMatches.length === 0) {
         this._snackBar.open('No deleted matches found!', '', {
           duration: 3000
         });
@@ -173,7 +173,7 @@ export class AdminComponent {
     const dialogRef = this.dialog.open(LastGamesDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.matchService.undeleteMatch(match.id).subscribe(() => {
           this.getDeletedMatches();
           this._snackBar.open('Match has been undeleted!', '', {
