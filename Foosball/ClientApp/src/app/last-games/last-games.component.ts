@@ -7,6 +7,7 @@ import { HeadersService } from '../services/headers.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { LastGamesDialogComponent } from './last-games-dialog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-last-games',
