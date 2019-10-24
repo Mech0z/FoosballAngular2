@@ -1,13 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-@import './styles/material-theme.scss';
-
-@include angular-material-theme($foos-theme);
+@import './styles/material-theme';
+@import './styles/material-overwrites';
 
 body, html {
   height: 100%;
   width: 100%;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: whitesmoke;
+  background: whitesmoke;
   margin: 0;
   overflow: hidden;
 }
