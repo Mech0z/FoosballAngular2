@@ -27,8 +27,10 @@
         </i>
         <p> Logout</p>
       </div>
-
-
     </button>
+    <div class="mat-button button-content">
+      <mat-slide-toggle (change)="toggleDarkTheme($event)" [checked]="darkTheme$ | async"></mat-slide-toggle>
+      <p>Dark mode</p>
+    </div>
   </div>
 </div>

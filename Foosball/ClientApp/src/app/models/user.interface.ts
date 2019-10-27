@@ -8,4 +8,7 @@ export interface User {
   currentElo: number;
   isSelected: boolean;
   noElo: boolean;
+
+  // User settings
+  joinedTheDarkSide?: boolean;
 }

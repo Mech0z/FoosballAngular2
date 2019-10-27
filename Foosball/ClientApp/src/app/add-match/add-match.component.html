@@ -55,7 +55,7 @@
   <p>{{ message$ | async }}</p>
 </div>
 
-<div class="start-match" [ngClass]="selectedPlayers.length === 4 ? 'visible' : 'hidden'">
+<div class="start-match" [ngClass]="{'hidden': selectedPlayers.length < 4, 'visible': selectedPlayers.length >= 4, 'dark-theme': darkTheme$ | async}">
   <div class="player-section">
     <div class="player-col">
       <p *ngIf="selectedPlayers[0]">

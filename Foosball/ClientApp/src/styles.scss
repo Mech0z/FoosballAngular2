@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import './styles/material-theme';
 @import './styles/material-overwrites';
+@import './styles/variables';
 
 body, html {
   height: 100%;
@@ -18,6 +19,9 @@ p, a, h2, h2, h3, h4, h5 {
 p {
   font-size: 14px;
   margin: 0px;
+}
+a {
+  color: $primary;
 }
 
 h1 {

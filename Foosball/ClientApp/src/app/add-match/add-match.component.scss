@@ -46,9 +46,9 @@ mat-form-field {
   max-width: calc(50% - 24px);
   max-height: 80px;
   text-overflow: ellipsis;
-  background: white;
   flex-grow: 1;
 }
+
 
 .player:hover {
   cursor: pointer;
@@ -70,11 +70,13 @@ mat-form-field {
   height: 164px;
   padding: 16px;
   width: 100%;
-  color: white;
-  background: whitesmoke;
   border-top: 2px solid darkgrey;
   overflow: hidden;
+  background: whitesmoke;
   transition: transform .2s ease-out;
+}
+.dark-theme {
+  background: $dark;
 }
 
 .visible {

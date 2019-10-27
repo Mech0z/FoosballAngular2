@@ -3,7 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.interface';
 import { AuthenticationService } from '../services/authentication.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { ThemeService } from '../shared/theme.service';
+import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
   selector: 'app-account',
@@ -15,6 +17,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   public user: User;
   public userEmail: string;
   public checked: boolean;
+  darkTheme$: Observable<boolean>;
   returnUrl: string;
   loginUrl: string;
 
@@ -22,10 +25,12 @@ export class AccountComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
+    private theme: ThemeService,
     private http: HttpClient
   ) { }
 
   ngOnInit() {
+    this.darkTheme$ = this.theme.darkTheme$;
     this.userEmail = this.authenticationService.checkLogin();
     this.checked = true;
 
@@ -50,5 +55,9 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs.forEach(s => s.unsubscribe());
+  }
+
+  toggleDarkTheme(e: MatSlideToggleChange) {
+    this.theme.joinThe(e.checked);
   }
 }

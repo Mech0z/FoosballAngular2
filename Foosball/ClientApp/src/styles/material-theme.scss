@@ -13,11 +13,13 @@ $foos-theme: mat-light-theme($primary, $accent, $warn);
 // Our dark theme
 .dark-theme {
   color: $light-primary-text;
+  background: #424242;
   // For now theese are just the same - could be different if you want though
   $dark-primary: mat-palette($mat-blue, 700);
   $dark-accent: mat-palette($mat-green, 500);
   $dark-warn: mat-palette($mat-red);
-  $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
-  @include angular-material-theme($dark-theme);
+  $dark-foos-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+  @include angular-material-theme($dark-foos-theme);
 }
