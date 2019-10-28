@@ -1,5 +1,7 @@
 @import '~styles/variables';
 
+// Mobile
+
 .layout {
   height: 100%;
   background-color: whitesmoke;
@@ -40,7 +42,28 @@
   button.link-active {
     background: $accent;
   }
+
+  .btn-add {
+    display: none;
+  }
 }
+
+.fab-add {
+  position: fixed;
+  bottom: 64px;
+  right: 16px;
+  background-color: $accent;
+  color: white;
+  ::ng-deep .mat-button-wrapper {
+    padding: 0 4px 6px 0;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+// Desktop
 
 @media screen and (min-width: 512px) {
   .navigation {
@@ -49,6 +72,9 @@
     flex-direction: column;
     height: 100%;
     width: 42px;
+    .btn-add {
+      display: initial;
+    }
   }
 
   .layout {
@@ -62,8 +88,13 @@
     max-height: 100%;
     overflow: auto;
   }
+
   .material-icons {
     margin: 16px -6px;
+  }
+
+  .fab-add {
+    display: none;
   }
 }
 

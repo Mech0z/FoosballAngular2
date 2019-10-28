@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { FoosballHubService } from './services/foosballhub.service';
+import { ThemeService } from './shared/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,7 @@ import { FoosballHubService } from './services/foosballhub.service';
 })
 export class AppComponent implements OnInit {
   title = 'Foosball';
-  constructor(private swUpdate: SwUpdate, private foosballHubService: FoosballHubService) {
-
+  constructor(private swUpdate: SwUpdate, private foosballHubService: FoosballHubService, private theme: ThemeService) {
   }
 
   ngOnInit() {

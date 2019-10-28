@@ -1,5 +1,5 @@
-<div class="layout">
-  <div class="content">
+<div class="layout" >
+  <div class="content" [ngClass]="{'dark-theme': darkTheme$ | async}">
     <app-online></app-online>
     <router-outlet></router-outlet>
   </div>
@@ -14,7 +14,7 @@
         list
       </i>
     </button>
-    <button mat-button routerLink="/add-match" routerLinkActive="link-active">
+    <button mat-button routerLink="/add-match" routerLinkActive="link-active" class="btn-add">
       <i class="material-icons">
         add
       </i>
@@ -36,3 +36,7 @@
     </button>
   </div>
 </div>
+
+<button mat-fab routerLink="/add-match" routerLinkActive="hidden" class="fab-add">
+  <mat-icon>add</mat-icon>
+</button>

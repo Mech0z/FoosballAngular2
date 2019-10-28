@@ -11,6 +11,7 @@ import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { HeadersService } from '../services/headers.service';
 import { LeaderboardService } from '../services/leaderboard.service';
+import { ThemeService } from '../shared/theme.service';
 
 @Component({
   selector: 'app-add-match',
@@ -19,6 +20,7 @@ import { LeaderboardService } from '../services/leaderboard.service';
 })
 export class AddMatchComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
+  darkTheme$: Observable<boolean>;
   players: User[] = [];
   selectedPlayers: User[] = [];
   loading = true;
@@ -53,12 +55,14 @@ export class AddMatchComponent implements OnInit, OnDestroy {
 
   constructor(
     private http: HttpClient,
+    private theme: ThemeService,
     private matchService: MatchService,
     private headersService: HeadersService,
     private leaderboardService: LeaderboardService,
     private router: Router) { }
 
   ngOnInit() {
+    this.darkTheme$ = this.theme.darkTheme$;
     if (this.headersService.getUsername().length > 0) {
       this.isLoggedIn = true;
     }
