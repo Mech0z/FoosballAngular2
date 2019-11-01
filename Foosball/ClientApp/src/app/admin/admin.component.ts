@@ -213,4 +213,9 @@ export class AdminComponent implements OnInit, OnDestroy {
       })
     );
   }
+
+  deleteUnstartedSeason() {
+    alert('Fejl 40, pga. noget Mads har glemt at gøre');
+    throw(new Error('Not implemented'));
+  }
 }

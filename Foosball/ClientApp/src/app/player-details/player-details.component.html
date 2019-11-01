@@ -1,12 +1,5 @@
 <h1>Player stats <span class="user">{{selectedUser?.username}}</span></h1>
 <div *ngIf="playerSeasonHistory">
-  <!-- <mat-form-field>
-    <mat-select *ngIf="email" (selectionChange)="onChange()" [(ngModel)]="selectedUser">
-      <mat-option *ngFor="let user of users" [value]="user">
-        {{ user.username }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field> -->
   <mat-form-field>
     <input type="text" placeholder="Select user" aria-label="User" matInput [formControl]="selectUserControl" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" autoActiveFirstOption (optionSelected)="onChange($event)">

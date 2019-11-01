@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FoosballHubService } from '../services/foosballhub.service';
 import { LeaderboardService } from '../services/leaderboard.service';
 import { PlayerService } from '../services/player.service';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 
 
 @Component({
@@ -20,6 +20,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
   public leaderboards: Leaderboard[];
   public selectedLeaderboard: Leaderboard;
   public players: User[];
+  hilightPodium = false;
   isAdmin = false;
 
   delay = false;
@@ -38,27 +39,29 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
       this.isAdmin = true;
     }
 
-    this.getUsers();
-    this.getLeaderboardData();
+    this.subs.push(
+      combineLatest(
+        this.playerService.getUsers(),
+        this.leaderboardService.getLeaderboards()
+      ).subscribe(([players, leaderboards]) => {
+        this.players = players;
+        this.leaderboards = leaderboards;
+
+        this.setNames(this.players);
+        this.setSelectedLeaderboard();
+        setTimeout(() => this.hilightPodium = true);
+      })
+    );
+
     this.foosballHubService.connect();
     this.foosballHubService.connection.on('MatchAdded', () => {
-      this.matchAddedEvent();
+      this.onMatchAdded();
     });
   }
   ngOnDestroy(): void {
     this.subs.forEach(s => s.unsubscribe());
   }
 
-  private getUsers() {
-    this.subs.push(
-      this.playerService.getUsers().subscribe(result => {
-        this.players = result;
-        if (this.leaderboards != null) {
-          this.setNames(this.players);
-        }
-      }, error => console.error(error))
-    );
-  }
 
   private getLeaderboardData() {
     this.subs.push(
@@ -67,7 +70,6 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
         if (this.players != null) {
           this.setNames(this.players);
           this.setSelectedLeaderboard();
-          setTimeout(() => { this.delay = true; }, 100);
         }
       }, error => console.error(error))
     );
@@ -79,9 +81,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
     this.selectedLeaderboard.entries.sort((a, b) => b.eloRating - a.eloRating);
   }
 
-  public goToPlayer() {}
-
-  public matchAddedEvent() {
+  public onMatchAdded() {
     this.getLeaderboardData();
   }
 

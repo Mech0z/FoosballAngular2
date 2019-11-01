@@ -20,6 +20,7 @@
 
 .navigation {
   background-color: $primary;
+  border-top: 2px solid darkgray;
   height: 48px;
   min-width: 48px;
   display: flex;
@@ -54,8 +55,10 @@
   right: 16px;
   background-color: $accent;
   color: white;
-  ::ng-deep .mat-button-wrapper {
-    padding: 0 4px 6px 0;
+  mat-icon {
+    font-size: 28px;
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -67,6 +70,8 @@
 
 @media screen and (min-width: 512px) {
   .navigation {
+    border-right: 2px solid darkgray;
+    border-top: none;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
