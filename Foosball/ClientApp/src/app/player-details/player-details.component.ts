@@ -9,6 +9,7 @@ import { startWith, map } from 'rxjs/operators';
 import { PartnerPercentResult } from '../models/PartnerPercentResult';
 import { PlayerService } from '../services/player.service';
 import { MatchService } from '../services/match.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-player-details',
@@ -19,14 +20,19 @@ import { MatchService } from '../services/match.service';
 export class PlayerDetailsComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
   playerSeasonHistory: GetPlayerSeasonHistoryResponse;
-  email: string;
-  username: string;
   users: User[];
-  selectedUser: User;
+  selectedUser: User = {} as User;
   matches: Match[];
   selectUserControl = new FormControl();
   filteredUsers: Observable<User[]>;
   partnerResult: PartnerPercentResult[];
+
+  public get email(): string {
+    return this.selectedUser ? this.selectedUser.email : '';
+  }
+  public get userName(): string {
+    return this.selectedUser ? this.selectedUser.username : '';
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -63,7 +69,7 @@ export class PlayerDetailsComponent implements OnInit, OnDestroy {
 
   getPlayerHistory() {
     if (!this.email) {
-      this.email = this.route.snapshot.paramMap.get('email');
+      this.selectedUser.email = this.route.snapshot.paramMap.get('email');
     }
 
     this.subs.push(
@@ -104,10 +110,10 @@ export class PlayerDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  onChange() {
+  onChange(event: MatAutocompleteSelectedEvent) {
     this.playerSeasonHistory = null;
-    this.email = this.selectedUser.email;
-    this.setName();
+    this.selectedUser = event.option.value;
+    this.updateName();
     this.updateUrl();
     this.getPlayerHistory();
   }
@@ -121,7 +127,7 @@ export class PlayerDetailsComponent implements OnInit, OnDestroy {
           if (a.username > b.username) { return 1; }
           return 0;
         });
-        this.setName();
+        this.updateName();
       }, error => console.error(error))
     );
   }
@@ -137,12 +143,14 @@ export class PlayerDetailsComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  setName() {
-    this.users.forEach(user => {
-      if (user.email === this.email) {
-        this.username = user.username;
-      }
-    });
+  updateName() {
+    if (!this.selectedUser && this.users) {
+      this.users.forEach(user => {
+        if (user.email === this.email) {
+          this.selectedUser = user;
+        }
+      });
+    }
   }
 
   private updateUrl() {

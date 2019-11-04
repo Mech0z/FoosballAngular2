@@ -9,7 +9,7 @@ import { PlayerService } from '../services/player.service';
 export class ChangeEmailComponent {
   newEmail1: string;
   newEmail2: string;
-  message: string;
+  errorMessage: string;
   loading: boolean;
 
   constructor(
@@ -20,7 +20,7 @@ export class ChangeEmailComponent {
 
   changeEmail() {
     if (this.newEmail1 !== this.newEmail2) {
-      this.message = 'Emails are not equal';
+      this.errorMessage = 'Emails are not equal';
       return;
     }
 
@@ -28,9 +28,9 @@ export class ChangeEmailComponent {
 
     this.playerService.changeEmail(this.newEmail1).subscribe(result => {
       this.loading = false;
-      this.message = 'Emaail changed to ' + this.newEmail1;
+      this.errorMessage = 'Emaail changed to ' + this.newEmail1;
     }, error => {
-      this.message = 'Error in request: ' + error.errorMessage;
+      this.errorMessage = 'Error in request: ' + error.errorMessage;
       this.loading = false;
     });
   }

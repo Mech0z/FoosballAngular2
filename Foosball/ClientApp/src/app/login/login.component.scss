@@ -1,4 +1,6 @@
-.form {
+form {
+  display: flex;
+  flex-direction: column;
   .form-group {
     margin-bottom: 16px;
   }
