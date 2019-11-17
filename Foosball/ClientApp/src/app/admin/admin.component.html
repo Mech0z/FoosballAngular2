@@ -1,6 +1,6 @@
 <h1>Administration</h1>
-
-<mat-tab-group>
+<h3 *ngIf="!players">Loading...</h3>
+<mat-tab-group *ngIf="players">
   
   <!-- <mat-tab label="Leaderboard">
       Reset leaderboard
@@ -16,21 +16,21 @@
     </button>    
     <ul class="users">
       <li *ngFor="let user of usersMappings"
-        [class.selected]="user === selectedUser"
+        [class.selected]="user === selectedMappingUser"
         (click)="onUserMappingSelect(user)">
         <span >{{getName(user.email)}}</span>
       </li>
     </ul>
 
-    <ul *ngIf="selectedUser && !usersMappings" class="users">
+    <ul *ngIf="selectedMappingUser && !usersMappings" class="users">
       <div *ngIf="message" class="help-block">{{message}}</div>
-        {{getName(selectedUser.email)}} existing Roles: 
-      <li *ngFor="let role of selectedUser.roles">
+        {{getName(selectedMappingUser.email)}} existing Roles: 
+      <li *ngFor="let role of selectedMappingUser.roles">
         <span >{{role}}</span>
       </li>
     </ul>
 
-    <ul *ngIf="selectedUser && !usersMappings">  
+    <ul *ngIf="selectedMappingUser && !usersMappings">  
       
         <button type="button" mat-stroked-button (click)="addPlayerRole()">
           Add Player role to user
@@ -115,5 +115,23 @@
       </mat-form-field>
       <br/>
       <button [disabled]="loading" class="btn" (click)="startNewSeason()">Add season</button>
+  </mat-tab>
+  
+  <mat-tab label="Password">
+    <h4>Change users password</h4>
+    <h4>{{passwordMessage}}</h4>
+    <div *ngIf="loading">Loading</div>
+    <div *ngIf="!selectedPasswordPlayer && !loading">
+        <li *ngFor="let player of players" 
+        [class.selected]="player === selectedPasswordPlayer"
+        (click)="onPasswordSelect(player)">
+        <span >{{getName(player.email)}}</span>
+      </li>
+    </div>
+    <div *ngIf="selectedPasswordPlayer && !loading">
+        {{getName(selectedPasswordPlayer.email)}} selected
+        <input matInput type="password" [(ngModel)]="newUserPassword" class="form-control"> 
+        <li (click)="changeUserPassword()">Change password</li>
+    </div>
   </mat-tab>
 </mat-tab-group>

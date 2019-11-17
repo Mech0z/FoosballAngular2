@@ -7,6 +7,7 @@ import { ChangeUserRolesRequest } from '../models/ChangeUserRolesRequest';
 import { Match } from '../models/Match';
 import { Season } from '../models/Season';
 import { UpsertSeasonRequest } from '../models/UpsertSeasonRequest';
+import { ChangeUserPasswordRequest } from '../models/ChangeUserPasswordRequest';
 
 @Injectable()
 export class AdministrationService {
@@ -45,5 +46,10 @@ export class AdministrationService {
   getSeasons(): Observable<Season[]> {
     const headers = this.headersService.createHttpHeaders();
     return this.http.get<Season[]>('/api/SeasonsAdministration/GetSeasons', { headers: headers });
+  }
+
+  changeUserPassword(request: ChangeUserPasswordRequest) {
+    const headers = this.headersService.createHttpHeaders();
+    return this.http.post('/api/Administration/ChangeUserPassword', request, { headers: headers });
   }
 }

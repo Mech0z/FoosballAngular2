@@ -13,6 +13,7 @@ import { Season } from '../models/Season';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { UpsertSeasonRequest } from '../models/UpsertSeasonRequest';
 import { Subscription } from 'rxjs';
+import { ChangeUserPasswordRequest } from '../models/ChangeUserPasswordRequest';
 
 @Component({
   selector: 'app-admin',
@@ -25,12 +26,15 @@ export class AdminComponent implements OnInit, OnDestroy {
   deletedMessage: string;
   rolesMessage: string;
   loading: boolean;
-  selectedUser: UserMappingsResponseEntry;
+  selectedMappingUser: UserMappingsResponseEntry;
+  selectedPasswordPlayer: User;
   usersMappings: UserMappingsResponseEntry[];
   deletedMatches: Match[];
   seasons: Season[];
+  newUserPassword: string;
   newSeason: Season;
   players: User[];
+  passwordMessage: string;
 
   constructor(
     private administrationSerivce: AdministrationService,
@@ -149,8 +153,25 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   onUserMappingSelect(userMapping: UserMappingsResponseEntry) {
-    this.selectedUser = userMapping;
+    this.selectedMappingUser = userMapping;
     this.usersMappings = null;
+  }
+
+  onPasswordSelect(player: User) {
+    this.selectedPasswordPlayer = player;
+  }
+
+  changeUserPassword() {
+    const request = new ChangeUserPasswordRequest(this.selectedPasswordPlayer.email, this.newUserPassword);
+    this.loading = true;
+    this.administrationSerivce.changeUserPassword(request).subscribe(result => {
+      this.loading = false;
+      this.passwordMessage = 'Password changing was successful';
+      this.selectedPasswordPlayer = null;
+    }, error => {
+      this.loading = false;
+      this.passwordMessage = 'Changing password failed!' + error;
+    });
   }
 
   public getName(email: string) {
@@ -167,19 +188,19 @@ export class AdminComponent implements OnInit, OnDestroy {
   addPlayerRole() {
     this.loading = true;
     let request = null;
-    if (this.selectedUser.roles === null) {
+    if (this.selectedMappingUser.roles === null) {
       const roles: string[] = ['Player'];
-      request = new ChangeUserRolesRequest(this.selectedUser.email, roles);
-    } else if (this.selectedUser.roles.indexOf('Player') === -1) {
-      this.selectedUser.roles.push('Player');
-      request = new ChangeUserRolesRequest(this.selectedUser.email, this.selectedUser.roles);
+      request = new ChangeUserRolesRequest(this.selectedMappingUser.email, roles);
+    } else if (this.selectedMappingUser.roles.indexOf('Player') === -1) {
+      this.selectedMappingUser.roles.push('Player');
+      request = new ChangeUserRolesRequest(this.selectedMappingUser.email, this.selectedMappingUser.roles);
     }
 
     if (request != null) {
       this.subs.push(
         this.administrationSerivce.addPlayerRole(request).subscribe(() => {
           this.loading = false;
-          this.selectedUser = null;
+          this.selectedMappingUser = null;
         }, error => {
           this.loading = false;
           this.message = error.message;
