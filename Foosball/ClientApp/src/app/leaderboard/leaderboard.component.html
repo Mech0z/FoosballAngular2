@@ -11,6 +11,7 @@
       </mat-menu>
     </div>
   </div>
+  <div *ngIf="selectedLeaderboard?.entries.length === 0">No matches yet this season, go down and play!</div>
   <div class="player" [ngClass]="{'gold': i === 0 && hilightPodium, 'silver': i === 1 && hilightPodium, 'bronze': i === 2 && hilightPodium}"
     *ngFor="let leaderboardEntry of selectedLeaderboard?.entries; let i = index" routerLink="/player-details/{{leaderboardEntry?.userName}}">
     <div class="header">
