@@ -1,6 +1,6 @@
 
 // tslint:disable-next-line:max-line-length
-import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule, MatProgressSpinnerModule, MatMenuModule, MatSlideToggleModule, MatSelectModule } from '@angular/material/';
+import { MatButtonModule, MatSnackBarModule, MatIconModule, MatAutocompleteModule, MatFormFieldModule, MatProgressSpinnerModule, MatMenuModule, MatSlideToggleModule, MatSelectModule, MatProgressBarModule } from '@angular/material/';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -75,6 +75,7 @@ import { ChangePasswordComponent } from './changepassword/changepassword.compone
     MatSlideToggleModule,
     MatTabsModule,
     MatDatepickerModule,
+    MatProgressBarModule,
     MatSelectModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
@@ -107,8 +108,8 @@ import { ChangePasswordComponent } from './changepassword/changepassword.compone
     ActivityService,
     FoosballHubService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
-    {provide: MAT_DATE_LOCALE, useValue: 'da-DK'}],
-    exports: [ LastGamesDialogComponent ],
+    { provide: MAT_DATE_LOCALE, useValue: 'da-DK' }],
+  exports: [LastGamesDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

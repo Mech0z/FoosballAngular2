@@ -1,10 +1,12 @@
 <div class="top-content">
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
   <a *ngIf="!isLoggedIn" routerLink="/login">Login first</a>
   <div *ngIf="isLoggedIn && !haveRole">You need 'Player' role to submit matches, talk to an admin</div>
   <div *ngIf="isLoggedIn && haveRole">
     <div *ngIf="matchStarted">
-  
+      <mat-progress-bar *ngIf="true" mode="indeterminate"></mat-progress-bar>
+
       <form #matchForm="ngForm" class="submit-form" (input)="setValidStatus()">
         <p>Match 1</p>
         <div class="matchinput">
@@ -12,7 +14,7 @@
             <input name="match1team1score" [(ngModel)]="match1team1score" name="match1team1score" matInput type="number"
               maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
           </mat-form-field>
-  
+
           <mat-form-field>
             <input name="match1team2score" [(ngModel)]="match1team2score" name="match1team2score" matInput type="number"
               maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
@@ -24,7 +26,7 @@
             <input name="match2team1score" [(ngModel)]="match2team1score" name="match2team1score" matInput type="number"
               maxlength="10" step="1" placeholder="Team 1 score" min="0" required>
           </mat-form-field>
-  
+
           <mat-form-field>
             <input name="match2team2score" [(ngModel)]="match2team2score" name="match2team2score" matInput type="number"
               maxlength="10" step="1" placeholder="Team 2 score" min="0" required>
@@ -32,7 +34,7 @@
         </div>
       </form>
     </div>
-    <div class="layout" *ngIf="!loading && !matchStarted">
+    <div class="layout" *ngIf="players.length && !loading && !matchStarted">
       <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px">
         <mat-form-field style="width: 50%;">
           <input matInput class="filter-players" placeholder="Find player..." aria-label="FilterPlayers"
@@ -51,11 +53,12 @@
     <p>{{ errorMessage$ | async }}</p>
 
   </div>
-  
+
   <p>{{ message$ | async }}</p>
 </div>
 
-<div class="start-match" [ngClass]="{'hidden': selectedPlayers.length < 4, 'visible': selectedPlayers.length >= 4, 'dark-theme': darkTheme$ | async}">
+<div class="start-match"
+  [ngClass]="{'hidden': selectedPlayers.length < 4, 'visible': selectedPlayers.length >= 4, 'dark-theme': darkTheme$ | async}">
   <div class="player-section">
     <div class="player-col">
       <p *ngIf="selectedPlayers[0]">
@@ -104,7 +107,8 @@
       Score
     </button>
 
-    <button style="width: 100px; color: white" type="button" *ngIf="matchStarted" mat-raised-button color="primary" (click)="matchStarted = false">
+    <button style="width: 100px; color: white" type="button" *ngIf="matchStarted" mat-raised-button color="primary"
+      (click)="matchStarted = false">
       Back
     </button>
     <button style="width: 100px; color: white" type="button" *ngIf="matchStarted" mat-raised-button color="accent"
