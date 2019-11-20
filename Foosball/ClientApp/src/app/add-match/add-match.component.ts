@@ -134,14 +134,13 @@ export class AddMatchComponent implements OnInit, OnDestroy {
           return new Date(item.startDate).getTime() <= Date.now();
         });
 
-        const orderedSeasons = activeSeasons.sort((a, b) => {
-          const aDate = new Date(a.startDate);
-          const bDate = new Date(b.startDate);
-          return aDate > bDate ? -1 : aDate < bDate ? 1 : 0;
+         activeSeasons.sort(function(a, b) {
+          // Turn your strings into dates, and then subtract them
+          // to get a value that is either negative, positive, or zero.
+          return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
         });
-        const currentSeason = orderedSeasons[orderedSeasons.length - 1];
 
-
+        const currentSeason = activeSeasons[0];
 
         this.http.get<Leaderboard[]>('/api/leaderboard/index').pipe(take(1)).subscribe(leaderboards => {
           leaderboards.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
