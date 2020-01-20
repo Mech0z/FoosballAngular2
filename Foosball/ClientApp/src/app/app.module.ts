@@ -40,6 +40,7 @@ import { ChangePasswordComponent } from './changepassword/changepassword.compone
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { PlayerRankComponent } from './player-rank/player-rank.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,3 +1,63 @@
+// import { BrowserModule } from '@angular/platform-browser';
+// import { NgModule } from '@angular/core';
+// import { GraphModel } from '../models/GraphModel';
+// import { GraphModelPlot } from '../models/GraphModelPlot';
+// import { AppComponent } from '../app.component';
+// import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+// // @NgModule decorator with its metadata
+// @NgModule({
+//   declarations: [AppComponent],
+//   imports: [BrowserModule],
+//   providers: [],
+//   bootstrap: [AppComponent]
+// })
+// export class GraphModule {
+//     multi: any[];
+//     view: any[] = [700, 300];
+
+//     // options
+//     legend = true;
+//     showLabels = true;
+//     animations = true;
+//     xAxis = true;
+//     yAxis = true;
+//     showYAxisLabel = true;
+//     showXAxisLabel = true;
+//     xAxisLabel = 'Date';
+//     yAxisLabel = 'Rating';
+//     timeline = true;
+
+//     colorScheme = {
+//             domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+//           };
+
+//     constructor(graphData: GraphModel[]) {
+//       Object.assign(this, {graphData});
+//       }
+
+//     ngOnInit(): void {
+//        this.playerService.getPlayerRank('madsskipper@gmail.com', 'Season Of Glory (15)').subscribe(result => {
+//           const data = new GraphModel('Mads');
+//           data.series = [];
+
+//           // console.error(result);
+
+//           result.rankPlots.forEach(plot => {
+//             data.series.push(new GraphModelPlot(plot.date.toString(), plot.rank));
+//           });
+
+//           let array_name;
+//           array_name = [data];
+//           console.error(data);
+//           console.error(multi);
+//           console.error(array_name);
+//        }, error => {
+//          console.error(error);
+//        });
+//     }
+// }
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HeadersService } from '../services/headers.service';
 import { AdministrationService } from '../services/administration.service';
@@ -56,7 +116,8 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
           console.error(multi);
           console.error(array_name);
 
-           Object.assign(this, {array_name});
+           this.multi = array_name;
+           Object.assign(this, {multi});
        }, error => {
          console.error(error);
        });
