@@ -112,9 +112,9 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
 
           let array_name;
           array_name = [data];
-          console.error(data);
-          console.error(multi);
-          console.error(array_name);
+          // console.error(data);
+          // console.error(multi);
+          // console.error(array_name);
 
            this.multi = array_name;
            Object.assign(this, {multi});
