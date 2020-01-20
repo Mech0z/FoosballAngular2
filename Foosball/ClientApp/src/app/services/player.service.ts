@@ -31,7 +31,7 @@ export class PlayerService {
   }
 
   getPlayerRank(email: string, seasonName: string) {
-    return this.http.get<PlayerRankSeasonEntry[]>('/api/PlayerRanks/GetPlayerRank?email=' + email + '&seasonName=' + seasonName);
+    return this.http.get<PlayerRankSeasonEntry>('/api/PlayerRanks/GetPlayerRank?email=' + email + '&seasonName=' + seasonName);
   }
 
   changeEmail(newEmail: string) {

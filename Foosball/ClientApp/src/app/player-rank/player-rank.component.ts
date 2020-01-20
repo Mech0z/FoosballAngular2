@@ -4,6 +4,9 @@ import { AdministrationService } from '../services/administration.service';
 import { LeaderboardService } from '../services/leaderboard.service';
 import { PlayerService } from '../services/player.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { multi } from './data';
+import { GraphModel } from '../models/GraphModel';
+import { GraphModelPlot } from '../models/GraphModelPlot';
 
 @Component({
   selector: 'app-player-rank',
@@ -14,72 +17,6 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
 
     multi: any[];
     view: any[] = [700, 300];
-    bla =  [
-      {
-        'name': 'Germany',
-        'series': [
-          {
-            'name': '1990',
-            'value': 62000000
-          },
-          {
-            'name': '2010',
-            'value': 73000000
-          },
-          {
-            'name': '2011',
-            'value': 89400000
-          }
-        ]
-      },
-      {
-        'name': 'USA',
-        'series': [
-          {
-            'name': '1990',
-            'value': 250000000
-          },
-          {
-            'name': '2010',
-            'value': 309000000
-          },
-          {
-            'name': '2011',
-            'value': 311000000
-          }
-        ]
-      },
-      {
-        'name': 'France',
-        'series': [
-          {
-            'name': '1990',
-            'value': 58000000
-          },
-          {
-            'name': '2010',
-            'value': 50000020
-          },
-          {
-            'name': '2011',
-            'value': 58000000
-          }
-        ]
-      },
-      {
-        'name': 'UK',
-        'series': [
-          {
-            'name': '1990',
-            'value': 57000000
-          },
-          {
-            'name': '2010',
-            'value': 62000000
-          }
-        ]
-      }
-    ];
 
     // options
     legend = true;
@@ -89,8 +26,8 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
     yAxis = true;
     showYAxisLabel = true;
     showXAxisLabel = true;
-    xAxisLabel = 'Year';
-    yAxisLabel = 'Population';
+    xAxisLabel = 'Date';
+    yAxisLabel = 'Rating';
     timeline = true;
 
     colorScheme = {
@@ -99,28 +36,42 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
 
     constructor(
       private playerService: PlayerService) {
-        const test = this.bla;
-         Object.assign(this, { test });
+         Object.assign(this, { multi });
       }
 
     ngOnInit(): void {
        this.playerService.getPlayerRank('madsskipper@gmail.com', 'Season Of Glory (15)').subscribe(result => {
-        console.error(result);
+          const data = new GraphModel('Mads');
+          data.series = [];
+
+          // console.error(result);
+
+          result.rankPlots.forEach(plot => {
+            data.series.push(new GraphModelPlot(plot.date.toString(), plot.rank));
+          });
+
+          let array_name;
+          array_name = [data];
+          console.error(data);
+          console.error(multi);
+          console.error(array_name);
+
+           Object.assign(this, {array_name});
        }, error => {
          console.error(error);
        });
     }
 
     onSelect(data): void {
-      console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+      // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
     }
 
     onActivate(data): void {
-      console.log('Activate', JSON.parse(JSON.stringify(data)));
+      // console.log('Activate', JSON.parse(JSON.stringify(data)));
     }
 
     onDeactivate(data): void {
-      console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+      // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
     }
 
     ngOnDestroy(): void {
