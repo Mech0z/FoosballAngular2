@@ -7,6 +7,7 @@ import { ChangeEmailRequest } from '../models/ChangeEmailRequest';
 import { User } from '../models/user.interface';
 import { CreateUserRequest } from '../models/CreateUserRequest';
 import { PartnerPercentResult } from '../models/PartnerPercentResult';
+import { PlayerRankSeasonEntry } from '../models/PlayerRankSeasonEntry';
 
 @Injectable()
 export class PlayerService {
@@ -23,6 +24,14 @@ export class PlayerService {
 
   createUser(request: CreateUserRequest) {
     return this.http.post('/api/Player/CreateUser', request);
+  }
+
+  getPlayersRanks(seasonName: string) {
+    return this.http.get<PlayerRankSeasonEntry[]>('/api/PlayerRanks/GetPlayerRanks?seasonName=' + seasonName);
+  }
+
+  getPlayerRank(email: string, seasonName: string) {
+    return this.http.get<PlayerRankSeasonEntry[]>('/api/PlayerRanks/GetPlayerRank?email=' + email + '&seasonName=' + seasonName);
   }
 
   changeEmail(newEmail: string) {

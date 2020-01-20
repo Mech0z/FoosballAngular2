@@ -37,6 +37,8 @@ import { ActivityService } from './services/activity.service';
 import { ResponsiveOverviewComponent } from './views/responsive-overview/responsive-overview.component';
 import { FoosballHubService } from './services/foosballhub.service';
 import { ChangePasswordComponent } from './changepassword/changepassword.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { PlayerRankComponent } from './player-rank/player-rank.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { ChangePasswordComponent } from './changepassword/changepassword.compone
     RegisterAccountComponent,
     ResponsiveOverviewComponent,
     AdminComponent,
-    ActivityComponent
+    ActivityComponent,
+    PlayerRankComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -79,6 +82,7 @@ import { ChangePasswordComponent } from './changepassword/changepassword.compone
     MatSelectModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
+    NgxChartsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     RouterModule.forRoot([
       { path: '', redirectTo: 'leaderboard', pathMatch: 'full' },
@@ -93,7 +97,8 @@ import { ChangePasswordComponent } from './changepassword/changepassword.compone
       { path: 'last-games', component: LastGamesComponent },
       { path: 'register-account', component: RegisterAccountComponent },
       { path: 'admin', component: AdminComponent },
-      { path: 'activity', component: ActivityComponent }
+      { path: 'activity', component: ActivityComponent },
+      { path: 'player-rank', component: PlayerRankComponent }
     ])
   ],
   entryComponents: [LastGamesDialogComponent],
