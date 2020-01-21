@@ -17,6 +17,7 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
 
     multi: any[];
     view: any[] = [700, 300];
+    datasource: GraphModel[];
 
     // options
     legend = true;
@@ -36,18 +37,15 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
 
     constructor(
       private playerService: PlayerService) {
-         Object.assign(this, { multi });
+         // Object.assign(this, { multi });
       }
 
     ngOnInit(): void {
        this.playerService.getPlayerRank('madsskipper@gmail.com', 'Season Of Glory (15)').subscribe(result => {
-          const data = new GraphModel('Mads');
-          data.series = [];
-
-          // console.error(result);
+          const data: GraphModel[] = [{name: 'Mads', series: []}];
 
           result.rankPlots.forEach(plot => {
-            data.series.push(new GraphModelPlot(plot.date.toString(), plot.rank));
+            data[0].series.push({name: plot.date.toString(), value: plot.rank});
           });
 
           let array_name;
@@ -56,7 +54,7 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
           console.error(multi);
           console.error(array_name);
 
-           Object.assign(this, {array_name});
+          this.datasource = data;
        }, error => {
          console.error(error);
        });
