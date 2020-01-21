@@ -16,7 +16,7 @@ import { GraphModelPlot } from '../models/GraphModelPlot';
 export class PlayerRankComponent implements OnInit, OnDestroy {
 
     multi: any[];
-    view: any[] = [700, 300];
+    view: any[] = [1500, 500];
     datasource: GraphModel[];
 
     // options
@@ -37,28 +37,44 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
 
     constructor(
       private playerService: PlayerService) {
-         // Object.assign(this, { multi });
       }
 
+    // ngOnInit(): void {
+    //    this.playerService.getPlayerRank('madsskipper@gmail.com', 'Season Of Glory (15)').subscribe(result => {
+    //       const data: GraphModel[] = [{name: 'Mads', series: []}];
+
+    //       result.rankPlots.forEach(plot => {
+    //         data[0].series.push({name: plot.date.toString(), value: plot.eloRating});
+    //       });
+
+    //       let array_name;
+    //       array_name = [data];
+
+    //       this.datasource = data;
+    //    }, error => {
+    //      console.error(error);
+    //    });
+    // }
+
     ngOnInit(): void {
-       this.playerService.getPlayerRank('madsskipper@gmail.com', 'Season Of Glory (15)').subscribe(result => {
-          const data: GraphModel[] = [{name: 'Mads', series: []}];
+      this.playerService.getPlayersRanks('Season Of Glory (15)').subscribe(result => {
+        const data: GraphModel[] = [];
 
-          result.rankPlots.forEach(plot => {
-            data[0].series.push({name: plot.date.toString(), value: plot.rank});
-          });
+        result.forEach(element => {
+          const player: GraphModel = {name: element.email, series: []};
+          element.rankPlots.forEach(plot => {
+            player.series.push({name: plot.date.toString(), value: plot.eloRating});
+         });
+         data.push(player);
+        });
 
-          let array_name;
-          array_name = [data];
-          console.error(data);
-          console.error(multi);
-          console.error(array_name);
+         console.error(data);
 
-          this.datasource = data;
-       }, error => {
-         console.error(error);
-       });
-    }
+         this.datasource = data;
+      }, error => {
+        console.error(error);
+      });
+   }
 
     onSelect(data): void {
       // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
