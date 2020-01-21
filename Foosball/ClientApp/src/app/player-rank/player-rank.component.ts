@@ -16,7 +16,7 @@ import { GraphModelPlot } from '../models/GraphModelPlot';
 export class PlayerRankComponent implements OnInit, OnDestroy {
 
     multi: any[];
-    view: any[] = [1500, 500];
+    view: any[] = [1500, 700];
     datasource: GraphModel[];
 
     // options
@@ -30,6 +30,7 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
     xAxisLabel = 'Date';
     yAxisLabel = 'Rating';
     timeline = true;
+    autoScale = true;
 
     colorScheme = {
       domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
@@ -63,12 +64,10 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
         result.forEach(element => {
           const player: GraphModel = {name: element.email, series: []};
           element.rankPlots.forEach(plot => {
-            player.series.push({name: plot.date.toString(), value: plot.eloRating});
+            player.series.push({name: plot.date, value: plot.eloRating});
          });
          data.push(player);
         });
-
-         console.error(data);
 
          this.datasource = data;
       }, error => {

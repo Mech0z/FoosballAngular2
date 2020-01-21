@@ -1,4 +1,4 @@
 export class GraphModelPlot {
-    name: string;
+    name: Date;
     value: number;
 }
