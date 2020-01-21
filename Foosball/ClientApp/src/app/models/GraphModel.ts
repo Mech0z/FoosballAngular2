@@ -1,10 +1,6 @@
 import { GraphModelPlot } from './GraphModelPlot';
 
-export class GraphModel {
-    constructor(name: string) {
-        this.name = name;
-    }
-
+export interface GraphModel {
     name: string;
     series: GraphModelPlot[];
 }
