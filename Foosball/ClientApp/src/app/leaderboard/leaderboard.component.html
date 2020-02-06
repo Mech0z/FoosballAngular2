@@ -2,20 +2,19 @@
 
 <div *ngIf="leaderboards" style="max-width: 600px;">
   <div style="display: flex; justify-content: space-between; align-items: center;">
-    <h1>{{selectedLeaderboard?.seasonName }}</h1>
+    <h1 style="display: flex; align-items: center; cursor: pointer;" [matMenuTriggerFor]="menu">
+      {{selectedLeaderboard?.seasonName }}<i class="material-icons">expand_more</i></h1>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngFor="let l of leaderboards" (click)="selectedLeaderboard = l">
+        {{ l.seasonName }}</button>
+      <button mat-menu-item *ngIf="selectedLeaderboard && isAdmin" (click)="recalculateSeason()"
+        style="font-weight: bold;">RECALCULATE
+      </button>
+    </mat-menu>
     <div style="margin-bottom: -8px;">
       <button mat-button (click)="refreshData()">
         <i class="material-icons">refresh</i>
       </button>
-      <button mat-button [matMenuTriggerFor]="menu" *ngIf="selectedLeaderboard">
-        <i class="material-icons">expand_more</i>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item *ngFor="let l of leaderboards" (click)="selectedLeaderboard = l">
-          {{ l.seasonName }}</button>
-        <button mat-menu-item *ngIf="selectedLeaderboard && isAdmin" (click)="recalculateSeason()"
-          style="font-weight: bold;">RECALCULATE</button>
-      </mat-menu>
     </div>
   </div>
   <div *ngIf="selectedLeaderboard?.entries.length === 0">No matches yet this season, go down and play!</div>

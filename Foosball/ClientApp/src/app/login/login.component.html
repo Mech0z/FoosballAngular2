@@ -6,7 +6,7 @@
       <mat-error *ngIf="f.submitted && !userIsValid()" class="help-block">Username is required</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="password" name=PasswordInput [(ngModel)]="password" required />
+      <input matInput type="password" placeholder="Password" name=PasswordInput [(ngModel)]="password" required />
       <mat-error *ngIf="f.submitted && !passwordIsValid()" class="help-block">Password is required</mat-error>
     </mat-form-field>
     <div *ngIf="errorMessage" class="help-block">{{errorMessage}}</div>
