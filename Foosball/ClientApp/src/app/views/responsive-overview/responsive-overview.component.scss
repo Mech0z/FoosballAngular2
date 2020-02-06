@@ -1,4 +1,4 @@
-@import '~styles/variables';
+@import "~styles/variables";
 
 // Mobile
 
@@ -37,9 +37,9 @@
   }
   button:hover {
     transform: scale(1.1);
-    background: rgba(whitesmoke, 0.2); 
+    background: rgba(whitesmoke, 0.2);
   }
-  
+
   button.link-active {
     background: $accent;
   }
@@ -102,5 +102,3 @@
     display: none;
   }
 }
-
-

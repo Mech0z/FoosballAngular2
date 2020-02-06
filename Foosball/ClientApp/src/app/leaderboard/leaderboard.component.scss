@@ -64,6 +64,6 @@ p {
 .loading {
   top: 0;
   left: -16px;
-  position: absolute;
+  position: fixed;
   width: calc(100vw + 32px);
 }
