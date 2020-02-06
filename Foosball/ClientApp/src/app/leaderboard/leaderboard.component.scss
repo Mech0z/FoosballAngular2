@@ -1,4 +1,4 @@
-@import '~styles/variables';
+@import "~styles/variables";
 
 .block {
   width: 20px;
@@ -41,14 +41,14 @@ p {
 }
 
 .gold {
-  box-shadow: 4px 4px 2px 0px  grey;
+  box-shadow: 4px 4px 2px 0px grey;
   margin: 8px 12px 4px 2px;
   transition: all 500ms linear;
   transition-delay: 500ms;
 }
 
 .silver {
-  box-shadow: 3px 3px 2px 0px  grey;
+  box-shadow: 3px 3px 2px 0px grey;
   margin: 8px 10px 4px 4px;
   transition: all 500ms linear;
   transition-delay: 250ms;
@@ -59,4 +59,11 @@ p {
   margin: 8px 8px 4px 6px;
   transition: all 500ms linear;
   transition-delay: 0ms;
+}
+
+.loading {
+  top: 0;
+  left: -16px;
+  position: absolute;
+  width: calc(100vw + 32px);
 }

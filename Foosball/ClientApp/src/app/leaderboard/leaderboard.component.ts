@@ -8,6 +8,7 @@ import { FoosballHubService } from '../services/foosballhub.service';
 import { LeaderboardService } from '../services/leaderboard.service';
 import { PlayerService } from '../services/player.service';
 import { Subscription, combineLatest } from 'rxjs';
+import { take, finalize } from 'rxjs/operators';
 
 
 @Component({
@@ -20,10 +21,10 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
   public leaderboards: Leaderboard[];
   public selectedLeaderboard: Leaderboard;
   public players: User[];
-  hilightPodium = false;
-  isAdmin = false;
+  hilightPodium: boolean;
+  loading: boolean;
+  isAdmin: boolean;
 
-  delay = false;
 
   constructor(
     private headerService: HeadersService,
@@ -34,45 +35,45 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
     private playerService: PlayerService) { }
 
   ngOnInit(): void {
+    this.loading = true;
+
     const roles = this.headerService.getRoles();
     if (roles.includes('Admin')) {
       this.isAdmin = true;
     }
-
-    this.subs.push(
-      combineLatest(
-        this.playerService.getUsers(),
-        this.leaderboardService.getLeaderboards()
-      ).subscribe(([players, leaderboards]) => {
+    combineLatest(
+      this.playerService.getUsers(),
+      this.leaderboardService.getLeaderboards()
+    ).pipe(take(1), finalize(() => this.loading = false))
+      .subscribe(([players, leaderboards]) => {
         this.players = players;
         this.leaderboards = leaderboards;
 
         this.setNames(this.players);
         this.setSelectedLeaderboard();
         setTimeout(() => this.hilightPodium = true);
-      })
-    );
+      });
 
     this.foosballHubService.connect();
     this.foosballHubService.connection.on('MatchAdded', () => {
-      this.onMatchAdded();
+      this.refreshData();
     });
   }
+
   ngOnDestroy(): void {
     this.subs.forEach(s => s.unsubscribe());
   }
 
-
   private getLeaderboardData() {
-    this.subs.push(
-      this.leaderboardService.getLeaderboards().subscribe(result => {
-        this.leaderboards = result;
-        if (this.players != null) {
-          this.setNames(this.players);
-          this.setSelectedLeaderboard();
-        }
-      }, error => console.error(error))
-    );
+    this.loading = true;
+    this.leaderboardService.getLeaderboards().pipe(take(1), finalize(() => this.loading = false)).subscribe(result => {
+      this.leaderboards = result;
+      if (this.players != null) {
+        this.setNames(this.players);
+        this.setSelectedLeaderboard();
+      }
+      setTimeout(() => this.hilightPodium = true);
+    }, error => console.error(error));
   }
 
   private setSelectedLeaderboard() {
@@ -81,7 +82,8 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
     this.selectedLeaderboard.entries.sort((a, b) => b.eloRating - a.eloRating);
   }
 
-  public onMatchAdded() {
+  public refreshData() {
+    this.hilightPodium = false;
     this.getLeaderboardData();
   }
 
