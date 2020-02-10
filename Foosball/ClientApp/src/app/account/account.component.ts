@@ -6,6 +6,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { Subscription, Observable } from 'rxjs';
 import { ThemeService } from '../shared/theme.service';
 import { MatSlideToggleChange } from '@angular/material';
+import { finalize, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-account',
@@ -20,6 +21,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   darkTheme$: Observable<boolean>;
   returnUrl: string;
   loginUrl: string;
+  loading: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,6 +32,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.darkTheme$ = this.theme.darkTheme$;
     this.userEmail = this.authenticationService.checkLogin();
     this.checked = true;
@@ -42,15 +45,15 @@ export class AccountComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.subs.push(
-      this.http.get<User[]>('/api/Player/GetUsers').subscribe(result => {
+    this.http.get<User[]>('/api/Player/GetUsers')
+      .pipe(take(1), finalize(() => this.loading = false))
+      .subscribe(result => {
         result.forEach(function (user) {
-          if (user.email == this.userEmail) {
+          if (user.email === this.userEmail) {
             this.user = user;
           }
         }.bind(this));
-      }, error => console.error(error))
-    );
+      }, error => console.error(error));
   }
 
   ngOnDestroy() {

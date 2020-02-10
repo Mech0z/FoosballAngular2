@@ -5,9 +5,9 @@
   <div *ngIf="isLoggedIn && !haveRole">You need 'Player' role to submit matches, talk to an admin</div>
   <div *ngIf="isLoggedIn && haveRole">
     <div *ngIf="matchStarted">
-      <mat-progress-bar *ngIf="true" mode="indeterminate"></mat-progress-bar>
 
       <form #matchForm="ngForm" class="submit-form" (input)="setValidStatus()">
+        <mat-progress-bar *ngIf="submitting" mode="indeterminate"></mat-progress-bar>
         <p>Match 1</p>
         <div class="matchinput">
           <mat-form-field>
@@ -112,7 +112,7 @@
       Back
     </button>
     <button style="width: 100px; color: white" type="button" *ngIf="matchStarted" mat-raised-button color="accent"
-      [disabled]="!(matchesValid$ | async)" (click)="submitMatch()">
+      [disabled]="!(matchesValid$ | async) || submitting" (click)="submitMatch()">
       Submit
     </button>
   </div>

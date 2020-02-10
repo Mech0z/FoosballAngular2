@@ -13,6 +13,6 @@ export class ActivityComponent {
     constructor(public activityService: ActivityService) { }
 
     refreshActivity() {
-        this.activityService.refresh();
+        this.activityService.getActivity();
     }
 }

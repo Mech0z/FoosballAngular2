@@ -1,5 +1,6 @@
+<mat-progress-bar class="loading" *ngIf="loadingPlayers || loadingMatches" mode="indeterminate"></mat-progress-bar>
+
 <h1>Match history</h1>
-<p *ngIf="!matches || !players"><em>Loading...</em></p>
 <div *ngIf="matches && players" style="max-width: 666px;">
   <div *ngFor="let match of matches" class="match">
     <div class="header">

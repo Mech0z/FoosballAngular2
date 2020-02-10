@@ -6,7 +6,7 @@
 
 .mat-button {
   padding: 8px 16px;
-  margin: 0 -16px
+  margin: 0 -16px;
 }
 
 .button-content {
@@ -14,4 +14,11 @@
   justify-content: space-between;
   flex-direction: row-reverse;
   align-items: center;
+}
+
+.loading {
+  top: 0;
+  left: -16px;
+  position: fixed;
+  width: calc(100vw + 32px);
 }
