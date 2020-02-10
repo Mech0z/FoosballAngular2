@@ -35,12 +35,28 @@
       </form>
     </div>
     <div class="layout" *ngIf="players.length && !loading && !matchStarted">
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
         <mat-form-field style="width: 50%;">
           <input matInput class="filter-players" placeholder="Find player..." aria-label="FilterPlayers"
             [formControl]="filterPlayersControl">
         </mat-form-field>
-        <mat-slide-toggle (click)="showAllToggle()">Show all players</mat-slide-toggle>
+        <div style="display: flex; align-items: center;">
+          <mat-slide-toggle (click)="showAllToggle()">Show all</mat-slide-toggle>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>sort</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [disabled]="preferedSort === sortOrders.Alphabetical"
+              (click)="setSort(sortOrders.Alphabetical)">
+              Alphabetical
+              <mat-icon style="color: #8bc34a;" *ngIf="preferedSort === sortOrders.Alphabetical">check</mat-icon>
+            </button>
+            <button mat-menu-item [disabled]="preferedSort === sortOrders.ELO" (click)="setSort(sortOrders.ELO)">
+              ELO
+              <mat-icon style="color: #8bc34a;" *ngIf="preferedSort === sortOrders.ELO">check</mat-icon>
+            </button>
+          </mat-menu>
+        </div>
       </div>
       <div class="players">
         <div class="player" [ngClass]="{selected: p.isSelected}" *ngFor="let p of evenMoreFilteredPlayers | async"
