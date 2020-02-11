@@ -7,38 +7,27 @@ import { take } from 'rxjs/operators';
 
 @Injectable()
 export class ActivityService {
-  activityText = new ReplaySubject<string>();
-  activitySeconds = new ReplaySubject<number>();
-  activity = new ReplaySubject<boolean>();
-  lastActivityChange = new ReplaySubject<Date>();
+  activityText$ = new ReplaySubject<string>();
+  activitySecond$ = new ReplaySubject<number>();
+  activity$ = new ReplaySubject<boolean>();
+  lastActivity$ = new ReplaySubject<Date>();
 
   constructor(private http: HttpClient, private foosballHubService: FoosballHubService) {
     this.getActivity();
     this.foosballHubService.connect();
     this.foosballHubService.connection.on('ActivityUpdated', (activity: boolean, duration: number, lastActivity: Date) => {
-      this.activity.next(activity);
-      this.activitySeconds.next(duration);
-      this.lastActivityChange.next(lastActivity);
-      this.setActivityText();
+      this.activity$.next(activity);
+      this.activitySecond$.next(duration);
+      this.lastActivity$.next(lastActivity);
+      this.activityText$.next(activity ? 'Busy!' : 'Free!');
     });
   }
 
   getActivity() {
     return this.http.get<GetStatusResponse>('/api/IoT/GetStatus').pipe(take(1)).subscribe(response => {
-      this.activity.next(response.activity);
-      this.activitySeconds.next(response.duration);
-      this.setActivityText();
-    });
-  }
-
-  refresh() {
-    this.getActivity();
-  }
-
-  setActivityText() {
-    this.activity.pipe(take(1)).subscribe((active) => {
-      const text = active ? 'Busy!' : 'Free!';
-      this.activityText.next(text);
+      this.activity$.next(response.activity);
+      this.activitySecond$.next(response.duration);
+      this.activityText$.next(response.activity ? 'Busy!' : 'Free!');
     });
   }
 }

@@ -1,12 +1,14 @@
+<mat-progress-bar class="loading" *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
 <div class="layout" *ngIf="user">
   <h1>Hello {{user.username}}</h1>
 
   <div class="buttons">
     <button [routerLink]='["/changepassword"]' type="button" mat-button>
       <div class="button-content">
-          <i class="material-icons">
-              swap_horiz
-              </i>
+        <i class="material-icons">
+          swap_horiz
+        </i>
         <p> Change password</p>
       </div>
     </button>

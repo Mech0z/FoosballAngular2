@@ -1,8 +1,8 @@
-@import '~styles/variables';
+@import "~styles/variables";
 
 p {
   margin: 0px;
-  color: white;;
+  color: white;
 }
 
 h2 {
@@ -50,3 +50,9 @@ h2 {
   text-overflow: ellipsis;
 }
 
+.loading {
+  top: 0;
+  left: -16px;
+  position: fixed;
+  width: calc(100vw + 32px);
+}

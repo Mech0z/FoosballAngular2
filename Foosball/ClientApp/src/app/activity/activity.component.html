@@ -1,10 +1,13 @@
 <div style="display: flex; justify-content: space-between; align-items: center;">
-  <h1>Activity: <span class="status">{{activityService.activityText | async}}</span></h1>
-  <div class="indicator" [ngClass]="(activityService.activity | async) ? 'taken': 'free'"></div>
+  <h1>Activity: <span class="status">{{activityService.activityText$ | async}}</span></h1>
+  <div class="indicator" [ngClass]="(activityService.activity$ | async) ? 'taken': 'free'"></div>
 </div>
 <br />
-<div *ngIf="(activityService.activity | async)">
-  Seconds of activity: {{activityService.activitySeconds  | async}}
+<div *ngIf="(activityService.activity$ | async)">
+  Seconds of activity: {{activityService.activitySeconds$  | async}}
+</div>
+<div *ngIf="!(activityService.activity$ | async) && (activityService.lastActivity$ | async)">
+  Last activity was at: {{ (activityService.lastActivity$  | async) | date:'short'}}
 </div>
 <br />
 <button mat-raised-button color="primary" (click)="refreshActivity()">

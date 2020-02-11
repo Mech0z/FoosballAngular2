@@ -13,6 +13,12 @@ import { HeadersService } from '../services/headers.service';
 import { LeaderboardService } from '../services/leaderboard.service';
 import { ThemeService } from '../shared/theme.service';
 
+const PREFERED_PLAYER_SORT = 'PREFERED_PLAYER_SORT';
+enum SortOrder {
+  Alphabetical = 'Alphabetical',
+  ELO = 'ELO'
+}
+
 @Component({
   selector: 'app-add-match',
   templateUrl: './add-match.component.html',
@@ -43,6 +49,9 @@ export class AddMatchComponent implements OnInit, OnDestroy {
   evenMoreFilteredPlayers: Observable<User[]>;
   filterPlayersControl = new FormControl();
 
+  sortOrders = SortOrder;
+  preferedSort: SortOrder;
+
   private set errorMessage(val: string) {
     this.errorMessage$.next(val);
   }
@@ -64,6 +73,7 @@ export class AddMatchComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
+    this.preferedSort = localStorage.getItem(PREFERED_PLAYER_SORT) as SortOrder;
     this.darkTheme$ = this.theme.darkTheme$;
     if (this.headersService.getUsername().length > 0) {
       this.isLoggedIn = true;
@@ -110,8 +120,8 @@ export class AddMatchComponent implements OnInit, OnDestroy {
 
   get filteredPlayers(): User[] {
     const playersActiveThisSeasson = this.activeLeaderboard ? this.activeLeaderboard.entries.map(p => p.userName) : [];
-    const fPlayers = this.showAll ? this.players : this.players.filter((p: User) => playersActiveThisSeasson.includes(p.email));
-    fPlayers.sort((a, b) => b.currentElo - a.currentElo);
+    let fPlayers = this.showAll ? this.players : this.players.filter((p: User) => playersActiveThisSeasson.includes(p.email));
+    fPlayers = this.sortPlayers(fPlayers, this.preferedSort);
     return fPlayers;
   }
 
@@ -134,7 +144,7 @@ export class AddMatchComponent implements OnInit, OnDestroy {
           return new Date(item.startDate).getTime() <= Date.now();
         });
 
-         activeSeasons.sort(function(a, b) {
+        activeSeasons.sort(function (a, b) {
           // Turn your strings into dates, and then subtract them
           // to get a value that is either negative, positive, or zero.
           return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
@@ -238,6 +248,30 @@ export class AddMatchComponent implements OnInit, OnDestroy {
           console.log(error);
           this.message = error.message;
         });
+  }
+
+  sortPlayers(players: User[], order: SortOrder) {
+    switch (order) {
+      case SortOrder.Alphabetical: {
+        return players.sort((a, b) => {
+          const textA = a.username.toUpperCase();
+          const textB = b.username.toUpperCase();
+          return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        });
+      }
+      case SortOrder.ELO: {
+        return players.sort((a, b) => b.currentElo - a.currentElo);
+      }
+      default: {
+        return players.sort((a, b) => b.currentElo - a.currentElo);
+      }
+    }
+  }
+
+  setSort(sort: SortOrder) {
+    this.preferedSort = sort;
+    localStorage.setItem(PREFERED_PLAYER_SORT, sort);
+    this.filterPlayersControl.setValue('');
   }
 
 }

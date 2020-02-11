@@ -5,7 +5,7 @@ import { User } from '../models/user.interface';
 import { Match } from '../models/Match';
 import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, finalize } from 'rxjs/operators';
 import { PartnerPercentResult } from '../models/PartnerPercentResult';
 import { PlayerService } from '../services/player.service';
 import { MatchService } from '../services/match.service';
@@ -26,6 +26,7 @@ export class PlayerDetailsComponent implements OnInit, OnDestroy {
   selectUserControl = new FormControl();
   filteredUsers: Observable<User[]>;
   partnerResult: PartnerPercentResult[];
+  loading: boolean;
 
   public get email(): string {
     return this.selectedUser ? this.selectedUser.email : '';
@@ -68,6 +69,7 @@ export class PlayerDetailsComponent implements OnInit, OnDestroy {
   }
 
   getPlayerHistory() {
+    this.loading = true;
     if (!this.email) {
       this.selectedUser.email = this.route.snapshot.paramMap.get('email');
     }
@@ -81,6 +83,7 @@ export class PlayerDetailsComponent implements OnInit, OnDestroy {
 
     this.subs.push(
       this.playerService.getPlayerHistory(this.email)
+        .pipe(finalize(() => this.loading = false))
         .subscribe(
           data => {
             this.playerSeasonHistory = data;
