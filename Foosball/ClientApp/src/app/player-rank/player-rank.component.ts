@@ -44,7 +44,7 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
           const data: GraphModel[] = [{name: email, series: []}];
 
           result.rankPlots.forEach(plot => {
-            data[0].series.push({name: plot.date.toString(), value: plot.eloRating});
+            data[0].series.push({name: plot.date, value: plot.eloRating});
           });
 
           let array_name;
