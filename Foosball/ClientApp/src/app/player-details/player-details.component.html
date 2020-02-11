@@ -20,6 +20,7 @@
         <th>Rank</th>
         <th>Games</th>
         <th>ELO</th>
+        <th>Graph</th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
         <td>{{ entry.wins }} / {{ entry.numberOfGames }} ({{ (entry.wins/ entry.numberOfGames * 100)| number :
           '1.2-2'}})</td>
         <td>{{ entry.eloRating }}</td>
+        <td><button routerLink="/player-rank/{{selectedUser?.email}}/{{entry.seasonName}}">graph</button></td>
       </tr>
     </tbody>
   </table>
