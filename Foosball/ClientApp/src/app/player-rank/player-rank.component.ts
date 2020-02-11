@@ -53,7 +53,7 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
 
-      this.playerService.getPlayersRanks('Season Of Glory (15)').subscribe(result => {
+      this.playerService.getPlayersRanks('The Hip Season (16)').subscribe(result => {
         const data: GraphModel[] = [];
 
         result.forEach(element => {
