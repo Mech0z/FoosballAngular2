@@ -1,11 +1,10 @@
 @import "~styles/variables";
 
-.block {
-  width: 20px;
-  height: 20px;
-  margin-top: 20px;
-  background-color: black;
-  transition: margin 3s ease-in 2s;
+.top-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 8px;
 }
 
 .player {

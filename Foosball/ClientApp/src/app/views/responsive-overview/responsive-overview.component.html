@@ -1,5 +1,10 @@
+<button mat-icon-button class="refresh-icon-btn mat-elevation-z5"
+  [ngClass]="(refreshVisible$ | async) ? 'visible' : ''">
+  <mat-icon>refresh</mat-icon>
+</button>
+
 <div class="layout">
-  <div class="content" [ngClass]="{'dark-theme': darkTheme$ | async}">
+  <div class="content" #scrollContainer [ngClass]="{'dark-theme': darkTheme$ | async}">
     <app-online></app-online>
     <router-outlet></router-outlet>
   </div>
@@ -37,6 +42,7 @@
   </div>
 </div>
 
-<button mat-fab routerLink="/add-match" routerLinkActive="hidden" class="fab-add">
+<button mat-fab routerLink="/add-match" routerLinkActive="hidden" class="fab-add"
+  [ngClass]="(fabVisible$ | async) ? 'hidden' : ''">
   <mat-icon>add</mat-icon>
 </button>

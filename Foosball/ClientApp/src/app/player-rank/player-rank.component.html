@@ -1,19 +1,11 @@
-<ngx-charts-line-chart
-  [view]="view"
-  [scheme]="colorScheme"
-  [legend]="legend"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxis]="xAxis"
-  [yAxis]="yAxis"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  [timeline]="timeline"
-  [results]="datasource"
-  (select)="onSelect($event)"
-  (activate)="onActivate($event)"
-  (deactivate)="onDeactivate($event)"
-  [autoScale]="autoScale"
+<button mat-raised-button class="back-btn" (click)="goBack()">
+  <mat-icon>keyboard_arrow_left</mat-icon>Back
+</button>
 
-  >
-</ngx-charts-line-chart>
+<div class="chart">
+  <ngx-charts-line-chart [view]="view" [scheme]="colorScheme" [legend]="legend" [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis" [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel" [timeline]="timeline" [results]="datasource" (select)="onSelect($event)"
+    (activate)="onActivate($event)" (deactivate)="onDeactivate($event)" [autoScale]="autoScale">
+  </ngx-charts-line-chart>
+</div>

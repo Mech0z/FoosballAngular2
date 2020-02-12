@@ -55,15 +55,17 @@
   right: 16px;
   background-color: $accent;
   color: white;
+  transition: all 0.3s ease-out;
   mat-icon {
     font-size: 28px;
     width: 40px;
     height: 40px;
+    margin-top: -2px;
+    margin-right: -1px;
   }
-}
-
-.hidden {
-  display: none;
+  &.hidden {
+    transform: translateY(200px);
+  }
 }
 
 // Desktop
@@ -100,5 +102,23 @@
 
   .fab-add {
     display: none;
+  }
+}
+
+// Refresh page
+
+.refresh-icon-btn {
+  position: fixed;
+  top: 32px;
+  left: calc(50% - 20px);
+  transition: all 0.8s ease-in-out;
+  transform: translateY(-200px);
+  background: rgba($accent, 0.5);
+  color: white;
+  &.visible {
+    transform: translateY(0) rotate(360deg);
+  }
+  mat-icon {
+    font-size: 22px;
   }
 }

@@ -27,10 +27,15 @@
       <tr *ngFor="let entry of playerSeasonHistory.playerLeaderBoardEntries">
         <td>{{ entry.seasonName }}</td>
         <td>{{ entry.rank }}</td>
-        <td>{{ entry.wins }} / {{ entry.numberOfGames }} ({{ (entry.wins/ entry.numberOfGames * 100)| number :
-          '1.2-2'}})</td>
+        <td>
+          {{ entry.wins }} / {{ entry.numberOfGames }} ({{ (entry.wins/ entry.numberOfGames * 100)| number : '1.2-2'}})
+        </td>
         <td>{{ entry.eloRating }}</td>
-        <td><button routerLink="/player-rank/{{selectedUser?.email}}/{{entry.seasonName}}"><i class="material-icons">show_chart</i></button></td>
+        <td>
+          <button mat-icon-button routerLink="/player-rank/{{selectedUser?.email}}/{{entry.seasonName}}">
+            <mat-icon>show_chart</mat-icon>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
