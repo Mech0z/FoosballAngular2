@@ -99,7 +99,8 @@ import { PlayerRankComponent } from './player-rank/player-rank.component';
       { path: 'register-account', component: RegisterAccountComponent },
       { path: 'admin', component: AdminComponent },
       { path: 'activity', component: ActivityComponent },
-      { path: 'player-rank/:email/:season', component: PlayerRankComponent }
+      { path: 'player-rank/:email/:season', component: PlayerRankComponent },
+      { path: 'player-rank/:season', component: PlayerRankComponent }
     ])
   ],
   entryComponents: [LastGamesDialogComponent],

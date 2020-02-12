@@ -11,7 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class PlayerRankComponent implements OnInit, OnDestroy {
 
     multi: any[];
-    view: any[] = [1500, 700];
+    view: any[] = [1000, 600];
     datasource: GraphModel[];
     // options
     legend = true;
@@ -40,40 +40,47 @@ export class PlayerRankComponent implements OnInit, OnDestroy {
       // localhost:4200/player-rank/madsskipper@gmail.com/The%20Hip%20Season%20%2816%29
       const email = this.route.snapshot.paramMap.get('email');
       const season = this.route.snapshot.paramMap.get('season');
-       this.playerService.getPlayerRank(email, season).subscribe(result => {
-          const data: GraphModel[] = [{name: email, series: []}];
 
-          result.rankPlots.forEach(plot => {
-            data[0].series.push({name: plot.date, value: plot.eloRating});
-          });
-
-          let array_name;
-          array_name = [data];
-
-          this.datasource = data;
-       }, error => {
-         console.error(error);
-       });
+      if(email === null) {
+        this.initAllPlayers(season);
+      } else {
+        this.initSinglePlayer(email, season);
+      }
     }
 
-  //   ngOnInit(): void {
+    initSinglePlayer(email: string, season: string) {
+      this.playerService.getPlayerRank(email, season).subscribe(result => {
+        const data: GraphModel[] = [{name: email, series: []}];
 
-  //     this.playerService.getPlayersRanks('The Hip Season (16)').subscribe(result => {
-  //       const data: GraphModel[] = [];
+        result.rankPlots.forEach(plot => {
+          data[0].series.push({name: plot.date, value: plot.eloRating});
+        });
 
-  //       result.forEach(element => {
-  //         const player: GraphModel = {name: element.email, series: []};
-  //         element.rankPlots.forEach(plot => {
-  //           player.series.push({name: plot.date, value: plot.eloRating});
-  //        });
-  //        data.push(player);
-  //       });
+        let array_name;
+        array_name = [data];
 
-  //        this.datasource = data;
-  //     }, error => {
-  //       console.error(error);
-  //     });
-  //  }
+        this.datasource = data;
+     }, error => {
+       console.error(error);
+     });
+    }
+
+    initAllPlayers(season: string) {
+      this.playerService.getPlayersRanks(season).subscribe(result => {
+              const data: GraphModel[] = [];
+              result.forEach(element => {
+                const player: GraphModel = {name: element.email, series: []};
+                element.rankPlots.forEach(plot => {
+                  player.series.push({name: plot.date, value: plot.eloRating});
+               });
+               data.push(player);
+              });
+
+               this.datasource = data;
+            }, error => {
+              console.error(error);
+            });
+    }
 
     onSelect(data): void {
       // console.log('Item clicked', JSON.parse(JSON.stringify(data)));

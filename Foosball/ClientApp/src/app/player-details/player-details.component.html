@@ -30,7 +30,7 @@
         <td>{{ entry.wins }} / {{ entry.numberOfGames }} ({{ (entry.wins/ entry.numberOfGames * 100)| number :
           '1.2-2'}})</td>
         <td>{{ entry.eloRating }}</td>
-        <td><button routerLink="/player-rank/{{selectedUser?.email}}/{{entry.seasonName}}">graph</button></td>
+        <td><button routerLink="/player-rank/{{selectedUser?.email}}/{{entry.seasonName}}"><i class="material-icons">show_chart</i></button></td>
       </tr>
     </tbody>
   </table>

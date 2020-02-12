@@ -12,6 +12,9 @@
       </button>
     </mat-menu>
     <div style="margin-bottom: -8px;">
+      <button mat-button routerLink="/player-rank//{{selectedLeaderboard?.seasonName}}">
+        <i class="material-icons">show_chart</i>
+      </button>
       <button mat-button (click)="refreshData()">
         <i class="material-icons">refresh</i>
       </button>
