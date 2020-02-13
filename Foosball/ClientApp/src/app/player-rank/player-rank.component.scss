@@ -8,13 +8,12 @@
   padding-left: 8px;
   display: none;
   color: white;
-  display: flex;
   align-items: center;
   mat-icon {
     margin-top: -2px;
   }
   @media screen and (max-width: 512px) {
-    display: block;
+    display: flex;
   }
 }
 

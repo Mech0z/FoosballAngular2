@@ -109,14 +109,14 @@
 
 .refresh-icon-btn {
   position: fixed;
-  top: 32px;
+  top: -50px;
   left: calc(50% - 20px);
-  transition: all 0.8s ease-in-out;
-  transform: translateY(-200px);
+  transition: all 0.4s ease-out;
   background: rgba($accent, 0.5);
+  transform: scale(0.5);
   color: white;
   &.visible {
-    transform: translateY(0) rotate(360deg);
+    transform: translateY(75px) scale(1.5);
   }
   mat-icon {
     font-size: 22px;

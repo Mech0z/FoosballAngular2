@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { HeadersService } from '../../services/headers.service';
+import { Observable, fromEvent, Subscription, Subject, ReplaySubject } from 'rxjs';
 import { AuthenticationService } from '../../services/authentication.service';
+import { HeadersService } from '../../services/headers.service';
 import { ThemeService } from '../../shared/theme.service';
-import { Observable, merge, fromEvent, Subscription, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-responsive-overview',
@@ -15,10 +15,13 @@ export class ResponsiveOverviewComponent implements OnInit, AfterViewInit, OnDes
   darkTheme$: Observable<boolean>;
   fabVisible = new Subject<boolean>();
   fabVisible$ = this.fabVisible.asObservable();
-  refreshVisible = new Subject<boolean>();
+  refreshVisible = new ReplaySubject<boolean>();
   refreshVisible$ = this.refreshVisible.asObservable();
-  isAdmin = false;
+  _refreshVisible: boolean;
+  isAdmin: boolean;
   startOffset: number;
+  startTime: number;
+  endTime: number;
   startY: number;
   lastY: number;
   endY: number;
@@ -35,7 +38,7 @@ export class ResponsiveOverviewComponent implements OnInit, AfterViewInit, OnDes
       this.isAdmin = true;
     }
     if (this.authenticationService.checkLogin()) {
-      this.authenticationService.validateLogin().subscribe(result => { }, error => {
+      this.authenticationService.validateLogin().subscribe(() => { }, () => {
         this.authenticationService.logout();
         window.location.reload();
       });
@@ -51,34 +54,40 @@ export class ResponsiveOverviewComponent implements OnInit, AfterViewInit, OnDes
   }
 
   private setupScrollSubscribtion() {
-    const mouseDown = fromEvent(this.scrollContainer.nativeElement, 'touchstart');
-    const mouseUp = fromEvent(this.scrollContainer.nativeElement, 'touchend');
-    const mouseMove = fromEvent(this.scrollContainer.nativeElement, 'touchmove');
-    const scrollEnd = fromEvent(this.scrollContainer.nativeElement, 'scroll');
+    const touchStart = fromEvent(this.scrollContainer.nativeElement, 'touchstart');
+    const touchMove = fromEvent(this.scrollContainer.nativeElement, 'touchmove');
+    const touchEnd = fromEvent(this.scrollContainer.nativeElement, 'touchend');
+    const scroll = fromEvent(this.scrollContainer.nativeElement, 'scroll');
 
-    this.subs.add(mouseDown.subscribe((e: any) => {
+    this.subs.add(touchStart.subscribe((e: any) => {
       this.startOffset = this.scrollContainer.nativeElement.scrollTop;
       this.startY = e.changedTouches[0].clientY;
-    }));
-    this.subs.add(mouseUp.subscribe((e: any) => {
-      this.endY = e.changedTouches[0].clientY;
-      const scrollOverTop = this.endY - this.startY - this.startOffset;
-      if (scrollOverTop > 200) {
-        location.reload();
-      } else {
-        this.refreshVisible.next(false);
-      }
-    }));
-    this.subs.add(mouseMove.subscribe((e: any) => {
-      const currentY = e.changedTouches[0].clientY;
-      this.refreshVisible.next((currentY - this.startY - this.startOffset > 0) && this.lastY < currentY);
-      this.lastY = currentY;
-    }));
-    this.subs.add(scrollEnd.subscribe((e: any) => {
-      const scrollElement = this.scrollContainer.nativeElement;
-      const offset = scrollElement.offsetHeight - scrollElement.scrollTop + scrollElement.offsetHeight;
-      this.fabVisible.next(offset < 100);
+      this.startTime = new Date().getTime();
     }));
 
+    this.subs.add(touchEnd.subscribe((e: any) => {
+      this.endY = e.changedTouches[0].clientY;
+      this.endTime = new Date().getTime();
+      const elapsedMs = this.endTime - this.startTime;
+      // Prevent Mads and Martin from ruining my beautifull feature
+      if (this._refreshVisible && elapsedMs > 500) {
+        location.reload();
+      }
+      this.refreshVisible.next(false);
+    }));
+
+    this.subs.add(touchMove.subscribe((e: any) => {
+      if (this.startOffset !== 0) { return; }
+      const currentY = e.changedTouches[0].clientY;
+      this._refreshVisible = this.lastY < currentY;
+      this.refreshVisible.next(this._refreshVisible);
+      this.lastY = currentY;
+    }));
+
+    this.subs.add(scroll.subscribe(() => {
+      const scrollElement = this.scrollContainer.nativeElement;
+      const offset = scrollElement.scrollHeight - scrollElement.scrollTop - scrollElement.offsetHeight;
+      this.fabVisible.next(offset < 40);
+    }));
   }
 }
